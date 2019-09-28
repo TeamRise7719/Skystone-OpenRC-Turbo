@@ -33,8 +33,8 @@ public class Drivetrain {
         //configuring the components
 
 
-        lr = hardwareMap.dcMotor.get("driveBL");
-        lf = hardwareMap.dcMotor.get("driveFL");
+        lr = hardwareMap.dcMotor.get("leftB");
+        lf = hardwareMap.dcMotor.get("leftF");
         lr.setDirection(DcMotor.Direction.FORWARD);
         lf.setDirection(DcMotor.Direction.FORWARD);
         lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -42,8 +42,8 @@ public class Drivetrain {
         lr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        rr = hardwareMap.dcMotor.get("driveBR");
-        rf = hardwareMap.dcMotor.get("driveFR");
+        rr = hardwareMap.dcMotor.get("rightB");
+        rf = hardwareMap.dcMotor.get("rightF");
         rr.setDirection(DcMotor.Direction.REVERSE);
         rf.setDirection(DcMotor.Direction.REVERSE);
         rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
