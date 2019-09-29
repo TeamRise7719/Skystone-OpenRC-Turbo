@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode.VisionTargeting;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -14,8 +14,7 @@ public class TensorFlowObjectDetection extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/Skystone.tflite"; //For OpenRC, loaded from internal storage to reduce APK size
     private static final String LABEL_FIRST_ELEMENT = "Stone";
     private static final String LABEL_SECOND_ELEMENT = "Skystone";
-    private static final String VUFORIA_KEY =
-            "AUbWH2r/////AAABmTqIGJpUgkb9j4jexPb0CKYmpPjDhVyV5bE2RL866jD2AKG/pqN0P8mPlybMo3P0xERT+mK0uW04FHPso8OcJDLER7gW6Rjnv49Yzc7ks3zkCGtwmHx/sqInqUl4i2jlHTFiW8qYnAf/iOJ0O2jO7j8UjOuurbpGT+3iGwRprWQFe7/Wb6k08A1tMIwvDKgU3g+PudWyfefPeo2Oo3PYzIiGu+KlswOR26Jn3jRSGmlin3JrfLkvmV7AmTaFWGwb876eR21A5EP40EIBk8E9nDuJcVB60q9R7nnBvf/qjsSuUwKQWtn9xTBzWSIhEzXetUY5PMxckiugQLWHp7YAkrM7SGNte2JrUk9XslYRqV4z";
+    private static final String VUFORIA_KEY = "AUbWH2r/////AAABmTqIGJpUgkb9j4jexPb0CKYmpPjDhVyV5bE2RL866jD2AKG/pqN0P8mPlybMo3P0xERT+mK0uW04FHPso8OcJDLER7gW6Rjnv49Yzc7ks3zkCGtwmHx/sqInqUl4i2jlHTFiW8qYnAf/iOJ0O2jO7j8UjOuurbpGT+3iGwRprWQFe7/Wb6k08A1tMIwvDKgU3g+PudWyfefPeo2Oo3PYzIiGu+KlswOR26Jn3jRSGmlin3JrfLkvmV7AmTaFWGwb876eR21A5EP40EIBk8E9nDuJcVB60q9R7nnBvf/qjsSuUwKQWtn9xTBzWSIhEzXetUY5PMxckiugQLWHp7YAkrM7SGNte2JrUk9XslYRqV4z";
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
 
