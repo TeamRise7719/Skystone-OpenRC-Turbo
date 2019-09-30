@@ -1,4 +1,5 @@
-package org.firstinspires.ftc.teamcode.Subsystems.Driving;
+package org.firstinspires.ftc.teamcode.Subsystems.Driving.autonomous;
+
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -17,7 +18,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Subsystems.Sensing.I2CXL;
 
-public class SeansEncLibrary {
+
+public class encoderLibrary {
 
     DcMotor left_back_drive;
     DcMotor left_front_drive;
@@ -34,8 +36,8 @@ public class SeansEncLibrary {
     I2CXL ultrasonicFront;
     I2CXL ultrasonicBack;
 
-    private static final double     COUNTS_PER_MOTOR_REV    = 1120 ;
-    private static final double     DRIVE_GEAR_REDUCTION    = 0.6666;     // This is < 1.0 if geared UP
+    private static final double     COUNTS_PER_MOTOR_REV    = 537.6 ;
+    private static final double     DRIVE_GEAR_REDUCTION    = 1;     // This is < 1.0 if geared UP
     private static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -45,29 +47,29 @@ public class SeansEncLibrary {
     public  final double     DRIVE_SPEED             = 0.8;     // Nominal speed
     public  final double     DRIVE_SPEED_SLOW             = 0.4;     // Slower speed for better accuracy.
 
-    public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
+    public  final double     TURN_SPEED              = 0.4;     // Nominal half speed for better accuracy.
 
     private static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
     private static final double     ENCODER_THRESHOLD       = 10;      // As tight as we can make it with an integer gyro
 
-    private static  double     P_TURN_COEFF            = 0.035;     // Larger is more responsive, but also less stable
+    private static  double     P_TURN_COEFF            = 0.02;     // Larger is more responsive, but also less stable
     private static  double     I_TURN_COEFF            = 0.001;     // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
+    private static  double     D_TURN_COEFF            = 0.05;     // Larger is more responsive, but also less stable
 
 
     private static final double     P_DRIVE_COEFF           = 0.16;     // Larger is more responsive, but also less stable
     private static final double     ULTRA_COEFF           = 0.06;     // Larger is more responsive, but also less stable
 
-    public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
+    public encoderLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
 
-        ultrasonicFront = hardwareMap.get(I2CXL.class, "ultsonFront");
-        ultrasonicBack = hardwareMap.get(I2CXL.class, "ultsonBack");
+//        ultrasonicFront = hardwareMap.get(I2CXL.class, "ultsonFront");
+//        ultrasonicBack = hardwareMap.get(I2CXL.class, "ultsonBack");
 
-        left_back_drive = hardwareMap.dcMotor.get("driveBL");
-        left_front_drive = hardwareMap.dcMotor.get("driveFL");
-        right_back_drive = hardwareMap.dcMotor.get("driveBR");
-        right_front_drive = hardwareMap.dcMotor.get("driveFR");
+        left_back_drive = hardwareMap.dcMotor.get("leftB");
+        left_front_drive = hardwareMap.dcMotor.get("leftF");
+        right_back_drive = hardwareMap.dcMotor.get("rightB");
+        right_front_drive = hardwareMap.dcMotor.get("rightF");
 
         telemetry = tel;
         linearOpMode = opMode;
@@ -83,8 +85,8 @@ public class SeansEncLibrary {
         gyro.initialize(param);
         gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-        ultrasonicFront.initialize();
-        ultrasonicBack.initialize();
+//        ultrasonicFront.initialize();
+//        ultrasonicBack.initialize();
 
         left_back_drive.setDirection(DcMotor.Direction.REVERSE);
         left_front_drive.setDirection(DcMotor.Direction.REVERSE);
@@ -127,18 +129,18 @@ public class SeansEncLibrary {
         right_front_drive.setPower(0);
     }
 
-        /**
-         *  Method to drive on a fixed compass bearing (angle), based on encoder counts.
-         *  Move will stop if either of these conditions occur:
-         *  1) Move gets to the desired position
-         *  2) Driver stops the opmode running.
-         *
-         * @param speed      Target speed for forward motion.  Should allow for _/- variance for adjusting heading
-         * @param distance   Distance (in inches) to move from current position.  Negative distance means move backwards.
-         * @param angle      Absolute Angle (in Degrees) relative to last gyro reset.
-         *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
-         *                   If a relative angle is required, add/subtract from current heading.
-         */
+    /**
+     *  Method to drive on a fixed compass bearing (angle), based on encoder counts.
+     *  Move will stop if either of these conditions occur:
+     *  1) Move gets to the desired position
+     *  2) Driver stops the opmode running.
+     *
+     * @param speed      Target speed for forward motion.  Should allow for _/- variance for adjusting heading
+     * @param distance   Distance (in inches) to move from current position.  Negative distance means move backwards.
+     * @param angle      Absolute Angle (in Degrees) relative to last gyro reset.
+     *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
+     *                   If a relative angle is required, add/subtract from current heading.
+     */
     public void gyroDrive ( double speed,
                             double distance,
                             double angle,
@@ -155,6 +157,16 @@ public class SeansEncLibrary {
 
         // Ensure that the opmode is still active
         if (linearOpMode.opModeIsActive()) {
+
+            left_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            left_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            right_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            right_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            left_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            left_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
@@ -182,7 +194,7 @@ public class SeansEncLibrary {
 
             // keep looping while we are still active, and BOTH motors are running.
             while (linearOpMode.opModeIsActive() && (Math.abs(newLeftTarget-left_back_drive.getCurrentPosition())>ENCODER_THRESHOLD
-                   || Math.abs(newRightTarget-right_back_drive.getCurrentPosition())>ENCODER_THRESHOLD) ) {
+                    || Math.abs(newRightTarget-right_back_drive.getCurrentPosition())>ENCODER_THRESHOLD) ) {
 
                 // adjust relative speed based on heading error.
                 error = getError(angle);
@@ -241,8 +253,8 @@ public class SeansEncLibrary {
 
     public void gyroDriveTime ( double speed,
                                 double time,
-                            double angle,
-                            boolean steeringToggle) {
+                                double angle,
+                                boolean steeringToggle) {
 
         double  max;
         double  error;
@@ -323,8 +335,8 @@ public class SeansEncLibrary {
     }
 
     public void gyroStrafeTime ( double speed,
-                            double time,
-                            double angle,
+                                 double time,
+                                 double angle,
                                  boolean steeringToggle) {
 
         double  max;
@@ -336,6 +348,12 @@ public class SeansEncLibrary {
         // Ensure that the opmode is still active
         if (linearOpMode.opModeIsActive()) {
             // Set Target and Turn On RUN_TO_POSITION
+
+            left_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            left_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            right_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            right_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
             left_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             left_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -405,8 +423,8 @@ public class SeansEncLibrary {
     }
 
     public void gyroStrafeDistance ( double speed,
-                             double distance,
-                             double angle,
+                                     double distance,
+                                     double angle,
                                      boolean steeringToggle) {
 
 
@@ -423,6 +441,17 @@ public class SeansEncLibrary {
         if (linearOpMode.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
+
+            left_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            left_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            right_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            right_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            left_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            left_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
             moveCounts = (int)(distance * COUNTS_PER_INCH);
             newLeftTarget = left_back_drive.getCurrentPosition() + moveCounts;
             newRightTarget = (right_back_drive.getCurrentPosition() + moveCounts)*-1;
@@ -440,7 +469,7 @@ public class SeansEncLibrary {
             right_front_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // start motion.
-            speed = Range.clip(Math.abs(speed), 0.0, 1.0);
+            speed = Range.clip(speed, 0.0, 1.0);
             left_back_drive.setPower(speed);
             left_front_drive.setPower(-speed);
             right_back_drive.setPower(-speed);
@@ -526,10 +555,10 @@ public class SeansEncLibrary {
 
         // keep looping while we are still active, and not on heading.
         while (linearOpMode.opModeIsActive() && etime.time()<0.35) {
-             doneTurning = onHeading(angle);
-             if(!doneTurning){
-                 etime.reset();
-             }
+            doneTurning = onHeading(angle);
+            if(!doneTurning){
+                etime.reset();
+            }
         }
     }
 
@@ -581,11 +610,20 @@ public class SeansEncLibrary {
         motorSpeed = turn_PID.calculate(gyro_angle.firstAngle);
 
         // Send desired speeds to motors.
-        left_front_drive.setPower(-motorSpeed);
-        left_back_drive.setPower(-motorSpeed);
-        right_front_drive.setPower(motorSpeed);
-        right_back_drive.setPower(motorSpeed);
 
+        if (angle < 0){
+            left_front_drive.setPower(-motorSpeed);
+            left_back_drive.setPower(-motorSpeed);
+            right_front_drive.setPower(motorSpeed);
+            right_back_drive.setPower(motorSpeed);
+
+        } else {
+            left_front_drive.setPower(motorSpeed);
+            left_back_drive.setPower(motorSpeed);
+            right_front_drive.setPower(-motorSpeed);
+            right_back_drive.setPower(-motorSpeed);
+
+        }
         // Display it for the driver.
         telemetry.addData("Target", "%5.2f", angle);
         telemetry.addData("Err/Angle", "%5.2f:%5.2f", turn_PID.getError(),gyro_angle.firstAngle);
@@ -647,12 +685,12 @@ public class SeansEncLibrary {
     }
 
     public void UltrasonicGyroDrive(
-                                    double distance,
-                                    double angle,
-                                    boolean steeringToggle,
-                                    double UltraTolerance,
-                                    boolean isBack,
-                                    double Timeout) {
+            double distance,
+            double angle,
+            boolean steeringToggle,
+            double UltraTolerance,
+            boolean isBack,
+            double Timeout) {
         double speed;
         double max;
         double error;

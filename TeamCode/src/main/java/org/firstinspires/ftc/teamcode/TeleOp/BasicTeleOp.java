@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.Driving.teleop.Drivetrain;
 
 /*
  * Created by Sean Cardosi on 9/22/2019.
