@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import java.util.List;
 
 /*
- * Created by Sean Cardosi on 9/30/2019.
+ * Created by Sean Cardosi on 9/22/2019.
  *
  * Susbsystem used to detect Skystones and Stones using TensorFlow from the phone's built-in camera.
  */
