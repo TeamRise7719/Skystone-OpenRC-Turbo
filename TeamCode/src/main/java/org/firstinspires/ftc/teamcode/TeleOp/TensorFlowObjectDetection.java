@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.VisionTargeting;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
