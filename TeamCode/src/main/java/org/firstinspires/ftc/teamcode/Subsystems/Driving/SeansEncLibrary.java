@@ -34,11 +34,11 @@ public class SeansEncLibrary {
     I2CXL ultrasonicFront;
     I2CXL ultrasonicBack;
 
-    private static final double     COUNTS_PER_MOTOR_REV    = 1120 ;
-    private static final double     DRIVE_GEAR_REDUCTION    = 0.6666;     // This is < 1.0 if geared UP
+    private static final double     COUNTS_PER_MOTOR_REV    = 537.6;
+    private static final double     DRIVE_GEAR_REDUCTION    = (25/35);     // This is < 1.0 if geared UP
     private static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * Math.PI);
 
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
@@ -47,12 +47,13 @@ public class SeansEncLibrary {
 
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
-    private static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
+    private static final double     HEADING_THRESHOLD       = 1;      // As tight as we can make it with an integer gyro
     private static final double     ENCODER_THRESHOLD       = 10;      // As tight as we can make it with an integer gyro
 
-    private static  double     P_TURN_COEFF            = 0.035;     // Larger is more responsive, but also less stable
-    private static  double     I_TURN_COEFF            = 0.001;     // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
+    //TODO: Tune PID
+    private static  double     P_TURN_COEFF            = 0.00005;//0.035     // Larger is more responsive, but also less stable
+    private static  double     I_TURN_COEFF            = 0;// 0.001    // Larger is more responsive, but also less stable
+    private static  double     D_TURN_COEFF            = 0;//0.1     // Larger is more responsive, but also less stable
 
 
     private static final double     P_DRIVE_COEFF           = 0.16;     // Larger is more responsive, but also less stable
@@ -64,10 +65,10 @@ public class SeansEncLibrary {
         ultrasonicFront = hardwareMap.get(I2CXL.class, "ultsonFront");
         ultrasonicBack = hardwareMap.get(I2CXL.class, "ultsonBack");
 
-        left_back_drive = hardwareMap.dcMotor.get("driveBL");
-        left_front_drive = hardwareMap.dcMotor.get("driveFL");
-        right_back_drive = hardwareMap.dcMotor.get("driveBR");
-        right_front_drive = hardwareMap.dcMotor.get("driveFR");
+        left_back_drive = hardwareMap.dcMotor.get("leftB");
+        left_front_drive = hardwareMap.dcMotor.get("leftF");
+        right_back_drive = hardwareMap.dcMotor.get("rightB");
+        right_front_drive = hardwareMap.dcMotor.get("rightF");
 
         telemetry = tel;
         linearOpMode = opMode;

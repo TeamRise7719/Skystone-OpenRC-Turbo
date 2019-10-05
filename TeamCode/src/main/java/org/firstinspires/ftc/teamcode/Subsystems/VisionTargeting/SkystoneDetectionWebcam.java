@@ -59,7 +59,7 @@ public class SkystoneDetectionWebcam {
         telemetry.update();
     }
 
-        public void detect() {
+        public void TFdetect() {
 
             if (tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
