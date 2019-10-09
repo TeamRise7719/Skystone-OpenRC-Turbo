@@ -19,12 +19,17 @@ public class PIDTest extends LinearOpMode {
 
         while (opModeIsActive()) {
 
+            telemetry.addData("X to Drive Forward", "and Y to Rotate");
+
             if (gamepad1.x) {
 
                 enc.gyroDrive(0.1,24.5,0, false);
+                telemetry.addData("Driving: ", "24.5 Inches");
             }
             if (gamepad1.y) {
+
                 enc.gyroTurn(0.1,90);
+                telemetry.addData("Rotating: ", "90 Degrees");
             }
         }
     }

@@ -35,9 +35,9 @@ public class SeansEncLibrary {
     I2CXL ultrasonicBack;
 
     private static final double     COUNTS_PER_MOTOR_REV    = 537.6;
-    private static final double     DRIVE_GEAR_REDUCTION    = (25/35);     // This is < 1.0 if geared UP
-    private static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
-    private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    private static final double     EXTERNAL_GEAR_RATIO    = (25/32);     // This is < 1.0 if geared UP
+    private static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
+    private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * EXTERNAL_GEAR_RATIO) /
             (WHEEL_DIAMETER_INCHES * Math.PI);
 
     // These constants define the desired driving/control characteristics
