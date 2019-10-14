@@ -20,15 +20,24 @@ public class Blue_Auto_V1 extends LinearOpMode {
     int position;
     encoderLibrary enc;
     visionLibrary vis;
+    DcMotor intake;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         enc = new encoderLibrary(hardwareMap, telemetry, this);
+        intake = hardwareMap.dcMotor.get("intake");
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
 
         //moves toward skyblock
         enc.gyroDrive(0.5,32, 0,false);
+        //vision code goes here
+        //intakes block
+        intake.setPower(-1.0);
+        intake.wait(1900);
         //move to toward bridge
         enc.gyroDrive(0.5,-18,0,false);
         enc.gyroHold(0.5,45,2.5);
