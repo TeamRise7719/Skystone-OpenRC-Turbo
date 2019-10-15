@@ -4,17 +4,18 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.Subsystems.Driving.ComponentClass;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 
 /*
  * Created by Sean Cardosi on 9/22/2019.
  */
 @TeleOp(name = "BasicTeleOp", group = "Drive")
-public class BasicTeleOp extends OpMode {
+public class BasicTeleOp extends OpMode {//TODO: We need a robot naming convention... we just need a robot name.
 
     private Drivetrain robot;
 
-    private DcMotor intake;
+    private ComponentClass part;
 
     private boolean isReady = false;
 
@@ -25,9 +26,7 @@ public class BasicTeleOp extends OpMode {
         robot = new Drivetrain(hardwareMap, telemetry);
         robot.runUsingEncoders();
 
-        intake = hardwareMap.dcMotor.get("intake");
-        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        part = new ComponentClass(hardwareMap, telemetry);
 
         isReady = true;
     }
@@ -54,13 +53,18 @@ public class BasicTeleOp extends OpMode {
         if (gamepad1.x) {
             robot.resetHeading();
         }
-
-        if (gamepad1.a){
-            intake.setPower(-1.0);
-        }
-        if (gamepad1.b){
-            intake.setPower(1.0);
-        }
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
+
+
+        //TODO: This will need to be double checked. Unsure of the correct trigger values.
+        //----------------------------------------------=+(Intake)+=----------------------------------------------\\
+        if ((gamepad1.left_trigger > 0.1)&&(Math.abs(gamepad1.right_trigger ) < 0.1)) {//This is a precaution
+            part.intakeStone(Math.abs(gamepad1.right_trigger));//Intake stone
+        } else if ((gamepad1.right_trigger > 0.1)&&(Math.abs(gamepad1.left_trigger ) < 0.1)) {//This is a precaution
+            part.ejectStone(-(Math.abs(gamepad1.left_trigger)));//Eject stone
+        } else {
+            part.stopStone();//Stop power to the stone intake
+        }
+        //----------------------------------------------=+(Intake)+=----------------------------------------------\\
     }
 }
