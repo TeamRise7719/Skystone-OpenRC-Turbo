@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Subsystems.Driving.autonomous;
+package org.firstinspires.ftc.teamcode.Subsystems.Driving;
 
 public class SynchronousPID {
     private double m_P; // factor for "proportional" control

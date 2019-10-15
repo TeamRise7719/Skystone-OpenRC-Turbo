@@ -1,34 +1,32 @@
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.hardware.CRServo;
 
 
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.teleop.Drivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.teleop.mecanumDrivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.autonomous.encoderLibrary;
-import org.firstinspires.ftc.teamcode.Subsystems.Sensing.visionLibrary;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.teamcode.Subsystems.Driving.SeansEncLibrary;
+import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.VisionTargeting.SkystoneDetectionPhone;
+import org.firstinspires.ftc.teamcode.Subsystems.VisionTargeting.SkystoneDetectionWebcam;
 
 @Autonomous(name = "Blue_Auto_V1", group = "Rise")
 public class Blue_Auto_V1 extends LinearOpMode {
 
     private Drivetrain robot;
     int position;
-    encoderLibrary enc;
-    visionLibrary vis;
+    SeansEncLibrary enc;
+    SkystoneDetectionPhone phone;
+    SkystoneDetectionWebcam webcam;
     DcMotor intake;
 
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        enc = new encoderLibrary(hardwareMap, telemetry, this);
+        enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         intake = hardwareMap.dcMotor.get("intake");
-        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
 

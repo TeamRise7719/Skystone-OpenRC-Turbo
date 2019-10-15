@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.teleop.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 
 /*
  * Created by Sean Cardosi on 9/22/2019.

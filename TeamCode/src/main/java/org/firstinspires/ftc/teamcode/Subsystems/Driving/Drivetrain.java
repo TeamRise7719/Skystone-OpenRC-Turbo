@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Subsystems.Driving.teleop;
+package org.firstinspires.ftc.teamcode.Subsystems.Driving;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,25 +15,23 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * Hardware definitions and access for a robot with a four-motor
  * drive train and a gyro sensor.
  */
-public class mecanumDrivetrain {
+public class Drivetrain {
     private final HardwareMap hardwareMap;
     private final Telemetry telemetry;
 
     private final DcMotor lf, lr, rf, rr;
-    public DcMotor winchMotor;
 
     private final BNO055IMU imu;
 
     private double headingOffset = 0.0;
     private Orientation angles;
 
-    public mecanumDrivetrain(final HardwareMap _hardwareMap, final Telemetry _telemetry) {
+    public Drivetrain(final HardwareMap _hardwareMap, final Telemetry _telemetry) {
         hardwareMap = _hardwareMap;
         telemetry = _telemetry;
 
         //configuring the components
-        winchMotor = hardwareMap.dcMotor.get("winch");
-        winchMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
         lr = hardwareMap.dcMotor.get("leftB");
         lf = hardwareMap.dcMotor.get("leftF");
@@ -142,17 +140,7 @@ public class mecanumDrivetrain {
         lr.setPower(_lr / scale);
         rf.setPower(_rf / scale);
         rr.setPower(_rr / scale);
-
-        telemetry.addData("LF", lf.getCurrentPosition());
-
-        telemetry.addData("LR", lr.getCurrentPosition());
-
-        telemetry.addData("RF", rf.getCurrentPosition());
-
-        telemetry.addData("RR ", rr.getCurrentPosition());
     }
-
-    public void winch(double power) { winchMotor.setPower(power);}
 
     public void drive(Gamepad gamepad1, Telemetry telemetry) {
         loop();
@@ -160,26 +148,27 @@ public class mecanumDrivetrain {
         final double x = -gamepad1.left_stick_x;
         final double y = gamepad1.left_stick_y;
 
-        final double rotation = -((gamepad1.right_stick_x)/2);
+        final double rotation = -(gamepad1.right_stick_x);
         final double direction = Math.atan2(x, y) + getHeading();
         final double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
-//changed by 14699
+
         final double lf = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
         final double rf = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
         final double lr = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
         final double rr = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
-
-        setMotors((lf * lf * lf)/2, (lr * lr * lr)/2, (rf * rf * rf)/2, (rr * rr * rr)/2);
-
+        if((gamepad1.right_trigger>0.1)) {
+            setMotors(lf / 2, lr / 2, rf / 2, rr / 2);
+        } else {
+            setMotors(lf, lr, rf, rr);
+        }
 
         telemetry.addData("Speeds","%f,%f,%f,%f", lf,rf,lr,rr);
         telemetry.addData("RAW Gyro: ",getRawHeading());
         telemetry.addData("Heading: ",getHeading());
         telemetry.addData("Offset: ",headingOffset);
+
         telemetry.update();
-
-
 
 
     }
