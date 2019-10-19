@@ -45,7 +45,6 @@ public class Odometry {
     private double previousLeftValue = 0;
 
 
-
     public Odometry(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
 
@@ -60,13 +59,14 @@ public class Odometry {
 
     public void init(){
 
+        //GYRO IS IN RADIANS FOR PURE PURSUIT
         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
-        param.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        param.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         param.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         param.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         gyro.initialize(param);
-        angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
         leftBack.setDirection(DcMotor.Direction.REVERSE);
         leftFront.setDirection(DcMotor.Direction.REVERSE);
@@ -110,20 +110,22 @@ public class Odometry {
     /*
      * Finds the robots (x,y) location using the previous encoder values and the robot heading.
      */
-    public void Location() {
+    public void encLocation() {
 
-        changeRight = ((rightBack.getCurrentPosition()+rightFront.getCurrentPosition())/2) - previousRightValue;
-        changeLeft = ((leftBack.getCurrentPosition()+leftFront.getCurrentPosition())/2) - previousLeftValue;
+        changeRight = ((rightBack.getCurrentPosition() + rightFront.getCurrentPosition()) / 2) - previousRightValue;
+        changeLeft = ((leftBack.getCurrentPosition() + leftFront.getCurrentPosition()) / 2) - previousLeftValue;
 
-        distance = (changeRight+changeLeft)/2;
-        distanceInch = (distance*COUNTS_PER_INCH);
+        distance = (changeRight + changeLeft) / 2;
+        distanceInch = (distance * COUNTS_PER_INCH);
 
-        xLocation += distance*Math.cos(angles.firstAngle);
-        yLocation += distance*Math.sin(angles.firstAngle);
-        xLocationInch += distanceInch*Math.cos(angles.firstAngle);
-        yLocationInch +=distanceInch*Math.sin(angles.firstAngle);
+        xLocation += distance * Math.cos(angles.firstAngle);
+        yLocation += distance * Math.sin(angles.firstAngle);
+        xLocationInch += distanceInch * Math.cos(angles.firstAngle);
+        yLocationInch += distanceInch * Math.sin(angles.firstAngle);
 
-        telemetry.addData("Location:", "%f:%f",xLocation, yLocation);
+        telemetry.addData("Location:", "%f:%f", xLocation, yLocation);
         telemetry.addData("Location In Inches: ", "%d:%d", xLocationInch, yLocationInch);
+
+        previousValues();
     }
 }

@@ -8,8 +8,7 @@ public class CurvePoint {
     public double y;
     public double moveSpeed;
     public double turnSpeed;
-    private final double followDistance;
-    public double follwoDistance;
+    public double followDistance;
     public double pointLength;
     public double slowDownTurnRadians;
     public double slowDownTurnAmount;

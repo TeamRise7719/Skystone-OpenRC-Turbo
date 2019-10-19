@@ -78,7 +78,8 @@ public class PurePursuitMovement {
 
     public static void followCurve(ArrayList<CurvePoint> allPoints, double followAngle) {
 
-        CurvePoint followMe = getFollowPointPath(allPoints, new Point(CurrentXPosition/*This should be the robots current x position*/), allPoints.get(0).follwoDistance);
+
+        CurvePoint followMe = getFollowPointPath(allPoints, new Point(CurrentXPosition/*This should be the robots current x position*/), allPoints.get(0).followDistance);
 
         goToPosition(followMe.x, followMe.y, followMe.moveSpeed, followAngle, followMe.turnSpeed);
 
@@ -102,7 +103,7 @@ public class PurePursuitMovement {
             for (Point thisIntersection : intersections) {
 
                 double angle = Math.atan2(thisIntersection.y - CurrentYPosition, thisIntersection.x - CurrentXPosition);
-                double deltaAngle = Math.abs(PurePursuitMath.AngleWrap(angle - currentAngle));
+                double deltaAngle = Math.abs(PurePursuitMath.AngleWrap(angle - angles.firstAngle));
 
                 if (deltaAngle < closestAngle) {
                     closestAngle = deltaAngle;
@@ -112,6 +113,7 @@ public class PurePursuitMovement {
         }
         return followMe;
     }
+
 
     /**
      * Basic run to a position. Better to use followCurve.
@@ -123,9 +125,9 @@ public class PurePursuitMovement {
 
         double distanceToTarget = Math.hypot(x - CurrentXPosition, y - CurrentYPosition);
 
-        double absoluteAngleToTarget = Math.atan2(y - CurrentYPosition, x - CurrentXPosition);//WorldPosition is the robots starting position and hsould be updated to the robots current position throughout OpMode
+        double absoluteAngleToTarget = Math.atan2(y - CurrentYPosition, x - CurrentXPosition);//WorldPosition is the robots starting position and should be updated to the robots current position throughout OpMode
 
-        double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (currentAngle - Math.toRadians(90)));//in RADIANS current angle is the angle to start at and should be updated to current angle throughout OpMode
+        double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (angles.firstAngle - Math.toRadians(90)));
 
         double relativeXToPoint = Math.cos(relativeAngleToPoint) * distanceToTarget;
         double relativeYToPoint = Math.sin(relativeAngleToPoint * distanceToTarget);

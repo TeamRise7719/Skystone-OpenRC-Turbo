@@ -21,6 +21,6 @@ public class BasicPurePursuit extends OpMode {
         ArrayList<CurvePoint> allPoints = new ArrayList<>();
         allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
 
-        followCurve(allPoints, Math.toRadians(90));//Robot will get stuck spinning while looking for another poiint to go to at then endPoint.
+        followCurve(allPoints, Math.toRadians(90));//Robot will get stuck spinning while looking for another point to go to at the endPoint.
     }
 }
