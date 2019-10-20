@@ -17,44 +17,30 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  */
 public class Odometry {
 
-    DcMotor leftBack;
-    DcMotor leftFront;
-    DcMotor rightBack;
-    DcMotor rightFront;
+    DcMotor leftOdometer;
+    DcMotor rightOdometer;
 
     public BNO055IMU gyro;
     public Orientation angles;
 
     Telemetry telemetry;
-    LinearOpMode linearOpMode;
 
-    private static final double     COUNTS_PER_MOTOR_REV    = 537.6;
-    private static final double     EXTERNAL_GEAR_RATIO    = (25/32);     // This is < 1.0 if geared UP
-    private static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
-    private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * EXTERNAL_GEAR_RATIO) /
-            (WHEEL_DIAMETER_INCHES * Math.PI);
-    private double xLocation = 0;
-    private double yLocation = 0;
-    private double xLocationInch = 0;
-    private double yLocationInch = 0;
-    private double distance;
-    private double distanceInch;
-    private double changeRight = 0;
-    private double changeLeft = 0;
-    private double previousRightValue = 0;
-    private double previousLeftValue = 0;
+    double xLocation = 0.0;
+    double yLocation = 0.0;
+    double distance;
+    double changeRight = 0.0;
+    double changeLeft = 0.0;
+    double previousRightValue = 0.0;
+    double previousLeftValue = 0.0;
 
 
-    public Odometry(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
+    public Odometry(HardwareMap hardwareMap, Telemetry tel) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
 
-        leftBack = hardwareMap.dcMotor.get("leftB");
-        leftFront = hardwareMap.dcMotor.get("leftF");
-        rightBack = hardwareMap.dcMotor.get("rightB");
-        rightFront = hardwareMap.dcMotor.get("rightF");
+        leftOdometer = hardwareMap.dcMotor.get("encL");
+        rightOdometer = hardwareMap.dcMotor.get("encR");
 
         telemetry = tel;
-        linearOpMode = opMode;
     }
 
     public void init(){
@@ -68,34 +54,18 @@ public class Odometry {
         gyro.initialize(param);
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
-        leftBack.setDirection(DcMotor.Direction.REVERSE);
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftOdometer.setDirection(DcMotor.Direction.REVERSE);
+        leftOdometer.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        rightBack.setDirection(DcMotor.Direction.FORWARD);
-        rightFront.setDirection(DcMotor.Direction.FORWARD);
-        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightOdometer.setDirection(DcMotor.Direction.FORWARD);
+        rightOdometer.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
-        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftOdometer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightOdometer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void stop_all_motors(){
-
-        leftBack.setPower(0);
-        rightBack.setPower(0);
-        leftFront.setPower(0);
-        rightFront.setPower(0);
+        leftOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /*
@@ -103,8 +73,8 @@ public class Odometry {
      */
     public void previousValues() {
 
-        previousRightValue = (rightBack.getCurrentPosition()+rightFront.getCurrentPosition())/2;
-        previousLeftValue = (leftBack.getCurrentPosition()+leftFront.getCurrentPosition())/2;
+        previousRightValue = rightOdometer.getCurrentPosition();
+        previousLeftValue = leftOdometer.getCurrentPosition();
     }
 
     /*
@@ -112,19 +82,14 @@ public class Odometry {
      */
     public void encLocation() {
 
-        changeRight = ((rightBack.getCurrentPosition() + rightFront.getCurrentPosition()) / 2) - previousRightValue;
-        changeLeft = ((leftBack.getCurrentPosition() + leftFront.getCurrentPosition()) / 2) - previousLeftValue;
+        changeRight = rightOdometer.getCurrentPosition() - previousRightValue;
+        changeLeft = leftOdometer.getCurrentPosition() - previousLeftValue;
 
         distance = (changeRight + changeLeft) / 2;
-        distanceInch = (distance * COUNTS_PER_INCH);
-
         xLocation += distance * Math.cos(angles.firstAngle);
         yLocation += distance * Math.sin(angles.firstAngle);
-        xLocationInch += distanceInch * Math.cos(angles.firstAngle);
-        yLocationInch += distanceInch * Math.sin(angles.firstAngle);
 
-        telemetry.addData("Location:", "%f:%f", xLocation, yLocation);
-        telemetry.addData("Location In Inches: ", "%d:%d", xLocationInch, yLocationInch);
+        telemetry.addData("Location in cm: ", "%d:%d", xLocation, yLocation);
 
         previousValues();
     }
