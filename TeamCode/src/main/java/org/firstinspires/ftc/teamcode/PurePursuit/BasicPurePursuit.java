@@ -12,8 +12,6 @@ public class BasicPurePursuit extends OpMode {
 
     public void init() {
 
-        PurePursuitMovement.init();
-
     }
 
     public void loop() {

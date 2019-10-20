@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.PurePursuit;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
@@ -18,68 +16,82 @@ import java.util.ArrayList;
 import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMath.AngleWrap;
 import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMath.lineCircleIntersection;
 
+/**
+ * EVERYTHING IS CURRENTLY IN CENTIMETERS!!! ALL GRYO ANGLES ARE IN RADIANS!!!
+ */
 public class PurePursuitMovement {
 
     static Telemetry telemetry;
 
-    static DcMotor leftBack;
-    static DcMotor leftFront;
-    static DcMotor rightBack;
-    static DcMotor rightFront;
-
     static BNO055IMU gyro;
     static Orientation angles;
 
-    double movementX = 0;
+    static double movementX = 0.0;
+    static double movementY = 0.0;
+    static double movementTurn = 0.0;
+
+    private static PurePursuitDrivetrain pwr;
+    private static Odometry odometry;
 
     public PurePursuitMovement(Telemetry tel, HardwareMap hardwareMap) {
         telemetry = tel;
 
-        gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
+        pwr = new PurePursuitDrivetrain(hardwareMap);
+        odometry = new Odometry(hardwareMap, tel);
 
-        leftBack = hardwareMap.dcMotor.get("leftB");
-        leftFront = hardwareMap.dcMotor.get("leftF");
-        rightBack = hardwareMap.dcMotor.get("rightB");
-        rightFront = hardwareMap.dcMotor.get("rightF");
-    }
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit            = BNO055IMU.AngleUnit.RADIANS;
+        parameters.accelUnit            = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled       = true;
+        parameters.useExternalCrystal   = true;
+        parameters.mode                 = BNO055IMU.SensorMode.IMU;
+        parameters.loggingTag           = "IMU";
+        gyro                             = hardwareMap.get(BNO055IMU.class, "imuINT");
 
-    public static void init() {
-
-        BNO055IMU.Parameters param = new BNO055IMU.Parameters();
-        param.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        param.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        param.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-
-        gyro.initialize(param);
+        gyro.initialize(parameters);
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-
-        leftBack.setDirection(DcMotor.Direction.REVERSE);
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        rightBack.setDirection(DcMotor.Direction.FORWARD);
-        rightFront.setDirection(DcMotor.Direction.FORWARD);
-        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
-        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
+
+//    private static CurvePoint extendLine(CurvePoint firstPoint, CurvePoint secondPoint, double distance) {
+//
+//        /**
+//         * Since we are pointing to this point, extend the line if it is the last line
+//         * but do nothing if it isn't the last line
+//         *
+//         * So if you imagine the robot is almost done its path, without this algorithm
+//         * it will just point to the last point on its path creating craziness around
+//         * the end (although this is covered by some sanity checks later).
+//         * With this, it will imagine the line extends further and point to a location
+//         * outside the endpoint of the line only if it's the last point. This makes the
+//         * last part a lot smoother, almost looking like a curve but not.
+//         */
+//
+//        //get the angle of this line
+//        double lineAngle = Math.atan2(secondPoint.y - firstPoint.y,secondPoint.x - firstPoint.x);
+//        //get this line's length
+//        double lineLength = Math.hypot(secondPoint.x - firstPoint.x,secondPoint.y - firstPoint.y);
+//        //extend the line by 1.5 pointLengths so that we can still point to it when we
+//        //are at the end
+//        double extendedLineLength = lineLength + distance;
+//
+//        CurvePoint extended = new CurvePoint(secondPoint);
+//        extended.x = Math.cos(lineAngle) * extendedLineLength + firstPoint.x;
+//        extended.y = Math.sin(lineAngle) * extendedLineLength + firstPoint.y;
+//        return extended;
+//    }
 
 
     public static void followCurve(ArrayList<CurvePoint> allPoints, double followAngle) {
 
+//        //This should allow you to extend the final point. Should just be able to change "allPoints" in followMe to pathExtended
+//        ArrayList<CurvePoint> pathExtended = (ArrayList<CurvePoint>) allPoints.clone();
 
-        CurvePoint followMe = getFollowPointPath(allPoints, new Point(CurrentXPosition/*This should be the robots current x position*/), allPoints.get(0).followDistance);
+        //Change                                 this \/         to pathExtended
+        CurvePoint followMe = getFollowPointPath(allPoints, new Point(odometry.xLocation,odometry.yLocation), allPoints.get(0).followDistance);
+
+//        //This is the math that actually extends the final point
+//        pathExtended.set(pathExtended.size()-1, extendLine(allPoints.get(allPoints.size()-2),allPoints.get(allPoints.size()-1), allPoints.get(allPoints.size()-1).pointLength * 1.5));
 
         goToPosition(followMe.x, followMe.y, followMe.moveSpeed, followAngle, followMe.turnSpeed);
 
@@ -87,7 +99,7 @@ public class PurePursuitMovement {
 
     }
 
-    public static CurvePoint getFollowPointPath(ArrayList<CurvePoint> pathPoints, Point robotLocation, double xPos, double yPos, double followRadius) {
+    public static CurvePoint getFollowPointPath(ArrayList<CurvePoint> pathPoints, Point robotLocation, double followRadius) {//NOTE: I took out xPos and yPos. I did not use them.
 
         CurvePoint followMe = new CurvePoint(pathPoints.get(0));
 
@@ -102,7 +114,7 @@ public class PurePursuitMovement {
 
             for (Point thisIntersection : intersections) {
 
-                double angle = Math.atan2(thisIntersection.y - CurrentYPosition, thisIntersection.x - CurrentXPosition);
+                double angle = Math.atan2(thisIntersection.y - odometry.yLocation, thisIntersection.x - odometry.xLocation);
                 double deltaAngle = Math.abs(PurePursuitMath.AngleWrap(angle - angles.firstAngle));
 
                 if (deltaAngle < closestAngle) {
@@ -116,16 +128,16 @@ public class PurePursuitMovement {
 
 
     /**
-     * Basic run to a position. Better to use followCurve.
+     * Basic run to a position. Better to use followCurve as it implements this and uses it better.
      * @param x
      * @param y
      * @param movementSpeed
      */
     public static void goToPosition(double x, double y, double movementSpeed, double preferredAngle, double turnSpeed) {
 
-        double distanceToTarget = Math.hypot(x - CurrentXPosition, y - CurrentYPosition);
+        double distanceToTarget = Math.hypot(x - odometry.xLocation, y - odometry.yLocation);
 
-        double absoluteAngleToTarget = Math.atan2(y - CurrentYPosition, x - CurrentXPosition);//WorldPosition is the robots starting position and should be updated to the robots current position throughout OpMode
+        double absoluteAngleToTarget = Math.atan2(y - odometry.yLocation, x - odometry.xLocation);//WorldPosition is the robots starting position and should be updated to the robots current position throughout OpMode
 
         double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (angles.firstAngle - Math.toRadians(90)));
 
@@ -137,6 +149,8 @@ public class PurePursuitMovement {
 
         movementX = movementXPower * movementSpeed;//Movement X and Y are the power to apply to the motors
         movementY = movementYPower * movementSpeed;
+
+        pwr.ApplyPower();//This "should" apply power to the robot correctly. It should work.
 
         double relativeTurnAngle = relativeAngleToPoint - Math.toRadians(180) + preferredAngle;
         movementTurn = Range.clip(relativeTurnAngle / Math.toRadians(30), -1,1) * turnSpeed;//movement Turn is power to turn angles
