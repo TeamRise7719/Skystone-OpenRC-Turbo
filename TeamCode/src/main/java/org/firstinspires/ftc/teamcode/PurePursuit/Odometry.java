@@ -80,7 +80,7 @@ public class Odometry {
     /*
      * Finds the robots (x,y) location using the previous encoder values and the robot heading.
      */
-    public void encLocation() {
+    public void updateLocation() {
 
         changeRight = rightOdometer.getCurrentPosition() - previousRightValue;
         changeLeft = leftOdometer.getCurrentPosition() - previousLeftValue;

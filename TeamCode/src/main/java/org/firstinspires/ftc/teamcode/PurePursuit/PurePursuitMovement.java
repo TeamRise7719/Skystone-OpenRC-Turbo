@@ -151,6 +151,7 @@ public class PurePursuitMovement {
         movementY = movementYPower * movementSpeed;
 
         pwr.ApplyPower();//This "should" apply power to the robot correctly. It should work.
+        odometry.updateLocation();//This "should" update the robots x and y locations
 
         double relativeTurnAngle = relativeAngleToPoint - Math.toRadians(180) + preferredAngle;
         movementTurn = Range.clip(relativeTurnAngle / Math.toRadians(30), -1,1) * turnSpeed;//movement Turn is power to turn angles
