@@ -2,9 +2,8 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.ComponentClass;
+import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 
 /*
@@ -15,7 +14,7 @@ public class BasicTeleOp extends OpMode {//TODO: We need a robot naming conventi
 
     private Drivetrain robot;
 
-    private ComponentClass part;
+    private RobotComponents component;
 
     private boolean isReady = false;
 
@@ -26,7 +25,7 @@ public class BasicTeleOp extends OpMode {//TODO: We need a robot naming conventi
         robot = new Drivetrain(hardwareMap, telemetry);
         robot.runUsingEncoders();
 
-        part = new ComponentClass(hardwareMap, telemetry);
+        component = new RobotComponents(hardwareMap, telemetry);
 
         isReady = true;
     }
@@ -56,15 +55,22 @@ public class BasicTeleOp extends OpMode {//TODO: We need a robot naming conventi
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
 
 
-        //TODO: This will need to be double checked. Unsure of the correct trigger values.
+        //TODO: This will need to be double checked. Unsure of the correct trigger values. Check motor direction.
         //----------------------------------------------=+(Intake)+=----------------------------------------------\\
         if ((gamepad1.left_trigger > 0.1)&&(Math.abs(gamepad1.right_trigger ) < 0.1)) {//This is a precaution
-            part.intakeStone(Math.abs(gamepad1.right_trigger));//Intake stone
+            component.intakeStone();//Intake stone
         } else if ((gamepad1.right_trigger > 0.1)&&(Math.abs(gamepad1.left_trigger ) < 0.1)) {//This is a precaution
-            part.ejectStone(-(Math.abs(gamepad1.left_trigger)));//Eject stone
+            component.ejectStone();//Eject stone
         } else {
-            part.stopStone();//Stop power to the stone intake
+            component.stopStone();//Stop power to the stone intake
         }
         //----------------------------------------------=+(Intake)+=----------------------------------------------\\
+
+
+        //TODO: Check the correct encoder values for max and min. Check the correct motor directions
+        //----------------------------------------------=+(Lift)+=----------------------------------------------\\
+        component.liftControlUp(gamepad1);
+        component.liftControlDown(gamepad1);
+        //----------------------------------------------=+(Lift)+=----------------------------------------------\\
     }
 }

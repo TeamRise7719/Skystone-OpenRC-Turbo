@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.ComponentClass;
+import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Transitioning.AutoTransitioner;
@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.VisionTargeting.SkystoneDetecti
 public class Blue_Auto_V1 extends LinearOpMode {
 
     private Drivetrain robot;
-    private ComponentClass part;
+    private RobotComponents component;
     int position;
     SeansEncLibrary enc;
     SkystoneDetectionPhone phone;
@@ -28,14 +28,14 @@ public class Blue_Auto_V1 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         enc = new SeansEncLibrary(hardwareMap, telemetry, this);
-        part = new ComponentClass(hardwareMap,telemetry);
+        component = new RobotComponents(hardwareMap,telemetry);
 
 
         //moves toward skyblock
         enc.gyroDrive(0.5,32, 0,false);
         //vision code goes here
         //intakes block
-        part.intakeStone(1.0);
+        component.intakeStone();
         sleep(1900);
         //move to toward bridge
         enc.gyroDrive(0.5,-18,0,false);
