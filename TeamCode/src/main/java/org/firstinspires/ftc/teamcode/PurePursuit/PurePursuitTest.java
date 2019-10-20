@@ -1,13 +1,16 @@
 package org.firstinspires.ftc.teamcode.PurePursuit;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.ArrayList;
 
 import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.followCurve;
 import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.goToPosition;
 
-public class BasicPurePursuit extends OpMode {
+@Autonomous(name = "Pure Pursuit Test", group = "Pure Pursuit")
+public class PurePursuitTest extends OpMode {
 
 
     public void init() {
