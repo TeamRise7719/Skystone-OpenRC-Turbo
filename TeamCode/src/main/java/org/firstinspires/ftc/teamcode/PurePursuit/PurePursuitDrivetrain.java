@@ -7,6 +7,10 @@ import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.mov
 import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.movementX;
 import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.movementY;
 
+/**
+ * Created by Sean Cardosi.
+ * PurePursuitDrivetrain is the drivetrain class to only be used with Pure Pursuit.
+ */
 public class PurePursuitDrivetrain {
 
     public static DcMotor lf, lr, rf, rr;

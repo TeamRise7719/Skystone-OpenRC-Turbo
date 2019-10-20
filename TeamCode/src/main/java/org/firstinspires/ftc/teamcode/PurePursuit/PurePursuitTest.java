@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.followCurve;
 import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.goToPosition;
 
+/**
+ * Created by Sean Cardosi.
+ * Example of how to use Pure Pursuit to create an autonomous.
+ */
 @Autonomous(name = "Pure Pursuit Test", group = "Pure Pursuit")
 public class PurePursuitTest extends OpMode {
 

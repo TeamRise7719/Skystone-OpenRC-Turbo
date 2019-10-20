@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.PurePursuit;
 
 import org.firstinspires.ftc.teamcode.PurePursuit.Math.Point;
 
+/**
+ * Created by Sean Cardosi.
+ * CurvePoint is a class containing the point functions to use in other Pure Pursuit classes.
+ */
 public class CurvePoint {
 
     public double x;

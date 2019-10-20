@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /*
  * Created by Sean Cardosi on 10/17/2019.
+ * Class used for finding the robots current angle and location on the field.
  */
 public class Odometry {
 

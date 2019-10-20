@@ -17,6 +17,10 @@ import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMath.AngleWr
 import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMath.lineCircleIntersection;
 
 /**
+ * Created by Sean Cardosi.
+ * PurePursuitMovement is a class containing all of the functions to find and
+ * provide movement to the drivetrain while following a set of given points.
+ *
  * EVERYTHING IS CURRENTLY IN CENTIMETERS!!! ALL GRYO ANGLES ARE IN RADIANS!!!
  */
 public class PurePursuitMovement {

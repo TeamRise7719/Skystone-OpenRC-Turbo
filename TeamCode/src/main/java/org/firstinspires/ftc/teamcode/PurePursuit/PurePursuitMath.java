@@ -4,6 +4,10 @@ import org.firstinspires.ftc.teamcode.PurePursuit.Math.Point;
 
 import java.util.ArrayList;
 
+/**
+ * Created by Sean Cardosi.
+ * PurePursuitMath is a class containing all of the math functions for use with Pure Pursuit.
+ */
 public class PurePursuitMath {
 
     /**
