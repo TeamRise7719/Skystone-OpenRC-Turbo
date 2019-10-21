@@ -51,7 +51,7 @@ public class PositionIntegration extends OpMode {
         positionX += displacementX;
         positionY += displacementY;
 
-        telemetry.addData("Position(x,y)","(%d", positionX, positionY);
+        telemetry.addData("Position(x,y)","(%d,%d)", positionX, positionY);
 
     }
 }
