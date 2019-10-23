@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.Subsystems.Driving;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.PurePursuit.CurvePoint;
+
+import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.followCurve;
+
+import java.util.ArrayList;
 
 /**
  * Created by Sean Cardosi on 10/22/2019
@@ -20,7 +23,6 @@ public class AutonomousSelection {
     private boolean moveBuildFoundation = false;
     private boolean parkInBuildSite = false;
     private boolean thirdStone = false;
-
 
     public AutonomousSelection(Telemetry tel) {
         telemetry = tel;
@@ -62,17 +64,63 @@ public class AutonomousSelection {
 
     /**
      * Instructions for the red autonomous using Pure Pursuit based off of the controller inputs.
-     * Called in a normal OpMode as Pure Pursuit runs in a normal OpMode.
+     * Called in a normal OpMode as Pure Pursuit runs in a normal OpMode. I have made an example
+     * of how to program paths for this method.
      */
     public void runAutoRed() {
 
+        ArrayList<CurvePoint> allPoints = new ArrayList<>();
+
+        if (parkOverAllianceBridge == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (firstSkystone == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (secondSkystone == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (moveBuildFoundation == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (parkInBuildSite == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (thirdStone == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+
+        followCurve(allPoints, Math.toRadians(90));//Robot will get stuck spinning while looking for another point to go to at the endPoint.
     }
 
     /**
      * Instructions for the blue autonomous using Pure Pursuit based off of the controller inputs.
-     * Called in a normal OpMode as Pure Pursuit runs in a normal OpMode.
+     * Called in a normal OpMode as Pure Pursuit runs in a normal OpMode. I have made an example
+     * of how to program paths for this method.
      */
     public void runAutoBlue() {
 
+        ArrayList<CurvePoint> allPoints = new ArrayList<>();
+
+        if (parkOverAllianceBridge == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (firstSkystone == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (secondSkystone == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (moveBuildFoundation == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (parkInBuildSite == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+        if (thirdStone == true) {
+            allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        }
+
+        followCurve(allPoints, Math.toRadians(90));//Robot will get stuck spinning while looking for another point to go to at the endPoint.
     }
 }
