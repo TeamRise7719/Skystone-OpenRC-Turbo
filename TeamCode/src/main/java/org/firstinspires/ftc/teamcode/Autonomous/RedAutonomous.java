@@ -21,6 +21,7 @@ public class RedAutonomous extends OpMode {
 
     @Override
     public void init_loop() {
+        super.init_loop();
         select.makeSelections(gamepad1);
     }
 
