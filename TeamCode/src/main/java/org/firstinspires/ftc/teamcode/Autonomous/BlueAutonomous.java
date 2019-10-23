@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.AutonomousSelection;
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Driving.AutonomousSelection;
  * Created by Sean Cardosi on 10/22/19
  * This does not work yet.
  */
+@Autonomous(name = "Blue Auto", group = "FraserAuto")
 public class BlueAutonomous extends OpMode {
 
     AutonomousSelection select;
