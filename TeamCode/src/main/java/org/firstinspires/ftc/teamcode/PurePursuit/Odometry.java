@@ -33,6 +33,11 @@ public class Odometry {
     double changeLeft = 0.0;
     double previousRightValue = 0.0;
     double previousLeftValue = 0.0;
+    private double COUNTS_PER_REVOLUTION = 360;
+    private double WHEEL_DIAMETER_MM = 38;
+    private double WHEEL_DIAMETER_CM = WHEEL_DIAMETER_MM * 10;
+    private double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER_CM;
+    private double COUNTS_PER_CM = COUNTS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE;
 
 
     public Odometry(HardwareMap hardwareMap, Telemetry tel) {
@@ -70,7 +75,7 @@ public class Odometry {
     }
 
     /*
-     * Updates the previous encoder values. Call after each point is run to.
+     * Updates the previous encoder values..
      */
     public void previousValues() {
 
@@ -87,10 +92,10 @@ public class Odometry {
         changeLeft = leftOdometer.getCurrentPosition() - previousLeftValue;
 
         distance = (changeRight + changeLeft) / 2;
-        xLocation += distance * Math.cos(angles.firstAngle);
-        yLocation += distance * Math.sin(angles.firstAngle);
+        xLocation += (distance * Math.cos(angles.firstAngle)) * COUNTS_PER_CM;
+        yLocation += (distance * Math.sin(angles.firstAngle)) * COUNTS_PER_CM;
 
-        telemetry.addData("Location in cm: ", "%d:%d", xLocation, yLocation);
+        telemetry.addData("Location in CM: ", "%d:%d", xLocation, yLocation);
 
         previousValues();
     }

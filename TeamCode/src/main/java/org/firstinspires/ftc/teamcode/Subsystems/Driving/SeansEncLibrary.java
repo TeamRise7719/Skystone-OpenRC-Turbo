@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.SynchronousPID;
 import org.firstinspires.ftc.teamcode.Subsystems.Sensing.I2CXL;
 
-public class SeansEncLibrary {
+public class SeansEncLibrary {//TODO:Change this class to work using the new odometers.
 
     DcMotor left_back_drive;
     DcMotor left_front_drive;

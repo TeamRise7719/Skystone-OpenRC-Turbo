@@ -55,6 +55,9 @@ public class PurePursuitMovement {
         gyro.initialize(parameters);
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
     }
+    public static void init() {
+        odometry.init();
+    }
 
 
 //    private static CurvePoint extendLine(CurvePoint firstPoint, CurvePoint secondPoint, double distance) {

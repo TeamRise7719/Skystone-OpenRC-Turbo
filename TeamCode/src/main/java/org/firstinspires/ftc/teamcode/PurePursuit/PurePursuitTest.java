@@ -16,11 +16,12 @@ import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.goT
 @Autonomous(name = "Pure Pursuit Test", group = "Pure Pursuit")
 public class PurePursuitTest extends OpMode {
 
-
+    @Override
     public void init() {
-
+        PurePursuitMovement.init();
     }
 
+    @Override
     public void loop() {
 
         ArrayList<CurvePoint> allPoints = new ArrayList<>();
