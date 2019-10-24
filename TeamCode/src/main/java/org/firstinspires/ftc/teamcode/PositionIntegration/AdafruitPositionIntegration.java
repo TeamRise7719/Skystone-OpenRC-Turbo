@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 /**
- * Created by Sean Cardosi on 10/22/2019.
+ * Created by Sean Cardosi on 10/23/2019.
  * Uses the Adafruit BNO055 Arduino code but translated to java.
  */
 public class AdafruitPositionIntegration extends OpMode {
