@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.VisionTargeting.SkystoneDetecti
 public class Blue_Auto_V1 extends LinearOpMode {
 
     private Drivetrain robot;
+    boolean isSkystone;
     private RobotComponents component;
     int position;
     SeansEncLibrary enc;
@@ -30,6 +31,11 @@ public class Blue_Auto_V1 extends LinearOpMode {
         enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         component = new RobotComponents(hardwareMap,telemetry);
 
+        waitForStart();
+
+        while (phone.TFdetect(isSkystone) == false) {
+
+        }
 
         //moves toward skyblock
         enc.gyroDrive(0.5,32, 0,false);

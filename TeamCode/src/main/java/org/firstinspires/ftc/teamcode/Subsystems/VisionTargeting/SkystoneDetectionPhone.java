@@ -27,6 +27,7 @@ public class SkystoneDetectionPhone {
     private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/Skystone.tflite"; //For OpenRC, loaded from internal storage to reduce APK size
     private static final String LABEL_FIRST_ELEMENT = "Stone";
     private static final String LABEL_SECOND_ELEMENT = "Skystone";
+//    boolean isSkystone = false;
     private static final String VUFORIA_KEY = "AUbWH2r/////AAABmTqIGJpUgkb9j4jexPb0CKYmpPjDhVyV5bE2RL866jD2AKG/pqN0P8mPlybMo3P0xERT+mK0uW04FHPso8OcJDLER7gW6Rjnv49Yzc7ks3zkCGtwmHx/sqInqUl4i2jlHTFiW8qYnAf/iOJ0O2jO7j8UjOuurbpGT+3iGwRprWQFe7/Wb6k08A1tMIwvDKgU3g+PudWyfefPeo2Oo3PYzIiGu+KlswOR26Jn3jRSGmlin3JrfLkvmV7AmTaFWGwb876eR21A5EP40EIBk8E9nDuJcVB60q9R7nnBvf/qjsSuUwKQWtn9xTBzWSIhEzXetUY5PMxckiugQLWHp7YAkrM7SGNte2JrUk9XslYRqV4z";
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
@@ -55,7 +56,8 @@ public class SkystoneDetectionPhone {
     }
 
 
-    public void TFdetect() {
+    public boolean TFdetect(boolean isSkystone) {
+        isSkystone = false;
 
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
@@ -72,6 +74,11 @@ public class SkystoneDetectionPhone {
                             recognition.getLeft(), recognition.getTop());
                     telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                             recognition.getRight(), recognition.getBottom());
+                    if (recognition.getLabel() == LABEL_SECOND_ELEMENT) {
+                        isSkystone = true;
+                    } else {
+                        isSkystone = false;
+                    }
                 }
                 telemetry.update();
             }
@@ -80,6 +87,7 @@ public class SkystoneDetectionPhone {
         if (tfod != null) {
             tfod.shutdown();
         }
+        return isSkystone;
     }
 
     /*
