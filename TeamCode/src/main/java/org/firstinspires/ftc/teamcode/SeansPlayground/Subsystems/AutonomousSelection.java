@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.Subsystems.Driving;
+package org.firstinspires.ftc.teamcode.SeansPlayground.Subsystems;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.PurePursuit.CurvePoint;
+import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.CurvePoint;
 
-import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.followCurve;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePursuitMovement.followCurve;
 
 import java.util.ArrayList;
 

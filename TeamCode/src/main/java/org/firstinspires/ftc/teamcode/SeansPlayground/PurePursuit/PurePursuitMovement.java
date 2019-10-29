@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.PurePursuit;
+package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,12 +9,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.PurePursuit.Math.Point;
+import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.Math.Point;
 
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMath.AngleWrap;
-import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMath.lineCircleIntersection;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePursuitMath.AngleWrap;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePursuitMath.lineCircleIntersection;
 
 /**
  * Created by Sean Cardosi.

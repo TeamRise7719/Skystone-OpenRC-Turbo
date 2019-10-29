@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.PurePursuit;
+package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.movementTurn;
-import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.movementX;
-import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.movementY;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePursuitMovement.movementTurn;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePursuitMovement.movementX;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePursuitMovement.movementY;
 
 /**
  * Created by Sean Cardosi.

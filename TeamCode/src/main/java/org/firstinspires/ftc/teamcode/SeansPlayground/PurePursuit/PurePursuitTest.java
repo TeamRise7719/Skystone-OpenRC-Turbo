@@ -1,13 +1,11 @@
-package org.firstinspires.ftc.teamcode.PurePursuit;
+package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.followCurve;
-import static org.firstinspires.ftc.teamcode.PurePursuit.PurePursuitMovement.goToPosition;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePursuitMovement.followCurve;
 
 /**
  * Created by Sean Cardosi.

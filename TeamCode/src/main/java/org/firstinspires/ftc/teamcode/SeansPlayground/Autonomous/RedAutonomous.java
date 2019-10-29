@@ -1,14 +1,16 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.SeansPlayground.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.AutonomousSelection;
+import org.firstinspires.ftc.teamcode.SeansPlayground.Subsystems.AutonomousSelection;
 
 /**
  * Created by Sean Cardosi on 10/22/19
  * This does not work yet.
  */
+@Disabled
 @Autonomous(name = "Red Auto", group = "FraserAuto")
 public class RedAutonomous extends OpMode {
 

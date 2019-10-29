@@ -32,8 +32,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     Telemetry telemetry;
     LinearOpMode linearOpMode;
 
-    I2CXL ultrasonicFront;
-    I2CXL ultrasonicBack;
+//    I2CXL ultrasonicFront;
+//    I2CXL ultrasonicBack;
 
     private static final double     COUNTS_PER_MOTOR_REV    = 537.6;
     private static final double     EXTERNAL_GEAR_RATIO    = (25/32);     // This is < 1.0 if geared UP
@@ -48,23 +48,23 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
-    private static final double     HEADING_THRESHOLD       = 1;      // As tight as we can make it with an integer gyro
+    private static final double     HEADING_THRESHOLD       = 0.5;      // As tight as we can make it with an integer gyro
     private static final double     ENCODER_THRESHOLD       = 10;      // As tight as we can make it with an integer gyro
 
     //TODO: Tune PID
-    private static  double     P_TURN_COEFF            = 0.00005;//0.035     // Larger is more responsive, but also less stable
-    private static  double     I_TURN_COEFF            = 0;// 0.001    // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0;//0.1     // Larger is more responsive, but also less stable
+    private static  double     P_TURN_COEFF            = 0.00125;//0.0015/4=.000375     // Larger is more responsive, but also less stable
+    private static  double     I_TURN_COEFF            = 0;//0.00000375    // Larger is more responsive, but also less stable
+    private static  double     D_TURN_COEFF            = 0.001;//0.2/4     // Larger is more responsive, but also less stable
 
 
     private static final double     P_DRIVE_COEFF           = 0.16;     // Larger is more responsive, but also less stable
-    private static final double     ULTRA_COEFF           = 0.06;     // Larger is more responsive, but also less stable
+//    private static final double     ULTRA_COEFF           = 0.06;     // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
 
-        ultrasonicFront = hardwareMap.get(I2CXL.class, "ultsonFront");
-        ultrasonicBack = hardwareMap.get(I2CXL.class, "ultsonBack");
+//        ultrasonicFront = hardwareMap.get(I2CXL.class, "ultsonFront");
+//        ultrasonicBack = hardwareMap.get(I2CXL.class, "ultsonBack");
 
         left_back_drive = hardwareMap.dcMotor.get("leftB");
         left_front_drive = hardwareMap.dcMotor.get("leftF");
@@ -75,7 +75,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         linearOpMode = opMode;
     }
 
-    public void init(){
+
+     public void init(){
 
         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
         param.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -85,8 +86,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         gyro.initialize(param);
         gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-        ultrasonicFront.initialize();
-        ultrasonicBack.initialize();
+//        ultrasonicFront.initialize();
+//        ultrasonicBack.initialize();
 
         left_back_drive.setDirection(DcMotor.Direction.REVERSE);
         left_front_drive.setDirection(DcMotor.Direction.REVERSE);
@@ -618,26 +619,26 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         return robotError;
     }
 
-    public double getErrorUltra(double targetDistance, boolean isBack) {
-
-        double ultrasonicValue;
-        double robotError;
-
-        // calculate error
-        if (isBack) {
-            //use the back sensor
-            ultrasonicValue = (ultrasonicBack.getDistance() / 2.54);
-
-        } else {
-
-            //use the front sensor
-            ultrasonicValue = (ultrasonicFront.getDistance() / 2.54);
-
-        }
-        robotError = targetDistance - ultrasonicValue;
-
-        return robotError;
-    }
+//    public double getErrorUltra(double targetDistance, boolean isBack) {
+//
+//        double ultrasonicValue;
+//        double robotError;
+//
+//        // calculate error
+//        if (isBack) {
+//            //use the back sensor
+//            ultrasonicValue = (ultrasonicBack.getDistance() / 2.54);
+//
+//        } else {
+//
+//            //use the front sensor
+//            ultrasonicValue = (ultrasonicFront.getDistance() / 2.54);
+//
+//        }
+//        robotError = targetDistance - ultrasonicValue;
+//
+//        return robotError;
+//    }
     /**
      * returns desired steering force.  +/- 1 range.  +ve = steer left
      * @param error   Error angle in robot relative degrees
@@ -648,107 +649,107 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         return Range.clip(error * PCoeff, -1, 1);
     }
 
-    public void UltrasonicGyroDrive(
-                                    double distance,
-                                    double angle,
-                                    boolean steeringToggle,
-                                    double UltraTolerance,
-                                    boolean isBack,
-                                    double Timeout) {
-        double speed;
-        double max;
-        double error;
-        double steer;
-        double leftSpeed;
-        double rightSpeed;
-        double ultraError;
-
-
-        // Ensure that the opmode is still active
-        if (linearOpMode.opModeIsActive()) {
-            left_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            left_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            ultraError = getErrorUltra(distance,isBack);
-
-            ElapsedTime etime = new ElapsedTime();
-            etime.reset();
-
-            // keep looping while we are still active, and BOTH motors are running.
-            while ((etime.time() < Timeout) && (linearOpMode.opModeIsActive()) /* && (java.lang.Math.abs(ultraError) > UltraTolerance)*/ ){
-                // adjust relative speed based on heading error.
-                ultraError = getErrorUltra(distance,isBack);
-                speed = ultraError*ULTRA_COEFF;
-
-                error = getError(angle);
-                steer = getSteer(error, P_DRIVE_COEFF);
-
-                // if driving in reverse, the motor correction also needs to be reversed
-                if (distance > 0) {
-                    steer *= -1.0;
-                }
-
-                if (steeringToggle) {
-                    leftSpeed = speed - steer;
-                    rightSpeed = speed + steer;
-                } else {
-                    leftSpeed = speed;
-                    rightSpeed = speed;
-                }
-
-                // Normalize speeds if either one exceeds +/- 1.0;
-                max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
-                if (max > 1) {
-                    leftSpeed /= max;
-                    rightSpeed /= max;
-                }
-
-                if (leftSpeed > 0.8){
-                    leftSpeed = 0.8;
-                } else if (leftSpeed < -0.8){
-                    leftSpeed = -0.8;
-                }
-
-                if (rightSpeed > 0.8){
-                    rightSpeed = 0.8;
-                } else if (rightSpeed < -0.8){
-                    rightSpeed = -0.8;
-                }
-
-                if(!isBack){
-                    leftSpeed = leftSpeed*-1;
-                    rightSpeed = rightSpeed*-1;
-                }
-
-                if((isBack)&&(ultrasonicBack.getError())){
-                    leftSpeed = 0;
-                    rightSpeed = 0;
-                }
-                else if((!isBack)&&(ultrasonicFront.getError())){
-                    leftSpeed = 0;
-                    rightSpeed = 0;
-                }
-
-                left_back_drive.setPower(leftSpeed);
-                left_front_drive.setPower(leftSpeed);
-                right_back_drive.setPower(rightSpeed);
-                right_front_drive.setPower(rightSpeed);
-
-
-                // Display drive status for the driver.
-                telemetry.addData("Target", distance);
-                telemetry.addData("Error", "%5.1f", ultraError);
-                telemetry.addData("Speed", "%5.2f:%5.2f", leftSpeed, rightSpeed);
-                telemetry.update();
-            }
-
-            // Stop all motion;
-            left_back_drive.setPower(0);
-            left_front_drive.setPower(0);
-            right_back_drive.setPower(0);
-            right_front_drive.setPower(0);
-        }
-    }
+//    public void UltrasonicGyroDrive(
+//                                    double distance,
+//                                    double angle,
+//                                    boolean steeringToggle,
+//                                    double UltraTolerance,
+//                                    boolean isBack,
+//                                    double Timeout) {
+//        double speed;
+//        double max;
+//        double error;
+//        double steer;
+//        double leftSpeed;
+//        double rightSpeed;
+//        double ultraError;
+//
+//
+//        // Ensure that the opmode is still active
+//        if (linearOpMode.opModeIsActive()) {
+//            left_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            left_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            ultraError = getErrorUltra(distance,isBack);
+//
+//            ElapsedTime etime = new ElapsedTime();
+//            etime.reset();
+//
+//            // keep looping while we are still active, and BOTH motors are running.
+//            while ((etime.time() < Timeout) && (linearOpMode.opModeIsActive()) /* && (java.lang.Math.abs(ultraError) > UltraTolerance)*/ ){
+//                // adjust relative speed based on heading error.
+//                ultraError = getErrorUltra(distance,isBack);
+//                speed = ultraError*ULTRA_COEFF;
+//
+//                error = getError(angle);
+//                steer = getSteer(error, P_DRIVE_COEFF);
+//
+//                // if driving in reverse, the motor correction also needs to be reversed
+//                if (distance > 0) {
+//                    steer *= -1.0;
+//                }
+//
+//                if (steeringToggle) {
+//                    leftSpeed = speed - steer;
+//                    rightSpeed = speed + steer;
+//                } else {
+//                    leftSpeed = speed;
+//                    rightSpeed = speed;
+//                }
+//
+//                // Normalize speeds if either one exceeds +/- 1.0;
+//                max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
+//                if (max > 1) {
+//                    leftSpeed /= max;
+//                    rightSpeed /= max;
+//                }
+//
+//                if (leftSpeed > 0.8){
+//                    leftSpeed = 0.8;
+//                } else if (leftSpeed < -0.8){
+//                    leftSpeed = -0.8;
+//                }
+//
+//                if (rightSpeed > 0.8){
+//                    rightSpeed = 0.8;
+//                } else if (rightSpeed < -0.8){
+//                    rightSpeed = -0.8;
+//                }
+//
+//                if(!isBack){
+//                    leftSpeed = leftSpeed*-1;
+//                    rightSpeed = rightSpeed*-1;
+//                }
+//
+//                if((isBack)&&(ultrasonicBack.getError())){
+//                    leftSpeed = 0;
+//                    rightSpeed = 0;
+//                }
+//                else if((!isBack)&&(ultrasonicFront.getError())){
+//                    leftSpeed = 0;
+//                    rightSpeed = 0;
+//                }
+//
+//                left_back_drive.setPower(leftSpeed);
+//                left_front_drive.setPower(leftSpeed);
+//                right_back_drive.setPower(rightSpeed);
+//                right_front_drive.setPower(rightSpeed);
+//
+//
+//                // Display drive status for the driver.
+//                telemetry.addData("Target", distance);
+//                telemetry.addData("Error", "%5.1f", ultraError);
+//                telemetry.addData("Speed", "%5.2f:%5.2f", leftSpeed, rightSpeed);
+//                telemetry.update();
+//            }
+//
+//            // Stop all motion;
+//            left_back_drive.setPower(0);
+//            left_front_drive.setPower(0);
+//            right_back_drive.setPower(0);
+//            right_front_drive.setPower(0);
+//        }
+//    }
 
 }

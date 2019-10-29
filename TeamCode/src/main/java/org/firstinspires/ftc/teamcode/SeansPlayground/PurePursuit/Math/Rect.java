@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.PurePursuit.Math;
+package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.Math;
 
 //javadoc:Rect_
 public class Rect {

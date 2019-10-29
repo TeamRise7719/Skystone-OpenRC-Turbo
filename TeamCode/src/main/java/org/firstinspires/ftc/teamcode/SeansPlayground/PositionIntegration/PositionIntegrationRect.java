@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.PositionIntegration;
+package org.firstinspires.ftc.teamcode.SeansPlayground.PositionIntegration;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -10,8 +10,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-
-import static com.qualcomm.robotcore.util.ElapsedTime.Resolution.SECONDS;
 
 /**
  * Created by Sean Cardosi on 10/21/2019.

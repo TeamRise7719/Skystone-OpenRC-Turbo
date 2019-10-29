@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.PurePursuit;
+package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit;
 
-import org.firstinspires.ftc.teamcode.PurePursuit.Math.Point;
+import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.Math.Point;
 
 import java.util.ArrayList;
 
