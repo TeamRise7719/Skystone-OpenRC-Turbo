@@ -54,9 +54,9 @@ public class SeansPIDTuningLibrary {
     private static final double     HEADING_THRESHOLD       = 0.5;      // As tight as we can make it with an integer gyro
     private static final double     ENCODER_THRESHOLD       = 10;      // As tight as we can make it with an integer gyro
 
-    private static  double     P_TURN_COEFF;
-    private static  double     I_TURN_COEFF;
-    private static  double     D_TURN_COEFF;
+    private double     P_TURN_COEFF;
+    private double     I_TURN_COEFF;
+    private double     D_TURN_COEFF;
 
     private static final double     P_DRIVE_COEFF           = 0.16;     // Larger is more responsive, but also less stable
 
@@ -114,9 +114,11 @@ public class SeansPIDTuningLibrary {
         turn_PID.setOutputRange(-TURN_SPEED, TURN_SPEED);
         turn_PID.setInputRange(-180, 180);
         PID = new PidUdpReceiver();
+        PID.beginListening();
         P_TURN_COEFF = PID.getP();
         I_TURN_COEFF = PID.getI();
         D_TURN_COEFF = PID.getD();
+        telemetry.setMsTransmissionInterval(50);
     }
 
     public void getPID() {
@@ -124,6 +126,13 @@ public class SeansPIDTuningLibrary {
         P_TURN_COEFF = PID.getP();
         I_TURN_COEFF = PID.getI();
         D_TURN_COEFF = PID.getD();
+
+        telemetry.addData("P", P_TURN_COEFF);
+        telemetry.addData("I", I_TURN_COEFF);
+        telemetry.addData("D", D_TURN_COEFF);
+    }
+    public void shutdown() {
+        PID.shutdown();
     }
 
     //Stop All Motors

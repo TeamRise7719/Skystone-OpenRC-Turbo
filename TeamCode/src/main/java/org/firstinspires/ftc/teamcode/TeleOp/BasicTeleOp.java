@@ -18,6 +18,8 @@ public class BasicTeleOp extends OpMode {
 
     private boolean isReady = false;
 
+    double turn = 0;
+
     @Override
     public void init() {
 
@@ -71,5 +73,22 @@ public class BasicTeleOp extends OpMode {
         component.liftControlUp(gamepad1);
         component.liftControlDown(gamepad1);
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
+
+
+//        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+//        if (gamepad1.dpad_left) {
+//            turn -= 0.05;
+//            component.rotate(yeet);
+//        } else if (gamepad1.dpad_right) {
+//            turn += 0.05;
+//            component.rotate(yeet);
+//        }
+//        if (gamepad1.y) {
+//            component.release();
+//        } else if (gamepad1.a) {
+//            component.grab();
+//        }
+//        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+
     }
 }

@@ -16,6 +16,7 @@ public class PIDTest extends LinearOpMode {
 //        enc = new SeansEncLibrary(hardwareMap, telemetry, this);
 //        enc.init();
         PID = new SeansPIDTuningLibrary(hardwareMap, telemetry, this);
+        PID.init();
 
         waitForStart();
 
@@ -31,5 +32,6 @@ public class PIDTest extends LinearOpMode {
                 PID.gyroTurn(0.75,90);
             }
         }
+        PID.shutdown();
     }
 }
