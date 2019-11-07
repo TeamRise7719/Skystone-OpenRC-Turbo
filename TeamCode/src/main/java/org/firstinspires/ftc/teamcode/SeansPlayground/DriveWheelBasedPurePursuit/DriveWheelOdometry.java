@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit;
+package org.firstinspires.ftc.teamcode.SeansPlayground.DriveWheelBasedPurePursuit;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -12,13 +12,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /*
- * Created by Sean Cardosi on 10/17/2019.
+ * Created by Sean Cardosi on 11/6/2019
  * Class used for finding the robots current angle and location on the field.
  */
-public class Odometry {
+public class DriveWheelOdometry {
 
-    DcMotor leftOdometer;
-    DcMotor rightOdometer;
+    private final DcMotor lf, lr, rf, rr;
 
     public BNO055IMU gyro;
     public Orientation angles;
@@ -39,9 +38,9 @@ public class Odometry {
     private double COUNTS_PER_CM = COUNTS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE;
 
 
-    public Odometry(HardwareMap hardwareMap, Telemetry tel) {
-        //GYRO IS IN RADIANS FOR PURE PURSUIT
+    public DriveWheelOdometry(HardwareMap hardwareMap, Telemetry tel) {
 
+        //GYRO IS IN RADIANS FOR PURE PURSUIT
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
 
         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
@@ -52,21 +51,23 @@ public class Odometry {
         gyro.initialize(param);
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
-        leftOdometer.setDirection(DcMotor.Direction.REVERSE);
-        leftOdometer.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lr = hardwareMap.dcMotor.get("leftB");
+        lf = hardwareMap.dcMotor.get("leftF");
+        lr.setDirection(DcMotor.Direction.FORWARD);
+        lf.setDirection(DcMotor.Direction.FORWARD);
+        lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        rightOdometer.setDirection(DcMotor.Direction.FORWARD);
-        rightOdometer.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
-        leftOdometer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightOdometer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        leftOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        leftOdometer = hardwareMap.dcMotor.get("encL");
-        rightOdometer = hardwareMap.dcMotor.get("encR");
+        rr = hardwareMap.dcMotor.get("rightB");
+        rf = hardwareMap.dcMotor.get("rightF");
+        rr.setDirection(DcMotor.Direction.REVERSE);
+        rf.setDirection(DcMotor.Direction.REVERSE);
+        rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry = tel;
     }
@@ -76,8 +77,8 @@ public class Odometry {
      */
     public void previousValues() {
 
-        previousRightValue = rightOdometer.getCurrentPosition();
-        previousLeftValue = leftOdometer.getCurrentPosition();
+        previousRightValue = (rr.getCurrentPosition() + rf.getCurrentPosition()) / 2.0;
+        previousLeftValue = (lr.getCurrentPosition() + lf.getCurrentPosition()) / 2.0;
     }
 
     /*
@@ -85,10 +86,10 @@ public class Odometry {
      */
     public void updateLocation() {
 
-        changeRight = rightOdometer.getCurrentPosition() - previousRightValue;
-        changeLeft = leftOdometer.getCurrentPosition() - previousLeftValue;
+        changeRight = ((rr.getCurrentPosition() + rf.getCurrentPosition()) / 2.0) - previousRightValue;
+        changeLeft = ((lr.getCurrentPosition() + lf.getCurrentPosition()) / 2.0) - previousLeftValue;
 
-        distance = (changeRight + changeLeft) / 2;
+        distance = (changeRight + changeLeft) / 2.0;
         xLocation += (distance * Math.cos(angles.firstAngle)) * COUNTS_PER_CM;
         yLocation += (distance * Math.sin(angles.firstAngle)) * COUNTS_PER_CM;
 

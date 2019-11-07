@@ -36,7 +36,7 @@ public class AutonomousPathing {
 
 
     }
-    public void runPath() {
+    public void runPurePursuitPath() {
 
         ArrayList<CurvePoint> allPoints = new ArrayList<>();
 
@@ -57,5 +57,23 @@ public class AutonomousPathing {
 
         }
         followCurve(allPoints, Math.toRadians(90));//Robot will get stuck spinning while looking for another point to go to at the endPoint.
+    }
+
+
+    public void runPIDPath() {
+
+        if (path14 == true) {
+
+            //Code to follow to get Skystones in this position
+
+        } else if (path25 == true) {
+
+            //Code to follow to get Skystones in this position
+
+        } else if (path36 == true) {
+
+            //Code to follow to get Skystones in this position
+
+        }
     }
 }

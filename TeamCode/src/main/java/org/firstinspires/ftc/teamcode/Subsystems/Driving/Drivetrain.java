@@ -31,8 +31,6 @@ public class Drivetrain {
         telemetry = _telemetry;
 
         //configuring the components
-
-
         lr = hardwareMap.dcMotor.get("leftB");
         lf = hardwareMap.dcMotor.get("leftF");
         lr.setDirection(DcMotor.Direction.FORWARD);

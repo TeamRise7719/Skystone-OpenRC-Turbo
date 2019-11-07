@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit;
+package org.firstinspires.ftc.teamcode.SeansPlayground.DriveWheelBasedPurePursuit;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,7 +9,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.CurvePoint;
 import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.Math.Point;
+import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePursuitMath;
 
 import java.util.ArrayList;
 
@@ -17,13 +19,13 @@ import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePur
 import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.PurePursuitMath.lineCircleIntersection;
 
 /**
- * Created by Sean Cardosi.
+ * Created by Sean Cardosi on 11/6/2019
  * PurePursuitMovement is a class containing all of the functions to find and
  * provide movement to the drivetrain while following a set of given points.
  *
  * EVERYTHING IS CURRENTLY IN CENTIMETERS!!! ALL GRYO ANGLES ARE IN RADIANS!!!
  */
-public class PurePursuitMovement {
+public class DriveWheelPurePursuitMovement {
 
     static Telemetry telemetry;
 
@@ -34,14 +36,14 @@ public class PurePursuitMovement {
     static double movementY = 0.0;
     static double movementTurn = 0.0;
 
-    private static PurePursuitDrivetrain pwr;
-    private static Odometry odometry;
+    private static DriveWheelPurePursuitDrivetrain pwr;
+    private static DriveWheelOdometry odometry;
 
-    public PurePursuitMovement(Telemetry tel, HardwareMap hardwareMap) {
+    public DriveWheelPurePursuitMovement(Telemetry tel, HardwareMap hardwareMap) {
         telemetry = tel;
 
-        pwr = new PurePursuitDrivetrain(hardwareMap);
-        odometry = new Odometry(hardwareMap, tel);
+        pwr = new DriveWheelPurePursuitDrivetrain(hardwareMap);
+        odometry = new DriveWheelOdometry(hardwareMap, tel);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit            = BNO055IMU.AngleUnit.RADIANS;
