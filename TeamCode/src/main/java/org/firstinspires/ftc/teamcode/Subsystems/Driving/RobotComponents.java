@@ -39,11 +39,11 @@ public class RobotComponents {
 
         liftL = hardwareMap.dcMotor.get("liftL");
         liftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftL.setDirection(DcMotor.Direction.REVERSE);
+        liftL.setDirection(DcMotor.Direction.FORWARD);
         liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftR = hardwareMap.dcMotor.get("liftR");
         liftR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftR.setDirection(DcMotor.Direction.FORWARD);
+        liftR.setDirection(DcMotor.Direction.REVERSE);
         liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        rot = hardwareMap.servo.get("rot");
 //        grab = hardwareMap.servo.get("grab");
