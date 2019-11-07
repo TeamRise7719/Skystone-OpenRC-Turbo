@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.SeansPlayground.PositionIntegration;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * Uses the rectangle formula for integration. I don't think you can loop fast enough for this to
  * work. If this works is is very inaccurate.
  */
+@Disabled
 @TeleOp(name = "Rectangle Position Integration", group = "Integration")
 public class PositionIntegrationRect extends OpMode {
 

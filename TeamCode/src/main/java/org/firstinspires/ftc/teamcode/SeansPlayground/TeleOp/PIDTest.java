@@ -4,34 +4,37 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.SeansPlayground.PIDTuning.SeansPIDTuningLibrary;
+import org.firstinspires.ftc.teamcode.Subsystems.Driving.SeansEncLibrary;
 
 @TeleOp(name = "TestPID",group = "Testing" )
 public class PIDTest extends LinearOpMode {
 
-//    SeansEncLibrary enc;
-    SeansPIDTuningLibrary PID;
+    SeansEncLibrary enc;
+//    SeansPIDTuningLibrary PID;
 
     public void runOpMode() throws InterruptedException {
 
-//        enc = new SeansEncLibrary(hardwareMap, telemetry, this);
-//        enc.init();
-        PID = new SeansPIDTuningLibrary(hardwareMap, telemetry, this);
-        PID.init();
+        enc = new SeansEncLibrary(hardwareMap, telemetry, this);
+        enc.init();
+//        PID = new SeansPIDTuningLibrary(hardwareMap, telemetry, this);
+//        PID.init();
 
         waitForStart();
 
         while (opModeIsActive()) {
 
-            PID.getPID();
+//            PID.getPID();
 
             if (gamepad1.x) {
 
-                PID.gyroDrive(0.75,24.5,0, false);
+                enc.gyroDrive(enc.TURN_SPEED,24.5,0, false);
             }
             if (gamepad1.y) {
-                PID.gyroTurn(0.75,90);
+                enc.gyroTurn(enc.DRIVE_SPEED,90);
+            }
+            if (gamepad1.b) {
+                enc.gyroHold(enc.TURN_SPEED,180,30);
             }
         }
-        PID.shutdown();
     }
 }

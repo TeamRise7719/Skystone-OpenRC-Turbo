@@ -48,13 +48,13 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
-    private static final double     HEADING_THRESHOLD       = 0.5;      // As tight as we can make it with an integer gyro
+    private static final double     HEADING_THRESHOLD       = 1;      // As tight as we can make it with an integer gyro
     private static final double     ENCODER_THRESHOLD       = 10;      // As tight as we can make it with an integer gyro
 
     //TODO: Tune PID
-    private static  double     P_TURN_COEFF            = 0.00125;//0.0015/4=.000375     // Larger is more responsive, but also less stable
-    private static  double     I_TURN_COEFF            = 0;//0.00000375    // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0.001;//0.2/4     // Larger is more responsive, but also less stable
+    private static  double     P_TURN_COEFF            = .0016;//.007     // Larger is more responsive, but also less stable
+    private static  double     I_TURN_COEFF            = 0;//.000003    // Larger is more responsive, but also less stable
+    private static  double     D_TURN_COEFF            = 0.00001;//.00001    // Larger is more responsive, but also less stable
 
 
     private static final double     P_DRIVE_COEFF           = 0.16;     // Larger is more responsive, but also less stable
@@ -551,8 +551,10 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         turn_PID.reset();
         turn_PID.setSetpoint(angle);
         turn_PID.setOutputRange(-speed,speed);
+        turn_PID.setDeadband(HEADING_THRESHOLD);
 
         ElapsedTime holdTimer = new ElapsedTime();
+
 
         // keep looping while we have time remaining.
         holdTimer.reset();

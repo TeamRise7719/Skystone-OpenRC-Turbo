@@ -20,9 +20,9 @@ public class RobotComponents {
     private final DcMotor liftR;
     private int liftMax = 2000;
     private int liftMin = 50;
-    private final Servo rot;
-    private final Servo grab;
-    private final Servo arm;
+//    private final Servo rot;
+//    private final Servo grab;
+//    private final Servo arm;
 
 
 
@@ -45,9 +45,9 @@ public class RobotComponents {
         liftR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftR.setDirection(DcMotor.Direction.FORWARD);
         liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rot = hardwareMap.servo.get("rot");
-        grab = hardwareMap.servo.get("grab");
-        arm = hardwareMap.servo.get("arm");
+//        rot = hardwareMap.servo.get("rot");
+//        grab = hardwareMap.servo.get("grab");
+//        arm = hardwareMap.servo.get("arm");
     }
     public void init() {
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -78,21 +78,25 @@ public class RobotComponents {
      */
     public void liftControlUp(Gamepad gamepad) {//For driver control
 
-        if (gamepad.dpad_up) {
+        if (gamepad.y) {
 
-            //Left side of lift
-            if (liftL.getCurrentPosition() < liftMax) {//If liftL is below its max height, raise
-                liftL.setPower(1.0);
-            } else if (liftL.getCurrentPosition() >= liftMax) {//If liftL is above its max height, stop
-                liftL.setPower(0.0);
-            }
-
-            //Right side of lift
-            if (liftR.getCurrentPosition() < liftMax) {//If liftR is below its max height, raise
-                liftR.setPower(1.0);
-            } else if (liftR.getCurrentPosition() >= liftMax) {//If liftR is above its max height, stop
-                liftR.setPower(0.0);
-            }
+            liftL.setPower(1.0);
+            liftR.setPower(1.0);
+//            //Left side of lift
+//            if (liftL.getCurrentPosition() < liftMax) {//If liftL is below its max height, raise
+//                liftL.setPower(1.0);
+//            } else if (liftL.getCurrentPosition() >= liftMax) {//If liftL is above its max height, stop
+//                liftL.setPower(0.0);
+//            }
+//
+//            //Right side of lift
+//            if (liftR.getCurrentPosition() < liftMax) {//If liftR is below its max height, raise
+//                liftR.setPower(1.0);
+//            } else if (liftR.getCurrentPosition() >= liftMax) {//If liftR is above its max height, stop
+//                liftR.setPower(0.0);
+//            }
+        } else {
+            liftStop();
         }
     }
 
@@ -102,21 +106,25 @@ public class RobotComponents {
      */
     public void liftControlDown(Gamepad gamepad) {//For driver control
 
-        if (gamepad.dpad_down) {
+        if (gamepad.a) {
 
-            //Left side of lift
-            if (liftL.getCurrentPosition() > liftMin) {//If liftL is above its min height, lower
-                liftL.setPower(-1.0);
-            } else if (liftL.getCurrentPosition() <= liftMin) {//If liftL is below its min height, stop
-                liftL.setPower(0.0);
-            }
-
-            //Right side of lift
-            if (liftR.getCurrentPosition() > liftMin) {//If liftR is above its min height, lower
-                liftR.setPower(-1.0);
-            } else if (liftR.getCurrentPosition() <= liftMin) {//If liftR is below its min height, stop
-                liftR.setPower(0.0);
-            }
+            liftL.setPower(-1);
+            liftR.setPower(-1);
+//            //Left side of lift
+//            if (liftL.getCurrentPosition() > liftMin) {//If liftL is above its min height, lower
+//                liftL.setPower(-1.0);
+//            } else if (liftL.getCurrentPosition() <= liftMin) {//If liftL is below its min height, stop
+//                liftL.setPower(0.0);
+//            }
+//
+//            //Right side of lift
+//            if (liftR.getCurrentPosition() > liftMin) {//If liftR is above its min height, lower
+//                liftR.setPower(-1.0);
+//            } else if (liftR.getCurrentPosition() <= liftMin) {//If liftR is below its min height, stop
+//                liftR.setPower(0.0);
+//            }
+        } else {
+            liftStop();
         }
     }
 
@@ -149,13 +157,13 @@ public class RobotComponents {
     //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 
-    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-    public void returnPosition() {
-
-    }
-    public void outPosition() {
-
-    }
-    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+//    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+//    public void returnPosition() {
+//
+//    }
+//    public void outPosition() {
+//
+//    }
+//    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 }
