@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.PIDTuning;
+package org.firstinspires.ftc.teamcode.SeansPlayground.ArchivedProjects.PIDTuning;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -54,9 +54,9 @@ public class SeansPIDTuningLibrary {
     private static final double     HEADING_THRESHOLD       = 0.5;      // As tight as we can make it with an integer gyro
     private static final double     ENCODER_THRESHOLD       = 10;      // As tight as we can make it with an integer gyro
 
-    private double     P_TURN_COEFF;
-    private double     I_TURN_COEFF;
-    private double     D_TURN_COEFF;
+    private double     P_TURN_COEFF = 0;
+    private double     I_TURN_COEFF = 0;
+    private double     D_TURN_COEFF = 0;
 
     private static final double     P_DRIVE_COEFF           = 0.16;     // Larger is more responsive, but also less stable
 
@@ -109,16 +109,17 @@ public class SeansPIDTuningLibrary {
         int motorIndexLB = left_back_drive.getPortNumber();
         PIDCoefficients pidOrigLB = motorControllerExLB.getPIDCoefficients(motorIndexLB, DcMotor.RunMode.RUN_USING_ENCODER);
 
-        turn_PID = new SynchronousPID(P_TURN_COEFF, I_TURN_COEFF, D_TURN_COEFF);
-        turn_PID.setContinuous(true);
-        turn_PID.setOutputRange(-TURN_SPEED, TURN_SPEED);
-        turn_PID.setInputRange(-180, 180);
         PID = new PidUdpReceiver();
         PID.beginListening();
         P_TURN_COEFF = PID.getP();
         I_TURN_COEFF = PID.getI();
         D_TURN_COEFF = PID.getD();
         telemetry.setMsTransmissionInterval(50);
+
+        turn_PID = new SynchronousPID(P_TURN_COEFF, I_TURN_COEFF, D_TURN_COEFF);
+        turn_PID.setContinuous(true);
+        turn_PID.setOutputRange(-TURN_SPEED, TURN_SPEED);
+        turn_PID.setInputRange(-180, 180);
     }
 
     public void getPID() {

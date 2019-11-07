@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.PositionIntegration;
+package org.firstinspires.ftc.teamcode.SeansPlayground.ArchivedProjects.PositionIntegration;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
+import com.qualcomm.robotcore.eventloop.opmode.Archived;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -19,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
  * Created by Sean Cardosi on 10/21/2019.
  * Just like before, this isn't going to work.
  */
-@Disabled
+@Archived
 @TeleOp(name = "PreMadeIMUIntegration", group = "Integration")
 public class PositionBNO055Function extends OpMode {
 
