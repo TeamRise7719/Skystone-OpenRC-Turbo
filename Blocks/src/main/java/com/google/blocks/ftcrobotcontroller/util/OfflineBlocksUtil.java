@@ -284,9 +284,9 @@ public class OfflineBlocksUtil {
       b = hue2rgb(p, q, hsl[0] - 1/3f);
     }
 
-    int r255 = (int) Math.round(r * 255f);
-    int g255 = (int) Math.round(g * 255f);
-    int b255 = (int) Math.round(b * 255f);
+    int r255 = Math.round(r * 255f);
+    int g255 = Math.round(g * 255f);
+    int b255 = Math.round(b * 255f);
     return Color.rgb(r255, g255, b255);
   }
 

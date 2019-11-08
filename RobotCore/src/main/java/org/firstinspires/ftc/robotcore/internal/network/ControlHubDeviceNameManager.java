@@ -56,7 +56,7 @@ import java.util.zip.CRC32;
 @SuppressWarnings("WeakerAccess")
 public class ControlHubDeviceNameManager implements DeviceNameManager {
 
-    protected enum DeviceNameTracking { UNINITIALIZED, WIFIAP };
+    protected enum DeviceNameTracking { UNINITIALIZED, WIFIAP }
 
     private static final ControlHubDeviceNameManager theInstance = new ControlHubDeviceNameManager();
     private static final String TAG = NetworkDiscoveryManager.TAG + "_ControlHubNameManager";

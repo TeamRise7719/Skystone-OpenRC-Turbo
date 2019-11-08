@@ -47,7 +47,7 @@ public class ScriptC_format_convert extends ScriptC {
     }
 
     public FieldID getFieldID_inputAllocation() {
-        return this.createFieldID(0, (Element)null);
+        return this.createFieldID(0, null);
     }
 
     public synchronized void set_outputWidth(int v) {
@@ -60,7 +60,7 @@ public class ScriptC_format_convert extends ScriptC {
     }
 
     public FieldID getFieldID_outputWidth() {
-        return this.createFieldID(1, (Element)null);
+        return this.createFieldID(1, null);
     }
 
     public synchronized void set_outputHeight(int v) {
@@ -73,22 +73,22 @@ public class ScriptC_format_convert extends ScriptC {
     }
 
     public FieldID getFieldID_outputHeight() {
-        return this.createFieldID(2, (Element)null);
+        return this.createFieldID(2, null);
     }
 
     public KernelID getKernelID_yuv2_to_argb8888() {
-        return this.createKernelID(1, 58, (Element)null, (Element)null);
+        return this.createKernelID(1, 58, null, null);
     }
 
     public void forEach_yuv2_to_argb8888(Allocation aout) {
-        this.forEach_yuv2_to_argb8888(aout, (LaunchOptions)null);
+        this.forEach_yuv2_to_argb8888(aout, null);
     }
 
     public void forEach_yuv2_to_argb8888(Allocation aout, LaunchOptions sc) {
         if (!aout.getType().getElement().isCompatible(this.__U8_4)) {
             throw new RSRuntimeException("Type mismatch with U8_4!");
         } else {
-            this.forEach(1, (Allocation)null, aout, (FieldPacker)null, sc);
+            this.forEach(1, (Allocation)null, aout, null, sc);
         }
     }
 }

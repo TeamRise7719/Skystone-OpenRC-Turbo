@@ -234,7 +234,7 @@ public class TypeConversion {
   }
 
   public static long doubleToFixedLong(double value, int fractionBits) {
-    return (long)Math.round(value * power2(fractionBits));
+    return Math.round(value * power2(fractionBits));
   }
 
   public static double doubleFromFixed(long value, int fractionBits) {

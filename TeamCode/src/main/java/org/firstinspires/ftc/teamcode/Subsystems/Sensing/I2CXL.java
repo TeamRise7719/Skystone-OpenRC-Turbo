@@ -135,7 +135,7 @@ public class I2CXL extends I2cDeviceSynchDevice<I2cDeviceSynch>
     public int sampleDistance(){
 
         //declare the array
-        int distanceArray[];
+        int[] distanceArray;
 
         //allocate memory for 10 indices
         distanceArray = new int[10];
@@ -154,7 +154,7 @@ public class I2CXL extends I2cDeviceSynchDevice<I2cDeviceSynch>
     public int sampleDistance100(){
 
         //declare the array
-        int distanceArray[];
+        int[] distanceArray;
 
         //allocate memory for 100 indices
         distanceArray = new int[100];

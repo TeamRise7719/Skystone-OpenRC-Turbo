@@ -458,7 +458,7 @@ public class WifiMuteStateMachine extends StateMachine {
     protected Toast makeToast(Activity activity, String msg)
     {
         Toast toast = Toast.makeText(activity.getApplicationContext(), msg, Toast.LENGTH_SHORT);
-        TextView message = (TextView) toast.getView().findViewById(android.R.id.message);
+        TextView message = toast.getView().findViewById(android.R.id.message);
         message.setTextColor(AppUtil.getColor(R.color.text_toast));
         message.setTextSize(18);
         toast.show();

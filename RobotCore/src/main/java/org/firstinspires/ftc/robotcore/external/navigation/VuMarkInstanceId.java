@@ -63,7 +63,7 @@ public class VuMarkInstanceId
             UNKNOWN,
             NUMERIC,
             STRING,
-            DATA;
+            DATA
         }
 
     //----------------------------------------------------------------------------------------------

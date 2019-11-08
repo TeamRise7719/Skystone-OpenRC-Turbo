@@ -20,6 +20,7 @@ dependencies {
     implementation project(':Hardware')
     implementation project(':Inspection')
     implementation project(':RobotCore')
+    implementation 'com.acmerobotics.dashboard:dashboard:0.3.4'
 
     turboImplementation project(':RobotServer')
     //turboImplementation project(':OpenRC')

@@ -188,7 +188,7 @@ public class RevBlinkinLedDriver implements HardwareDevice {
         {
             return elements[(this.ordinal() - 1) < 0 ? elements.length - 1 : this.ordinal() - 1];
         }
-    };
+    }
 
     protected final static String TAG = "RevBlinkinLedDriver";
 

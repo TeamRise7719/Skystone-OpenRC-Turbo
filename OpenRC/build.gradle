@@ -23,5 +23,7 @@ dependencies {
     turboImplementation project (':Blocks')
     turboImplementation project (':RobotServer')
 
+    implementation 'com.acmerobotics.dashboard:dashboard:0.3.4'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

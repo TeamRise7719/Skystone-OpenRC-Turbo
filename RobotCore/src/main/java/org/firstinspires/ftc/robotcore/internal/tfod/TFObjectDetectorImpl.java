@@ -205,7 +205,7 @@ public class TFObjectDetectorImpl implements TFObjectDetector {
     if (parameters.tfodMonitorViewParent != null) {
       imageViewParent = parameters.tfodMonitorViewParent;
     } else if (parameters.tfodMonitorViewIdParent != 0) {
-      imageViewParent = (ViewGroup) activity.findViewById(parameters.tfodMonitorViewIdParent);
+      imageViewParent = activity.findViewById(parameters.tfodMonitorViewIdParent);
     }
 
     if (imageViewParent != null) {
@@ -483,7 +483,7 @@ public class TFObjectDetectorImpl implements TFObjectDetector {
   @Override
   public void shutdown() {
     Thread currentThread = Thread.currentThread();
-    boolean interrupted = currentThread.interrupted();
+    boolean interrupted = Thread.interrupted();
 
     deactivate();
 

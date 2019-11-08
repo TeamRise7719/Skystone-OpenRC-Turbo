@@ -74,11 +74,7 @@ public class SkystoneDetectionPhone {
                             recognition.getLeft(), recognition.getTop());
                     telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                             recognition.getRight(), recognition.getBottom());
-                    if (recognition.getLabel() == LABEL_SECOND_ELEMENT) {
-                        isSkystone = true;
-                    } else {
-                        isSkystone = false;
-                    }
+                    isSkystone = recognition.getLabel() == LABEL_SECOND_ELEMENT;
                 }
                 telemetry.update();
             }

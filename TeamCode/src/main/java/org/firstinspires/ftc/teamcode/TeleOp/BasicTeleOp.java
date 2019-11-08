@@ -1,7 +1,13 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import com.acmerobotics.dashboard.FtcDashboard;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
@@ -29,7 +35,12 @@ public class BasicTeleOp extends OpMode {
 
         component = new RobotComponents(hardwareMap, telemetry);
 
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        TelemetryPacket packet = new TelemetryPacket();
+
+        dashboard.sendTelemetryPacket(packet);
         isReady = true;
+
     }
 
     @Override

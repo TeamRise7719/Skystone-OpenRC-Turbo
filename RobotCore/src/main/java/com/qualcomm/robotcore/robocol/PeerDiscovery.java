@@ -79,7 +79,7 @@ public class PeerDiscovery extends RobocolParsableBase {
       return p;
     }
 
-    private PeerType(int type) {
+    PeerType(int type) {
       this.type = type;
     }
 

@@ -112,7 +112,7 @@ public class EventLoopManager implements RecvLoopRunnable.RecvLoopCallback, Netw
   private               ElapsedTime           lastHeartbeatReceived     = new ElapsedTime();
   private               EventLoop             eventLoop                 = null;
   private final         Object                eventLoopLock             = new Object();
-  private final         Gamepad               gamepads[]                = { new Gamepad(), new Gamepad() };
+    private final Gamepad[] gamepads = {new Gamepad(), new Gamepad()};
   private               Heartbeat             heartbeat                 = new Heartbeat();
   private               boolean               attemptedSetTime          = false;
   private               EventLoopMonitor      callback                  = null;
@@ -445,7 +445,7 @@ public class EventLoopManager implements RecvLoopRunnable.RecvLoopCallback, Netw
     networkConnectionHandler.pushNetworkConnectionCallback(this);
     networkConnectionHandler.pushReceiveLoopCallback(this);
 
-    NetworkType networkType = networkConnectionHandler.getDefaultNetworkType(context);
+    NetworkType networkType = NetworkConnectionHandler.getDefaultNetworkType(context);
     networkConnectionHandler.init(networkType, context);  // idempotent
 
     // see also similar code in the driver station startup logic

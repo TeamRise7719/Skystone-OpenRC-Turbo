@@ -85,12 +85,12 @@ public class DeviceInfoAdapter extends BaseAdapter implements ListAdapter {
     }
 
     ControllerConfiguration controllerConfiguration = deviceControllers.get(pos);
-    String serialNum = editActivity.formatSerialNumber(editActivity, controllerConfiguration);
-    TextView displayNum = (TextView)row.findViewById(android.R.id.text2);
+    String serialNum = EditActivity.formatSerialNumber(editActivity, controllerConfiguration);
+    TextView displayNum = row.findViewById(android.R.id.text2);
     displayNum.setText(serialNum);
 
     String name = deviceControllers.get(pos).getName();
-    TextView text = (TextView)row.findViewById(android.R.id.text1);
+    TextView text = row.findViewById(android.R.id.text1);
     text.setText(name);
     return row;
 

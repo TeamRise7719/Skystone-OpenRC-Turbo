@@ -240,7 +240,7 @@ public class OpModeManagerImpl implements OpModeServices, OpModeManagerNotifier 
   }
 
   public void setMatchNumber(int matchNumber) {
-    this.matchNumber = matchNumber;
+    OpModeManagerImpl.matchNumber = matchNumber;
   }
 
   // called on DS receive thread

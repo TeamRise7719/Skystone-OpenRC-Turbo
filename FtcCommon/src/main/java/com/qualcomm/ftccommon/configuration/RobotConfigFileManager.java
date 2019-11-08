@@ -258,7 +258,7 @@ public class RobotConfigFileManager {
                         fileName = String.format(context.getString(R.string.configDirtyLabel), fileName);
                     }
 
-                    TextView activeFile = (TextView) activity.findViewById(idActiveConfigName);
+                    TextView activeFile = activity.findViewById(idActiveConfigName);
                     if (activeFile != null) {
                         activeFile.setText(fileName);
                     } else {
@@ -489,7 +489,7 @@ public class RobotConfigFileManager {
      * Returns a {@link Source} to the XSLT transformation that will transform robot config
      * templates/configurations into human-readable descriptions.
      */
-    @NonNull protected Source getRobotConfigDescriptionTransform() throws XmlPullParserException, IOException, TransformerConfigurationException,TransformerException
+    @NonNull protected Source getRobotConfigDescriptionTransform() throws XmlPullParserException, IOException, TransformerException
     {
         // Load RobotConfigTaxonomy as a DOM
         Reader xmlConfigTaxonomyReader = new InputStreamReader(context.getAssets().open(ROBOT_CONFIG_TAXONOMY_XML));

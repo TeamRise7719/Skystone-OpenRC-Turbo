@@ -129,7 +129,7 @@ public class MatrixServoController implements ServoController {
             master.waitOnRead();
         }
 
-        return ((double)servoCache[channel] / SERVO_POSITION_MAX);
+        return (servoCache[channel] / SERVO_POSITION_MAX);
     }
 
     @Override public Manufacturer getManufacturer()

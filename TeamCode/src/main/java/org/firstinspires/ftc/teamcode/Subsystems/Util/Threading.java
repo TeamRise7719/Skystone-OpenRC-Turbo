@@ -122,9 +122,7 @@ public class Threading {
         else if (!(opMode instanceof RISELinearOpMode)) return false;
 
             // If we're in a linear op mode but a stop has been requested, stop immediately
-        else if(((RISELinearOpMode) opMode).isStopRequested()) return false;
-
-        else return true;
+        else return !((RISELinearOpMode) opMode).isStopRequested();
     }
 
     public static boolean clearContinue() {

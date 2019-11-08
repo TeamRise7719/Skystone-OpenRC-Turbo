@@ -851,7 +851,7 @@ public class TelemetryImpl implements Telemetry, TelemetryInternal
         {
         synchronized (theLock)
             {
-            return this.actions.remove((Runnable)token);
+            return this.actions.remove(token);
             }
         }
 

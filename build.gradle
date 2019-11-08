@@ -20,11 +20,17 @@ allprojects {
         google()
         jcenter()
         maven {
-            url 'https://dl.bintray.com/openftc/maven';
+            url 'https://dl.bintray.com/openftc/maven'
         }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+allprojects {
+    repositories {
+        jcenter()
+    }
+
 }

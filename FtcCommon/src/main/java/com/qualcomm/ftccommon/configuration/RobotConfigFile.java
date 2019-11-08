@@ -63,7 +63,7 @@ public class RobotConfigFile {
         NONE,
         LOCAL_STORAGE,
         RESOURCE,
-    };
+    }
 
     private final static String LOGGER_TAG = "RobotConfigFile";
 

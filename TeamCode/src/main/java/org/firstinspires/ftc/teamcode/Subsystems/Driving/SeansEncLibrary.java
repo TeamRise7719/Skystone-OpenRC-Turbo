@@ -122,8 +122,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                  while (FtcOpModeRegister.opModeManager.getActiveOpMode() == robot.opMode) {
                      Threading.delay(0.03);
                  }
-             } catch (Exception ) {
-                 Log.e("IMUFAIL", "IMU FAILED", ex);
+             } catch (Exception ex) {
+
                  telemetry.addData("IMU FAILED0", () -> "IMU FAILED RESTART ROBOT");
                  telemetry.addData("IMU FAILED1", () -> "IMU FAILED RESTART ROBOT");
                  telemetry.addData("IMU FAILED2", () -> "IMU FAILED RESTART ROBOT");
@@ -205,7 +205,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                    || Math.abs(newRightTarget-right_back_drive.getCurrentPosition())>ENCODER_THRESHOLD) ) {
 
                 // adjust relative speed based on heading error.
-                error = getError(angle);
+//                error = getError(angle);
+                error = 0;
                 steer = getSteer(error, P_DRIVE_COEFF);
 
                 // if driving in reverse, the motor correction also needs to be reversed
@@ -276,10 +277,10 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
 
 
-            left_back_drive.setPower(driveSpeed + steeringSpeed);
-            left_front_drive.setPower(driveSpeed + steeringSpeed);
-            right_back_drive.setPower(driveSpeed - steeringSpeed);
-            right_front_drive.setPower(driveSpeed - steeringSpeed);
+//            left_back_drive.setPower(driveSpeed + steeringSpeed);
+//            left_front_drive.setPower(driveSpeed + steeringSpeed);
+//            right_back_drive.setPower(driveSpeed - steeringSpeed);
+//            right_front_drive.setPower(driveSpeed - steeringSpeed);
 
         }
 
@@ -320,7 +321,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             while ((etime.time() < time)&&(linearOpMode.opModeIsActive())) {
 
                 // adjust relative speed based on heading error.
-                error = getError(angle);
+//                error = getError(angle);
+                error = 0;
                 steer = getSteer(error, P_DRIVE_COEFF);
 
                 // if driving in reverse, the motor correction also needs to be reversed
@@ -402,7 +404,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             while ((etime.time() < time)&&(linearOpMode.opModeIsActive())) {
 
                 // adjust relative speed based on heading error.
-                error = getError(angle);
+//                error = getError(angle);
+                error = 0;
                 steer = getSteer(error, P_DRIVE_COEFF);
 
                 // if driving in reverse, the motor correction also needs to be reversed
@@ -497,7 +500,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             // keep looping while we are still active, and BOTH motors are running.
             while (linearOpMode.opModeIsActive() && (Math.abs(newLeftTarget-left_back_drive.getCurrentPosition())>ENCODER_THRESHOLD || Math.abs((newRightTarget)-right_back_drive.getCurrentPosition())>ENCODER_THRESHOLD) ) {
                 // adjust relative speed based on heading error.
-                error = getError(angle);
+//                error = getError(angle);
+                error = 0;
                 steer = getSteer(error, P_DRIVE_COEFF);
 
                 // if driving in reverse, the motor correction also needs to be reversed

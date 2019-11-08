@@ -233,7 +233,7 @@ public class TelemetryMessage extends RobocolParsableBase {
     if (tag.length() == 0) {
       putTagLen(buffer, 0);
     } else {
-      byte tagBytes[] = tag.getBytes(CHARSET);
+      byte[] tagBytes = tag.getBytes(CHARSET);
 
       if (tagBytes.length > cbTagMax) {
         throw new RobotCoreException(String.format("Telemetry tag cannot exceed %d bytes [%s]", cbTagMax, tag));

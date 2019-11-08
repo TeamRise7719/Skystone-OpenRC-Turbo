@@ -194,11 +194,7 @@ public class MatrixDcMotorController implements DcMotorController {
 
         master.waitOnRead();
 
-        if ((motorCache[transaction.motor].mode & 0x80) != 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (motorCache[transaction.motor].mode & 0x80) != 0;
     }
 
     @Override public void resetDeviceConfigurationForOpMode(int motor)
@@ -259,11 +255,7 @@ public class MatrixDcMotorController implements DcMotorController {
 
     void setFloatingFromMode(int motor)
     {
-        if (motorCache[motor].runMode == DcMotor.RunMode.STOP_AND_RESET_ENCODER) {
-            motorCache[motor].floating = true;
-        } else {
-            motorCache[motor].floating = false;
-        }
+        motorCache[motor].floating = motorCache[motor].runMode == DcMotor.RunMode.STOP_AND_RESET_ENCODER;
     }
 
     @Override

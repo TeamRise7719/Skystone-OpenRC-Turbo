@@ -116,7 +116,7 @@ public class FtcWifiDirectChannelSelectorActivity extends ThemedActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ftc_wifi_channel_selector);
 
-        ListView channelPickList = (ListView) findViewById(R.id.channelPickList);
+        ListView channelPickList = findViewById(R.id.channelPickList);
         loadAdapter(channelPickList);
         channelPickList.setOnItemClickListener(this);
         channelPickList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -145,7 +145,7 @@ public class FtcWifiDirectChannelSelectorActivity extends ThemedActivity impleme
             RobotLog.vv(TAG, "pref_wifip2p_channel: Found existing preferred channel (%d).", prefChannel);
             }
 
-        ListView channelPickList = (ListView) findViewById(R.id.channelPickList);
+        ListView channelPickList = findViewById(R.id.channelPickList);
         ArrayAdapter<WifiDirectChannelAndDescription> adapter = getAdapter(channelPickList);
 
         int index = -1;

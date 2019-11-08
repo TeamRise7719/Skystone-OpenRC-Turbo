@@ -140,7 +140,7 @@ public class LynxSetMotorPIDFControlLoopCoefficientsCommand extends LynxDekaInte
         this.i = i;
         this.d = d;
         this.f = f;
-        this.motorControlAlgorithm = (byte)motorControlAlgorithm.getValue();
+        this.motorControlAlgorithm = motorControlAlgorithm.getValue();
         }
 
     //----------------------------------------------------------------------------------------------
