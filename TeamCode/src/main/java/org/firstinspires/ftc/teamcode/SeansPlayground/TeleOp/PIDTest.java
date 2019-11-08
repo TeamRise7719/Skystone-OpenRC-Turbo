@@ -27,8 +27,11 @@ public class PIDTest extends RISELinearOpMode {
                 enc.steeringDrive(-12, true);
             }
             if (gamepad1.b) {
-                enc.steeringDrive(48, true);
+                enc.gyroTurn(enc.TURN_SPEED, 90);
             }
+
+            telemetry.addData("Active", "");
+            telemetry.update();
         }
     }
 }

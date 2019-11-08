@@ -64,7 +64,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     private static  double     D_TURN_COEFF            = 0.00004;//.000003     // Larger is more responsive, but also less stable
 
 
-    private static final double     P_DRIVE_COEFF           = 0.01;     // Larger is more responsive, but also less stable
+    private static final double     P_DRIVE_COEFF           = 0.04;     // Larger is more responsive, but also less stable
     private static final double     I_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
     private static final double     D_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
 
@@ -117,13 +117,18 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                  gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
 
-                 while (FtcOpModeRegister.opModeManager.getActiveOpMode() == robot.opMode) {
-                     Threading.delay(0.03);
-                 }
              } catch (Exception ex) {
                  telemetry.addData("Error:", ex.toString());
              }
          });
+
+//         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
+//         param.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+//         param.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+//         param.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+//
+//         gyro.initialize(param);
+//         gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         turnPID = new SynchronousPID(P_TURN_COEFF, I_TURN_COEFF, D_TURN_COEFF);
         leftDrivingPID = new SynchronousPID(P_DRIVE_COEFF, I_DRIVE_COEFF, D_DRIVE_COEFF);
@@ -156,21 +161,31 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         int encLeft;
         int encRight;
 
+        telemetry.addData("Activated", "");
+        telemetry.update();
+
         turnPID.reset();
         turnPID.setContinuous(true);
         gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         turnPID.setSetpoint(gyro_angle.firstAngle);
         turnPID.setOutputRange(-0.2,0.2);
+        telemetry.addData("Active1", "");
+        telemetry.update();
 
         leftDrivingPID.reset();
         leftDrivingPID.setContinuous(false);
         leftDrivingPID.setSetpoint(newLeftTarget);
         leftDrivingPID.setOutputRange(-0.8,0.8);
+        telemetry.addData("Active2", "");
+        telemetry.update();
+
 
         rightDrivingPID.reset();
         rightDrivingPID.setContinuous(false);
         rightDrivingPID.setSetpoint(newRightTarget);
         rightDrivingPID.setOutputRange(-0.8,0.8);
+        telemetry.addData("Active3", "");
+        telemetry.update();
 
 
         while (linearOpMode.opModeIsActive() && (Math.abs(newLeftTarget-left_back_drive.getCurrentPosition())>ENCODER_THRESHOLD
@@ -197,6 +212,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             telemetry.addData("LErr/RErr", "%5.2f:%5.2f", newLeftTarget - encLeft, newRightTarget - encRight);
             telemetry.addData("HeadingErr/CurrentHeading", "%5.2f:%5.2f", turnPID.getError(),gyro_angle.firstAngle);
             telemetry.addData("LSpd/RSpd/Steer", "%5.2f:%5.2f:%5.2f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
+            telemetry.update();
 
         }
 
