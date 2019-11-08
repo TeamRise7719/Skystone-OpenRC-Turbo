@@ -56,7 +56,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
     private static final double     HEADING_THRESHOLD       = 0.05;      // As tight as we can make it with an integer gyro
-    private static final double     ENCODER_THRESHOLD       = 10;      // As tight as we can make it with an integer gyro
+    private static final int     ENCODER_THRESHOLD       = 5;      // As tight as we can make it with an integer gyro
 
 
     private static  double     P_TURN_COEFF            = 0.04;//.007     // Larger is more responsive, but also less stable
@@ -161,35 +161,31 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         int encLeft;
         int encRight;
 
-        telemetry.addData("Activated", "");
-        telemetry.update();
-
         turnPID.reset();
         turnPID.setContinuous(true);
         gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         turnPID.setSetpoint(gyro_angle.firstAngle);
         turnPID.setOutputRange(-0.2,0.2);
-        telemetry.addData("Active1", "");
-        telemetry.update();
 
         leftDrivingPID.reset();
         leftDrivingPID.setContinuous(false);
         leftDrivingPID.setSetpoint(newLeftTarget);
         leftDrivingPID.setOutputRange(-0.8,0.8);
-        telemetry.addData("Active2", "");
-        telemetry.update();
 
 
         rightDrivingPID.reset();
         rightDrivingPID.setContinuous(false);
         rightDrivingPID.setSetpoint(newRightTarget);
         rightDrivingPID.setOutputRange(-0.8,0.8);
-        telemetry.addData("Active3", "");
-        telemetry.update();
 
+        int sum = 0;
+        while (linearOpMode.opModeIsActive()) {
+            sum++;
+            if((Math.abs(newLeftTarget-left_back_drive.getCurrentPosition())>ENCODER_THRESHOLD
+                    && (Math.abs(newRightTarget-right_back_drive.getCurrentPosition())>ENCODER_THRESHOLD))){
 
-        while (linearOpMode.opModeIsActive() && (Math.abs(newLeftTarget-left_back_drive.getCurrentPosition())>ENCODER_THRESHOLD
-                && Math.abs(newRightTarget-right_back_drive.getCurrentPosition())>ENCODER_THRESHOLD) ) {
+                break;
+            }
 
             if (steeringToggle){
                 gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -204,18 +200,19 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             encRight = right_back_drive.getCurrentPosition();
             rightDriveSpeed = rightDrivingPID.calculate(encRight);
 
+
             left_back_drive.setPower(leftDriveSpeed + steeringSpeed);
             left_front_drive.setPower(leftDriveSpeed + steeringSpeed);
             right_back_drive.setPower(rightDriveSpeed - steeringSpeed);
             right_front_drive.setPower(rightDriveSpeed - steeringSpeed);
 
-            telemetry.addData("LErr/RErr", "%5.2f:%5.2f", newLeftTarget - encLeft, newRightTarget - encRight);
-            telemetry.addData("HeadingErr/CurrentHeading", "%5.2f:%5.2f", turnPID.getError(),gyro_angle.firstAngle);
-            telemetry.addData("LSpd/RSpd/Steer", "%5.2f:%5.2f:%5.2f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
+            telemetry.addData("LErr/RErr", "%s:%s",newLeftTarget - encLeft, newRightTarget - encRight);
+            telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(),gyro_angle.firstAngle);
+//            telemetry.addData("LSpd/RSpd/Steer", "%d:%d:%d", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
             telemetry.update();
-
         }
-
+        telemetry.addData("Loop total","%s",sum);
+        telemetry.update();
         stop_all_motors();
 
     }

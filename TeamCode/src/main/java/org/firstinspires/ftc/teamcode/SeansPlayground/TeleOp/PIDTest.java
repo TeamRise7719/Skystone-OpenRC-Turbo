@@ -30,8 +30,7 @@ public class PIDTest extends RISELinearOpMode {
                 enc.gyroTurn(enc.TURN_SPEED, 90);
             }
 
-            telemetry.addData("Active", "");
-            telemetry.update();
+
         }
     }
 }
