@@ -70,8 +70,8 @@ public class BasicTeleOp extends OpMode {
 
         //TODO: Check the correct encoder values for max and min. Check the correct motor directions
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
-        component.liftControlUp(gamepad1);
-        component.liftControlDown(gamepad1);
+        component.liftControlUp(gamepad2);
+
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 

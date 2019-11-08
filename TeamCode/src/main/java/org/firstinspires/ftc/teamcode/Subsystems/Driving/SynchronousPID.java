@@ -25,9 +25,6 @@ public class SynchronousPID {
     // then treat error for the proportional
     // term as 0
 
-    public SynchronousPID() {
-    }
-
     /**
      * Allocate a PID object with the given constants for P, I, D
      *
@@ -74,7 +71,7 @@ public class SynchronousPID {
         // Don't blow away m_error so as to not break derivative
         double proportionalError = Math.abs(m_error) < m_deadband ? 0 : m_error;
 
-        m_result = (m_P * proportionalError + m_I * m_totalError + m_D * (m_error - m_prevError));
+        m_result = ((m_P * proportionalError) + (m_I * m_totalError) + (m_D * (m_error - m_prevError)));
         m_prevError = m_error;
 
         if (m_result > m_maximumOutput) {
@@ -181,7 +178,6 @@ public class SynchronousPID {
         }
         m_minimumInput = minimumInput;
         m_maximumInput = maximumInput;
-        setSetpoint(m_setpoint);
     }
 
     /**

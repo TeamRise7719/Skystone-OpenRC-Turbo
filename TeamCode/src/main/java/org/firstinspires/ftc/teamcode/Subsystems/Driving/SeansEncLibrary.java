@@ -10,13 +10,16 @@ import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import android.util.Log;
+import org.firstinspires.ftc.teamcode.Subsystems.Util.Threading;
+import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
+import org.firstinspires.ftc.teamcode.Subsystems.Robot.Robot;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.SynchronousPID;
-import org.firstinspires.ftc.teamcode.Subsystems.Sensing.I2CXL;
 
 public class SeansEncLibrary {//TODO:Change this class to work using the new odometers.
 
@@ -24,13 +27,15 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     DcMotor left_front_drive;
     DcMotor right_back_drive;
     DcMotor right_front_drive;
-    SynchronousPID turn_PID;
+    SynchronousPID robotPID;
 
     public BNO055IMU gyro;
     public Orientation gyro_angle;
 
     Telemetry telemetry;
     LinearOpMode linearOpMode;
+
+    Robot robot;
 
 //    I2CXL ultrasonicFront;
 //    I2CXL ultrasonicBack;
@@ -48,16 +53,16 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
-    private static final double     HEADING_THRESHOLD       = 1;      // As tight as we can make it with an integer gyro
+    private static final double     HEADING_THRESHOLD       = 0.05;      // As tight as we can make it with an integer gyro
     private static final double     ENCODER_THRESHOLD       = 10;      // As tight as we can make it with an integer gyro
 
     //TODO: Tune PID
-    private static  double     P_TURN_COEFF            = .0016;//.007     // Larger is more responsive, but also less stable
-    private static  double     I_TURN_COEFF            = 0;//.000003    // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0.00001;//.00001    // Larger is more responsive, but also less stable
+    private static  double     P_TURN_COEFF            = 0.04;//.007     // Larger is more responsive, but also less stable
+    private static  double     I_TURN_COEFF            = 0.001;//.00001   // Larger is more responsive, but also less stable
+    private static  double     D_TURN_COEFF            = 0.00004;//.000003     // Larger is more responsive, but also less stable
 
 
-    private static final double     P_DRIVE_COEFF           = 0.16;     // Larger is more responsive, but also less stable
+    private static final double     P_DRIVE_COEFF           = 0.08;     // Larger is more responsive, but also less stable
 //    private static final double     ULTRA_COEFF           = 0.06;     // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
@@ -78,16 +83,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
      public void init(){
 
-        BNO055IMU.Parameters param = new BNO055IMU.Parameters();
-        param.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        param.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        param.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        gyro.initialize(param);
-        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
-//        ultrasonicFront.initialize();
-//        ultrasonicBack.initialize();
 
         left_back_drive.setDirection(DcMotor.Direction.REVERSE);
         left_front_drive.setDirection(DcMotor.Direction.REVERSE);
@@ -110,15 +106,47 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+         Threading.startThread(() -> {
+             try {
+                 Log.i("IMUt", "starting imu stuff");
+
+                 BNO055IMU.Parameters param = new BNO055IMU.Parameters();
+                 param.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+                 param.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+                 param.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+                 gyro.initialize(param);
+                 gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+
+                 while (FtcOpModeRegister.opModeManager.getActiveOpMode() == robot.opMode) {
+                     Threading.delay(0.03);
+                 }
+             } catch (Exception ) {
+                 Log.e("IMUFAIL", "IMU FAILED", ex);
+                 telemetry.addData("IMU FAILED0", () -> "IMU FAILED RESTART ROBOT");
+                 telemetry.addData("IMU FAILED1", () -> "IMU FAILED RESTART ROBOT");
+                 telemetry.addData("IMU FAILED2", () -> "IMU FAILED RESTART ROBOT");
+                 telemetry.addData("IMU FAILED3", () -> "IMU FAILED RESTART ROBOT");
+                 telemetry.addData("IMU FAILED4", () -> "IMU FAILED RESTART ROBOT");
+                 telemetry.addData("IMU FAILED5", () -> "IMU FAILED RESTART ROBOT");
+                 telemetry.addData("IMU FAILED6", () -> "IMU FAILED RESTART ROBOT");
+                 telemetry.addData("IMU FAILED7", () -> "IMU FAILED RESTART ROBOT");
+                 telemetry.addData("IMU FAILED8", () -> "IMU FAILED RESTART ROBOT");
+                 telemetry.addData("IMU FAILED9", () -> "IMU FAILED RESTART ROBOT");
+             }
+         });
+
 
         DcMotorControllerEx motorControllerExLB = (DcMotorControllerEx) left_back_drive.getController();
         int motorIndexLB = left_back_drive.getPortNumber();
         PIDCoefficients pidOrigLB = motorControllerExLB.getPIDCoefficients(motorIndexLB, DcMotor.RunMode.RUN_USING_ENCODER);
 
-        turn_PID = new SynchronousPID(P_TURN_COEFF, I_TURN_COEFF, D_TURN_COEFF);
-        turn_PID.setContinuous(true);
-        turn_PID.setOutputRange(-TURN_SPEED, TURN_SPEED);
-        turn_PID.setInputRange(-180, 180);
+
+        robotPID = new SynchronousPID(P_TURN_COEFF, I_TURN_COEFF, D_TURN_COEFF);
+
+        robotPID.setOutputRange(-TURN_SPEED, TURN_SPEED);
+        robotPID.setInputRange(-180, 180);
     }
 
 
@@ -164,24 +192,13 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             newLeftTarget = left_back_drive.getCurrentPosition() + moveCounts;
             newRightTarget = right_back_drive.getCurrentPosition() + moveCounts;
 
-
-            // Set Target and Turn On RUN_TO_POSITION
-            left_back_drive.setTargetPosition(newLeftTarget);
-            left_front_drive.setTargetPosition(newLeftTarget);
-            right_back_drive.setTargetPosition(newRightTarget);
-            right_front_drive.setTargetPosition(newRightTarget);
-
-            left_back_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            left_front_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            right_back_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            right_front_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
             // start motion.
-            speed = Range.clip(Math.abs(speed), 0.0, 1.0);
+            speed = Range.clip(speed, -1.0, 1.0);
             left_back_drive.setPower(speed);
             left_front_drive.setPower(speed);
             right_back_drive.setPower(speed);
             right_front_drive.setPower(speed);
+
 
             // keep looping while we are still active, and BOTH motors are running.
             while (linearOpMode.opModeIsActive() && (Math.abs(newLeftTarget-left_back_drive.getCurrentPosition())>ENCODER_THRESHOLD
@@ -192,7 +209,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                 steer = getSteer(error, P_DRIVE_COEFF);
 
                 // if driving in reverse, the motor correction also needs to be reversed
-                if (distance > 0) {
+                if (distance < 0) {
                     steer *= -1.0;
                 }
 
@@ -233,12 +250,40 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             right_back_drive.setPower(0);
             right_front_drive.setPower(0);
 
-            // Turn off RUN_TO_POSITION
-            left_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            left_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
+    }
+
+    public void steeringDrive(double speed,
+                              double distance,
+                              double angle,
+                              boolean steeringToggle){
+
+        int     newLeftTarget;
+        int     newRightTarget;
+        int     moveCounts;
+        double  max;
+        double  error;
+        double  steer;
+        double  leftSpeed;
+        double  rightSpeed;
+
+        moveCounts = (int)(distance * COUNTS_PER_INCH);
+        newLeftTarget = left_back_drive.getCurrentPosition() + moveCounts;
+        newRightTarget = right_back_drive.getCurrentPosition() + moveCounts;
+
+        while (linearOpMode.opModeIsActive() && (Math.abs(newLeftTarget-left_back_drive.getCurrentPosition())>ENCODER_THRESHOLD
+                || Math.abs(newRightTarget-right_back_drive.getCurrentPosition())>ENCODER_THRESHOLD) ) {
+
+
+
+            left_back_drive.setPower(driveSpeed + steeringSpeed);
+            left_front_drive.setPower(driveSpeed + steeringSpeed);
+            right_back_drive.setPower(driveSpeed - steeringSpeed);
+            right_front_drive.setPower(driveSpeed - steeringSpeed);
+
+        }
+
+
     }
 
 
@@ -517,10 +562,11 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
      *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
      *                   If a relative angle is required, add/subtract from current heading.
      */
-    public void gyroTurn (  double speed, double angle) {
-        turn_PID.reset();
-        turn_PID.setSetpoint(angle);
-        turn_PID.setOutputRange(-speed,speed);
+    public void gyroTurn ( double speed, double angle) {
+        robotPID.reset();
+        robotPID.setContinuous(true);
+        robotPID.setSetpoint(angle);
+        robotPID.setOutputRange(-speed,speed);
 
         boolean doneTurning = false;
 
@@ -532,8 +578,16 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
              doneTurning = onHeading(angle);
              if(!doneTurning){
                  etime.reset();
+             } else {
+                 break;
              }
         }
+
+        left_front_drive.setPower(0);
+        left_back_drive.setPower(0);
+        right_front_drive.setPower(0);
+        right_back_drive.setPower(0);
+
     }
 
     /**
@@ -548,10 +602,10 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
      */
     public void gyroHold( double speed, double angle, double holdTime) {
 
-        turn_PID.reset();
-        turn_PID.setSetpoint(angle);
-        turn_PID.setOutputRange(-speed,speed);
-        turn_PID.setDeadband(HEADING_THRESHOLD);
+        robotPID.reset();
+        robotPID.setSetpoint(angle);
+        robotPID.setOutputRange(-speed,speed);
+        robotPID.setDeadband(HEADING_THRESHOLD);
 
         ElapsedTime holdTimer = new ElapsedTime();
 
@@ -583,22 +637,22 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         double motorSpeed;
         gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-        motorSpeed = turn_PID.calculate(gyro_angle.firstAngle);
+        motorSpeed = robotPID.calculate(gyro_angle.firstAngle);
 
         // Send desired speeds to motors.
-        left_front_drive.setPower(-motorSpeed);
-        left_back_drive.setPower(-motorSpeed);
-        right_front_drive.setPower(motorSpeed);
-        right_back_drive.setPower(motorSpeed);
+        left_front_drive.setPower(motorSpeed);
+        left_back_drive.setPower(motorSpeed);
+        right_front_drive.setPower(-motorSpeed);
+        right_back_drive.setPower(-motorSpeed);
 
         // Display it for the driver.
         telemetry.addData("Target", "%5.2f", angle);
-        telemetry.addData("Err/Angle", "%5.2f:%5.2f", turn_PID.getError(),gyro_angle.firstAngle);
-        telemetry.addData("Coef ", turn_PID.getState());
+        telemetry.addData("Err/Angle", "%5.2f:%5.2f", robotPID.getError(),gyro_angle.firstAngle);
+        telemetry.addData("Coef ", robotPID.getState());
         telemetry.addData("Speed.", "%5.2f:%5.2f", -motorSpeed, motorSpeed);
         telemetry.update();
 
-        return turn_PID.onTarget(HEADING_THRESHOLD);
+        return robotPID.onTarget(HEADING_THRESHOLD);
     }
 
     /**
@@ -607,19 +661,19 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
      * @return  error angle: Degrees in the range +/- 180. Centered on the robot's frame of reference
      *          +ve error means the robot should turn LEFT (CCW) to reduce error.
      */
-    public double getError(double targetAngle) {
-
-        double robotError;
-
-        // calculate error in -179 to +180 range  (
-        //robotError = targetAngle - gyro.getIntegratedZValue();
-        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        robotError = targetAngle - gyro_angle.firstAngle;
-
-        while (robotError > 180)  robotError -= 360;
-        while (robotError <= -180) robotError += 360;
-        return robotError;
-    }
+//    public double getError(double targetAngle) {
+//
+//        double robotError;
+//
+//        // calculate error in -179 to +180 range  (
+//        //robotError = targetAngle - gyro.getIntegratedZValue();
+//        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//        robotError = targetAngle - gyro_angle.firstAngle;
+//
+//        while (robotError > 180)  robotError -= 360;
+//        while (robotError <= -180) robotError += 360;
+//        return robotError;
+//    }
 
 //    public double getErrorUltra(double targetDistance, boolean isBack) {
 //

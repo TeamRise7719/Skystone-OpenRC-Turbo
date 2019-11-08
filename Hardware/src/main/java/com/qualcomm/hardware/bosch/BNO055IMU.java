@@ -354,7 +354,7 @@ public interface BNO055IMU
          * Step the algorithm as a result of the stimulus of new acceleration data.
          * @param linearAcceleration  the acceleration as just reported by the IMU
          */
-        void update(Acceleration linearAcceleration);
+        public void update(Acceleration linearAcceleration);
         }
 
     //----------------------------------------------------------------------------------------------
