@@ -21,13 +21,13 @@ public class PIDTest extends RISELinearOpMode {
 
             if (gamepad1.x) {
 
-                enc.gyroDrive(enc.DRIVE_SPEED,24, 0, true);
+                enc.steeringDrive(18, true);
             }
             if (gamepad1.y) {
-                enc.gyroTurn(enc.TURN_SPEED,90);
+                enc.steeringDrive(-12, true);
             }
             if (gamepad1.b) {
-                enc.gyroTurn(enc.TURN_SPEED,30);
+                enc.steeringDrive(48, true);
             }
         }
     }
