@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.DriveWheelBasedPurePursuit;
 
+import com.qualcomm.ftccommon.UpdateUI;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementTurn;
 import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementX;
 import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementY;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.telemetry;
 
 /**
  * Created by Sean Cardosi on 11/6/2019
@@ -84,5 +86,16 @@ public class DriveWheelPurePursuitDrivetrain {
         lr.setPower(lrPower);
         rf.setPower(rfPower);
         rr.setPower(rrPower);
+
+        telemetry.addData("MotorPowers",
+                "   |lf------------rf|\n" +
+                "|%d|----------------|%d|\n" +
+                "   |                |\n" +
+                "   |                |\n" +
+                "   |                |\n" +
+                "|%d|lr------------rr|%d|\n" +
+                "   |----------------|\n",
+                lfPower, rfPower, lrPower, rrPower);//Sorry Evan
+        telemetry.update();
     }
 }
