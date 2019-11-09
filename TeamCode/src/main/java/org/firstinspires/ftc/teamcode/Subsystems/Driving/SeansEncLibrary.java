@@ -59,12 +59,12 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
 
     private static  double     P_TURN_COEFF            = 0.03;//.007     // Larger is more responsive, but also less stable
-    private static  double     I_TURN_COEFF            = 0.001;//.00001   // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0.00004;//.000003     // Larger is more responsive, but also less stable
+    private static  double     I_TURN_COEFF            = 0.0015;//.00001   // Larger is more responsive, but also less stable
+    private static  double     D_TURN_COEFF            = 0.000075;//.000003     // Larger is more responsive, but also less stable
 
 
     private static final double     P_DRIVE_COEFF           = 0.0005;     // Larger is more responsive, but also less stable
-    private static final double     I_DRIVE_COEFF           = 0.0000025;     // Larger is more responsive, but also less stable
+    private static final double     I_DRIVE_COEFF           = 0.000005;     // Larger is more responsive, but also less stable
     private static final double     D_DRIVE_COEFF           = 0.0000006;     // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
@@ -165,7 +165,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
         int encLeft;
         int encRight;
-        ElapsedTime etime = new ElapsedTime();
+        ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         etime.reset();
 
 
@@ -187,10 +187,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         int sum = 0;
 
         while (linearOpMode.opModeIsActive()) {
-//            telemetry.addData("newLeftTarger","%s",newLeftTarget);
-//            telemetry.addData("left_back_drive","%s",left_back_drive.getCurrentPosition());
-//            telemetry.addData("newLeftTarget-left_back.drive","%s",newLeftTarget-left_back_drive.getCurrentPosition());
-//            telemetry.update();
+
             sum++;
             if((((Math.abs(newLeftTarget-left_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD)
                     && ((((Math.abs(newRightTarget-right_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD))))){
@@ -243,20 +240,20 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     public void gyroTurn ( double speed, double angle) {
         turnPID.reset();
         turnPID.setContinuous(true);
-        turnPID.setSetpoint(angle);
+        turnPID.setSetpoint(-angle);
         turnPID.setOutputRange(-speed,speed);
+
+
 
         boolean doneTurning = false;
 
-        ElapsedTime etime = new ElapsedTime();
+        ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         etime.reset();
 
         // keep looping while we are still active, and not on heading.
-        while (linearOpMode.opModeIsActive() && etime.time()<0.35) {
+        while (linearOpMode.opModeIsActive() && etime.time()<3.5) {
              doneTurning = onHeading(angle);
-             if(!doneTurning){
-                 etime.reset();
-             } else {
+             if(doneTurning){
                  break;
              }
         }

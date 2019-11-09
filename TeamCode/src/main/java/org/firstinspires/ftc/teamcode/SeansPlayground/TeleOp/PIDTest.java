@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Driving.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot.RISELinearOpMode;
 
 @TeleOp(name = "TestPID",group = "Testing" )
-public class PIDTest extends RISELinearOpMode {
+public class PIDTest extends LinearOpMode {
 
     SeansEncLibrary enc;
     public void runOpMode() throws InterruptedException {
@@ -17,14 +17,15 @@ public class PIDTest extends RISELinearOpMode {
 
         waitForStart();
 
+        //As long as the opMode is on, the loop will not break
         while (opModeIsActive()) {
 
             if (gamepad1.x) {
 
-                enc.steeringDrive(24, true);
+                enc.steeringDrive(24, false);
             }
             if (gamepad1.y) {
-                enc.steeringDrive(-12, true);
+                enc.steeringDrive(-12, false);
             }
             if (gamepad1.b) {
                 enc.gyroTurn(enc.TURN_SPEED, 90);
