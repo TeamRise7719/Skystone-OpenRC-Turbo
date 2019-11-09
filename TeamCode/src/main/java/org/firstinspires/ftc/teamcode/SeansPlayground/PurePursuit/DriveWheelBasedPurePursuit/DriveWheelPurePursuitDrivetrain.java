@@ -87,7 +87,7 @@ public class DriveWheelPurePursuitDrivetrain {
         rf.setPower(rfPower);
         rr.setPower(rrPower);
 
-        telemetry.addData("MotorPowers",
+        telemetry.addData("MotorPowers\n",
                 "   |lf------------rf|\n" +
                 "|%d|----------------|%d|\n" +
                 "   |                |\n" +
