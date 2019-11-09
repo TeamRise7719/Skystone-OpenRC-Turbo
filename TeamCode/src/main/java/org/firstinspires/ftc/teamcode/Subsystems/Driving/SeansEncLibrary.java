@@ -42,11 +42,10 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 //    I2CXL ultrasonicFront;
 //    I2CXL ultrasonicBack;
 
-    private static final double     COUNTS_PER_MOTOR_REV    = 537.6;
-    private static final double     EXTERNAL_GEAR_RATIO    = (25/32);     // This is < 1.0 if geared UP
-    private static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
-    private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * EXTERNAL_GEAR_RATIO) /
-            (WHEEL_DIAMETER_INCHES * Math.PI);
+    public double     COUNTS_PER_MOTOR_REV    = 537.6;
+    public double     EXTERNAL_GEAR_RATIO     = 0.78125;     // This is < 1.0 if geared UP
+    public double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
+    public double     COUNTS_PER_INCH         = ((COUNTS_PER_MOTOR_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * 3.1415));
 
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
@@ -55,18 +54,18 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
-    private static final double     HEADING_THRESHOLD       = 0.05;      // As tight as we can make it with an integer gyro
-    private static final int     ENCODER_THRESHOLD       = 5;      // As tight as we can make it with an integer gyro
+    public static final double     HEADING_THRESHOLD       = 0.05;      // As tight as we can make it with an integer gyro
+    public static final int     ENCODER_THRESHOLD       = 20;      // As tight as we can make it with an integer gyro
 
 
-    private static  double     P_TURN_COEFF            = 0.04;//.007     // Larger is more responsive, but also less stable
+    private static  double     P_TURN_COEFF            = 0.03;//.007     // Larger is more responsive, but also less stable
     private static  double     I_TURN_COEFF            = 0.001;//.00001   // Larger is more responsive, but also less stable
     private static  double     D_TURN_COEFF            = 0.00004;//.000003     // Larger is more responsive, but also less stable
 
 
-    private static final double     P_DRIVE_COEFF           = 0.04;     // Larger is more responsive, but also less stable
-    private static final double     I_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
-    private static final double     D_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
+    private static final double     P_DRIVE_COEFF           = 0.0005;     // Larger is more responsive, but also less stable
+    private static final double     I_DRIVE_COEFF           = 0.0000025;     // Larger is more responsive, but also less stable
+    private static final double     D_DRIVE_COEFF           = 0.0000006;     // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
@@ -150,40 +149,51 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     public void steeringDrive(double distance,
                               boolean steeringToggle){
 
-        double steeringSpeed;
-        double  leftDriveSpeed;
-        double  rightDriveSpeed;
+        distance = -distance;
 
-        int moveCounts = (int)(distance * COUNTS_PER_INCH);
+        double steeringSpeed;
+        double leftDriveSpeed;
+        double rightDriveSpeed;
+
+        leftDrivingPID.reset();
+        rightDrivingPID.reset();
+        turnPID.reset();
+
+        int moveCounts = ((int)(distance * COUNTS_PER_INCH));
         int newLeftTarget = left_back_drive.getCurrentPosition() + moveCounts;
         int newRightTarget = right_back_drive.getCurrentPosition() + moveCounts;
 
         int encLeft;
         int encRight;
+        ElapsedTime etime = new ElapsedTime();
+        etime.reset();
 
-        turnPID.reset();
+
         turnPID.setContinuous(true);
         gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         turnPID.setSetpoint(gyro_angle.firstAngle);
-        turnPID.setOutputRange(-0.2,0.2);
+        turnPID.setOutputRange(-0.6,0.6);
 
-        leftDrivingPID.reset();
+
         leftDrivingPID.setContinuous(false);
         leftDrivingPID.setSetpoint(newLeftTarget);
         leftDrivingPID.setOutputRange(-0.8,0.8);
 
 
-        rightDrivingPID.reset();
         rightDrivingPID.setContinuous(false);
         rightDrivingPID.setSetpoint(newRightTarget);
         rightDrivingPID.setOutputRange(-0.8,0.8);
 
         int sum = 0;
-        while (linearOpMode.opModeIsActive()) {
-            sum++;
-            if((Math.abs(newLeftTarget-left_back_drive.getCurrentPosition())>ENCODER_THRESHOLD
-                    && (Math.abs(newRightTarget-right_back_drive.getCurrentPosition())>ENCODER_THRESHOLD))){
 
+        while (linearOpMode.opModeIsActive()) {
+//            telemetry.addData("newLeftTarger","%s",newLeftTarget);
+//            telemetry.addData("left_back_drive","%s",left_back_drive.getCurrentPosition());
+//            telemetry.addData("newLeftTarget-left_back.drive","%s",newLeftTarget-left_back_drive.getCurrentPosition());
+//            telemetry.update();
+            sum++;
+            if((((Math.abs(newLeftTarget-left_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD)
+                    && ((((Math.abs(newRightTarget-right_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD))))){
                 break;
             }
 
@@ -208,11 +218,11 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
             telemetry.addData("LErr/RErr", "%s:%s",newLeftTarget - encLeft, newRightTarget - encRight);
             telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(),gyro_angle.firstAngle);
-//            telemetry.addData("LSpd/RSpd/Steer", "%d:%d:%d", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
+            telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
             telemetry.update();
         }
-        telemetry.addData("Loop total","%s",sum);
-        telemetry.update();
+//        telemetry.addData("Loop total","%s",sum);
+//        telemetry.update();
         stop_all_motors();
 
     }

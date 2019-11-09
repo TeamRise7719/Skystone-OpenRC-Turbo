@@ -21,7 +21,7 @@ public class PIDTest extends RISELinearOpMode {
 
             if (gamepad1.x) {
 
-                enc.steeringDrive(18, true);
+                enc.steeringDrive(24, true);
             }
             if (gamepad1.y) {
                 enc.steeringDrive(-12, true);
