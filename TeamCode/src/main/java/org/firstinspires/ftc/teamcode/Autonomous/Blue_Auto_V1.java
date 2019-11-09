@@ -37,16 +37,16 @@ public class Blue_Auto_V1 extends LinearOpMode {
 
         }
 
-        //moves toward skyblock
-        enc.gyroDrive(0.5,32, 0,false);
-        //vision code goes here
-        //intakes block
-        component.intakeStone();
-        sleep(1900);
-        //move to toward bridge
-        enc.gyroDrive(0.5,-18,0,false);
-        enc.gyroHold(0.5,45,2.5);
-        enc.gyroDrive(0.5,27,0,false);
+//        //moves toward skyblock
+//        enc.gyroDrive(0.5,32, 0,false);
+//        //vision code goes here
+//        //intakes block
+//        component.intakeStone();
+//        sleep(1900);
+//        //move to toward bridge
+//        enc.gyroDrive(0.5,-18,0,false);
+//        enc.gyroHold(0.5,45,2.5);
+//        enc.gyroDrive(0.5,27,0,false);
 
 
 

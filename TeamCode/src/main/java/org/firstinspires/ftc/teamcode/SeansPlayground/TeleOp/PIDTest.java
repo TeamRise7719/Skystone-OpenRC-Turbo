@@ -4,9 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.SeansEncLibrary;
+import org.firstinspires.ftc.teamcode.Subsystems.Robot.RISELinearOpMode;
 
 @TeleOp(name = "TestPID",group = "Testing" )
-public class PIDTest extends LinearOpMode {
+public class PIDTest extends RISELinearOpMode {
 
     SeansEncLibrary enc;
     public void runOpMode() throws InterruptedException {
@@ -20,14 +21,16 @@ public class PIDTest extends LinearOpMode {
 
             if (gamepad1.x) {
 
-                enc.gyroDrive(enc.TURN_SPEED,24.5,0, false);
+                enc.steeringDrive(18, true);
             }
             if (gamepad1.y) {
-                enc.gyroTurn(enc.DRIVE_SPEED,90);
+                enc.steeringDrive(-12, true);
             }
             if (gamepad1.b) {
-                enc.gyroHold(enc.TURN_SPEED,180,30);
+                enc.gyroTurn(enc.TURN_SPEED, 90);
             }
+
+
         }
     }
 }

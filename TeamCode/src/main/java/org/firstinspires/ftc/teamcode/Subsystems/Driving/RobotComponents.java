@@ -77,56 +77,14 @@ public class RobotComponents {
      * @param gamepad The gamepad to be sued to control the upward movement of the lift
      */
     public void liftControlUp(Gamepad gamepad) {//For driver control
-
-        if (gamepad.y) {
-
-            liftL.setPower(1.0);
-            liftR.setPower(1.0);
-//            //Left side of lift
-//            if (liftL.getCurrentPosition() < liftMax) {//If liftL is below its max height, raise
-//                liftL.setPower(1.0);
-//            } else if (liftL.getCurrentPosition() >= liftMax) {//If liftL is above its max height, stop
-//                liftL.setPower(0.0);
-//            }
-//
-//            //Right side of lift
-//            if (liftR.getCurrentPosition() < liftMax) {//If liftR is below its max height, raise
-//                liftR.setPower(1.0);
-//            } else if (liftR.getCurrentPosition() >= liftMax) {//If liftR is above its max height, stop
-//                liftR.setPower(0.0);
-//            }
-        } else {
-            liftStop();
-        }
+        liftL.setPower(gamepad.left_stick_y);
+        liftR.setPower(gamepad.left_stick_y);
     }
 
     /**
      * Uses a gamepad number to assign the downward movement of the lift to
      * @param gamepad The gamepad to be used to control the downward movement of the lift
      */
-    public void liftControlDown(Gamepad gamepad) {//For driver control
-
-        if (gamepad.a) {
-
-            liftL.setPower(-1);
-            liftR.setPower(-1);
-//            //Left side of lift
-//            if (liftL.getCurrentPosition() > liftMin) {//If liftL is above its min height, lower
-//                liftL.setPower(-1.0);
-//            } else if (liftL.getCurrentPosition() <= liftMin) {//If liftL is below its min height, stop
-//                liftL.setPower(0.0);
-//            }
-//
-//            //Right side of lift
-//            if (liftR.getCurrentPosition() > liftMin) {//If liftR is above its min height, lower
-//                liftR.setPower(-1.0);
-//            } else if (liftR.getCurrentPosition() <= liftMin) {//If liftR is below its min height, stop
-//                liftR.setPower(0.0);
-//            }
-        } else {
-            liftStop();
-        }
-    }
 
 
     /**
