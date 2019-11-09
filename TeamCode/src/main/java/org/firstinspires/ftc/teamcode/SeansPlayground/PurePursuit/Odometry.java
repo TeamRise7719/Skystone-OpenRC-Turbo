@@ -27,7 +27,7 @@ public class Odometry {
 
     double xLocation = 0.0;
     double yLocation = 0.0;
-    double distance;
+    double distance = 0.0;
     double changeRight = 0.0;
     double changeLeft = 0.0;
     double previousRightValue = 0.0;

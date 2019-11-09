@@ -26,7 +26,7 @@ public class DriveWheelOdometry {
 
     double xLocation = 0.0;
     double yLocation = 0.0;
-    double distance;
+    double distance = 0.0;
     double changeRight = 0.0;
     double changeLeft = 0.0;
     double previousRightValue = 0.0;
@@ -71,6 +71,16 @@ public class DriveWheelOdometry {
 
         telemetry = tel;
     }
+    public void init () {
+
+        xLocation = 0.0;
+        yLocation = 0.0;
+        distance = 0.0;
+        changeRight = 0.0;
+        changeLeft = 0.0;
+        previousRightValue = 0.0;
+        previousLeftValue = 0.0;
+    }
 
     /*
      * Updates the previous encoder values..
@@ -90,10 +100,12 @@ public class DriveWheelOdometry {
         changeLeft = ((lr.getCurrentPosition() + lf.getCurrentPosition()) / 2.0) - previousLeftValue;
 
         distance = (changeRight + changeLeft) / 2.0;
-        xLocation += (distance * Math.cos(angles.firstAngle)) * COUNTS_PER_CM;
-        yLocation += (distance * Math.sin(angles.firstAngle)) * COUNTS_PER_CM;
+        xLocation += (distance * Math.cos(angles.firstAngle));// * COUNTS_PER_CM;
+        yLocation += (distance * Math.sin(angles.firstAngle));// * COUNTS_PER_CM;
 
-        telemetry.addData("Location in CM: ", "%d:%d", xLocation, yLocation);
+//        telemetry.addData("Location in CM: ", "(%d,%d)", xLocation, yLocation);
+        telemetry.addData("xLocation", xLocation);
+        telemetry.addData("yLocation", yLocation);
 
         previousValues();
     }

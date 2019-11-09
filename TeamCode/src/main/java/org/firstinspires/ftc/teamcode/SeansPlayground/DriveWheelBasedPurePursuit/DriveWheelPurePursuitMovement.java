@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.SeansPlayground.DriveWheelBasedPurePursui
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Hardware;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -37,13 +38,11 @@ public class DriveWheelPurePursuitMovement {
     static double movementTurn = 0.0;
 
     private static DriveWheelPurePursuitDrivetrain pwr;
-    private static DriveWheelOdometry odometry;
+    public static DriveWheelOdometry odometry;
 
     public DriveWheelPurePursuitMovement(Telemetry tel, HardwareMap hardwareMap) {
         telemetry = tel;
 
-        pwr = new DriveWheelPurePursuitDrivetrain(hardwareMap);
-        odometry = new DriveWheelOdometry(hardwareMap, tel);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit            = BNO055IMU.AngleUnit.RADIANS;
@@ -56,6 +55,14 @@ public class DriveWheelPurePursuitMovement {
 
         gyro.initialize(parameters);
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+    }
+    public void init(HardwareMap hardwareMap, Telemetry tel) {
+        pwr = new DriveWheelPurePursuitDrivetrain(hardwareMap);
+        odometry = new DriveWheelOdometry(hardwareMap, tel);
+        odometry.init();
+        movementX = 0.0;
+        movementY = 0.0;
+        movementTurn = 0.0;
     }
 
 //    private static CurvePoint extendLine(CurvePoint firstPoint, CurvePoint secondPoint, double distance) {
@@ -142,7 +149,7 @@ public class DriveWheelPurePursuitMovement {
 
         double distanceToTarget = Math.hypot(x - odometry.xLocation, y - odometry.yLocation);
 
-        double absoluteAngleToTarget = Math.atan2(y - odometry.yLocation, x - odometry.xLocation);//WorldPosition is the robots starting position and should be updated to the robots current position throughout OpMode
+        double absoluteAngleToTarget = Math.atan2(y - odometry.yLocation, x - odometry.xLocation);
 
         double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (angles.firstAngle - Math.toRadians(90)));
 

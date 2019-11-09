@@ -15,6 +15,10 @@ public class DriveWheelPurePursuitDrivetrain {
 
     public static DcMotor lf, lr, rf, rr;
     private final HardwareMap hardwareMap;
+    double lfPower = 0.0;
+    double lrPower = 0.0;
+    double rfPower = 0.0;
+    double rrPower = 0.0;
 
 
     public DriveWheelPurePursuitDrivetrain(final HardwareMap _hardwareMap) {
@@ -27,8 +31,8 @@ public class DriveWheelPurePursuitDrivetrain {
         lf.setDirection(DcMotor.Direction.FORWARD);
         lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         rr = hardwareMap.dcMotor.get("rightB");
         rf = hardwareMap.dcMotor.get("rightF");
@@ -36,21 +40,27 @@ public class DriveWheelPurePursuitDrivetrain {
         rf.setDirection(DcMotor.Direction.REVERSE);
         rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    double lfPower = 0.0;
-    double lrPower = 0.0;
-    double rfPower = 0.0;
-    double rrPower = 0.0;
+    public void init() {
+        lfPower = 0.0;
+        lrPower = 0.0;
+        rfPower = 0.0;
+        rrPower = 0.0;
+        lr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 
     public void ApplyPower() {
 
-        lfPower = movementY - movementTurn + movementX*1.5;
-        lrPower = movementY - movementTurn - movementX*1.5;
-        rfPower = -movementY - movementTurn + movementX*1.5;
-        rrPower = -movementY - movementTurn - movementX*1.5;
+        lfPower = movementY - movementTurn + movementX*1.5;//Maybe *1.5 movementY - movementTurn + movementX
+        lrPower = movementY - movementTurn - movementX*1.5;//movementY - movementTurn - movementX
+        rfPower = movementY - movementTurn + movementX*1.5;//-movementY - movementTurn + movementX
+        rrPower = -movementY - movementTurn - movementX*1.5;//-movementY - movementTurn - movementX
 
         //find the maximum of the powers
         double maxRawPower = Math.abs(lfPower);
@@ -70,7 +80,7 @@ public class DriveWheelPurePursuitDrivetrain {
         rrPower *= scaleDownAmount;
         rfPower *= scaleDownAmount;
 
-        lf.setPower(lfPower);
+        lf.setPower(lfPower);//Power is negative because location was updated in the wrong direction (negative)
         lr.setPower(lrPower);
         rf.setPower(rfPower);
         rr.setPower(rrPower);

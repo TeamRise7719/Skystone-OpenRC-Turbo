@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.SeansPlayground.Subsystems.RobotMedia;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 
@@ -13,8 +14,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 public class BasicTeleOp extends OpMode {
 
     private Drivetrain robot;
-
     private RobotComponents component;
+    private RobotMedia media;//:D
 
     private boolean isReady = false;
 
@@ -28,6 +29,8 @@ public class BasicTeleOp extends OpMode {
         robot.runUsingEncoders();
 
         component = new RobotComponents(hardwareMap, telemetry);
+
+        media = new RobotMedia(hardwareMap);//:D
 
         isReady = true;
     }
@@ -90,5 +93,9 @@ public class BasicTeleOp extends OpMode {
 //        }
 //        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
+
+        //----------------------------------------------=+(Media)+=----------------------------------------------\\
+        media.playSounds(gamepad1, hardwareMap);//:D
+        //----------------------------------------------=+(Media)+=----------------------------------------------\\
     }
 }
