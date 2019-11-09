@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.DriveWheelBasedPurePursuit;
+package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.DriveWheelBasedPurePursuit;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;

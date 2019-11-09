@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.Math;
+package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.Math;
 
 //javadoc:Point_
 public class Point {

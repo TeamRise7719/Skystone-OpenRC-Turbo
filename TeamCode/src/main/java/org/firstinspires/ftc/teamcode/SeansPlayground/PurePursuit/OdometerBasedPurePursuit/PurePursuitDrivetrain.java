@@ -1,27 +1,23 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.DriveWheelBasedPurePursuit;
+package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import static org.firstinspires.ftc.teamcode.SeansPlayground.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementTurn;
-import static org.firstinspires.ftc.teamcode.SeansPlayground.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementX;
-import static org.firstinspires.ftc.teamcode.SeansPlayground.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementY;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.movementTurn;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.movementX;
+import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.movementY;
 
 /**
- * Created by Sean Cardosi on 11/6/2019
+ * Created by Sean Cardosi.
  * PurePursuitDrivetrain is the drivetrain class to only be used with Pure Pursuit.
  */
-public class DriveWheelPurePursuitDrivetrain {
+public class PurePursuitDrivetrain {
 
     public static DcMotor lf, lr, rf, rr;
     private final HardwareMap hardwareMap;
-    double lfPower = 0.0;
-    double lrPower = 0.0;
-    double rfPower = 0.0;
-    double rrPower = 0.0;
 
 
-    public DriveWheelPurePursuitDrivetrain(final HardwareMap _hardwareMap) {
+    public PurePursuitDrivetrain(final HardwareMap _hardwareMap) {
         hardwareMap = _hardwareMap;
 
         //configuring the components
@@ -31,8 +27,8 @@ public class DriveWheelPurePursuitDrivetrain {
         lf.setDirection(DcMotor.Direction.FORWARD);
         lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         rr = hardwareMap.dcMotor.get("rightB");
         rf = hardwareMap.dcMotor.get("rightF");
@@ -40,27 +36,21 @@ public class DriveWheelPurePursuitDrivetrain {
         rf.setDirection(DcMotor.Direction.REVERSE);
         rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public void init() {
-        lfPower = 0.0;
-        lrPower = 0.0;
-        rfPower = 0.0;
-        rrPower = 0.0;
-        lr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
+    double lfPower = 0.0;
+    double lrPower = 0.0;
+    double rfPower = 0.0;
+    double rrPower = 0.0;
 
     public void ApplyPower() {
 
-        lfPower = movementY - movementTurn + movementX*1.5;//Maybe *1.5 movementY - movementTurn + movementX
-        lrPower = movementY - movementTurn - movementX*1.5;//movementY - movementTurn - movementX
-        rfPower = movementY - movementTurn + movementX*1.5;//-movementY - movementTurn + movementX
-        rrPower = -movementY - movementTurn - movementX*1.5;//-movementY - movementTurn - movementX
+        lfPower = movementY - movementTurn + movementX*1.5;
+        lrPower = movementY - movementTurn - movementX*1.5;
+        rfPower = -movementY - movementTurn + movementX*1.5;
+        rrPower = -movementY - movementTurn - movementX*1.5;
 
         //find the maximum of the powers
         double maxRawPower = Math.abs(lfPower);
@@ -80,7 +70,7 @@ public class DriveWheelPurePursuitDrivetrain {
         rrPower *= scaleDownAmount;
         rfPower *= scaleDownAmount;
 
-        lf.setPower(lfPower);//Power is negative because location was updated in the wrong direction (negative)
+        lf.setPower(lfPower);
         lr.setPower(lrPower);
         rf.setPower(rfPower);
         rr.setPower(rrPower);
