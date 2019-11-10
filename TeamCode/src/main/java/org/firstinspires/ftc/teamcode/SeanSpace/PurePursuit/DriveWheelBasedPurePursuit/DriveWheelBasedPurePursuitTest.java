@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.DriveWheelBasedPurePursuit;
+package org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.DriveWheelBasedPurePursuit;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 
-import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.CurvePoint;
+import org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.CurvePoint;
 
 import java.util.ArrayList;
 

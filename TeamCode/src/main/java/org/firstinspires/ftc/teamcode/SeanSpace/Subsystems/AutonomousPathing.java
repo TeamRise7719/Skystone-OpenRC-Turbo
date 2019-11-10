@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.Subsystems;
+package org.firstinspires.ftc.teamcode.SeanSpace.Subsystems;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.CurvePoint;
+import org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.CurvePoint;
 
-import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.followCurve;
+import static org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.followCurve;
 
 import java.util.ArrayList;
 

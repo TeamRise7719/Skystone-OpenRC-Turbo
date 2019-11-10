@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit;
+package org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit;
 
-import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.Math.Point;
+import org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.Math.Point;
 
 import java.util.ArrayList;
 

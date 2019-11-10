@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.DriveWheelBasedPurePursuit;
+package org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,23 +9,21 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.CurvePoint;
-import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.Math.Point;
-import org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath;
+import org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.Math.Point;
 
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.AngleWrap;
-import static org.firstinspires.ftc.teamcode.SeansPlayground.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.lineCircleIntersection;
+import static org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.AngleWrap;
+import static org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.lineCircleIntersection;
 
 /**
- * Created by Sean Cardosi on 11/6/2019
+ * Created by Sean Cardosi.
  * PurePursuitMovement is a class containing all of the functions to find and
  * provide movement to the drivetrain while following a set of given points.
  *
  * EVERYTHING IS CURRENTLY IN CENTIMETERS!!! ALL GRYO ANGLES ARE IN RADIANS!!!
  */
-public class DriveWheelPurePursuitMovement {
+public class PurePursuitMovement {
 
     static Telemetry telemetry;
 
@@ -36,12 +34,14 @@ public class DriveWheelPurePursuitMovement {
     static double movementY = 0.0;
     static double movementTurn = 0.0;
 
-    private static DriveWheelPurePursuitDrivetrain pwr;
-    public static DriveWheelOdometry odometry;
+    private static PurePursuitDrivetrain pwr;
+    private static Odometry odometry;
 
-    public DriveWheelPurePursuitMovement(Telemetry tel, HardwareMap hardwareMap) {
+    public PurePursuitMovement(Telemetry tel, HardwareMap hardwareMap) {
         telemetry = tel;
 
+        pwr = new PurePursuitDrivetrain(hardwareMap);
+        odometry = new Odometry(hardwareMap, tel);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit            = BNO055IMU.AngleUnit.RADIANS;
@@ -54,14 +54,6 @@ public class DriveWheelPurePursuitMovement {
 
         gyro.initialize(parameters);
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-    }
-    public void init(HardwareMap hardwareMap, Telemetry tel) {
-        pwr = new DriveWheelPurePursuitDrivetrain(hardwareMap);
-        odometry = new DriveWheelOdometry(hardwareMap, tel);
-        odometry.init();
-        movementX = 0.0;
-        movementY = 0.0;
-        movementTurn = 0.0;
     }
 
 //    private static CurvePoint extendLine(CurvePoint firstPoint, CurvePoint secondPoint, double distance) {
@@ -148,7 +140,7 @@ public class DriveWheelPurePursuitMovement {
 
         double distanceToTarget = Math.hypot(x - odometry.xLocation, y - odometry.yLocation);
 
-        double absoluteAngleToTarget = Math.atan2(y - odometry.yLocation, x - odometry.xLocation);
+        double absoluteAngleToTarget = Math.atan2(y - odometry.yLocation, x - odometry.xLocation);//WorldPosition is the robots starting position and should be updated to the robots current position throughout OpMode
 
         double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (angles.firstAngle - Math.toRadians(90)));
 
