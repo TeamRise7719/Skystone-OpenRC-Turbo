@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.SeanSpace.ArchivedProjects.PIDTuning;
+package org.firstinspires.ftc.teamcode.SeansSpace.ArchivedProjects.PIDTuning;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

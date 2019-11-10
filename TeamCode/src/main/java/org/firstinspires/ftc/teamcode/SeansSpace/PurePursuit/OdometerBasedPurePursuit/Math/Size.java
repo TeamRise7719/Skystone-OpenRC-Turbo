@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.Math;
+package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.Math;
 
 //javadoc:Size_
 public class Size {

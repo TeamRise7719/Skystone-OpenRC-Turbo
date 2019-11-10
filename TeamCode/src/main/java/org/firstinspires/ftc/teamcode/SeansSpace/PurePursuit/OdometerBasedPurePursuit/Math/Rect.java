@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.Math;
+package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.Math;
 
 //javadoc:Rect_
 public class Rect {

@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.DriveWheelBasedPurePursuit;
+package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import static org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementTurn;
-import static org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementX;
-import static org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementY;
-import static org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.telemetry;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementTurn;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementX;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementY;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.telemetry;
 
 /**
  * Created by Sean Cardosi on 11/6/2019

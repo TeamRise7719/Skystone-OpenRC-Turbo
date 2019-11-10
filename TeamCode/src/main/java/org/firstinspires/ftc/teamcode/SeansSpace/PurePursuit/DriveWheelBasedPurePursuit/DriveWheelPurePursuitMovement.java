@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.DriveWheelBasedPurePursuit;
+package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,14 +9,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.CurvePoint;
-import org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.Math.Point;
-import org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.CurvePoint;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.Math.Point;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath;
 
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.AngleWrap;
-import static org.firstinspires.ftc.teamcode.SeanSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.lineCircleIntersection;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.AngleWrap;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.lineCircleIntersection;
 
 /**
  * Created by Sean Cardosi on 11/6/2019

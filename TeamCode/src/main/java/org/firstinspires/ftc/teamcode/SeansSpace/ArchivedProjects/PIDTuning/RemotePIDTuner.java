@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.SeanSpace.ArchivedProjects.PIDTuning;
+package org.firstinspires.ftc.teamcode.SeansSpace.ArchivedProjects.PIDTuning;
 
 import com.qualcomm.robotcore.eventloop.opmode.Archived;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
