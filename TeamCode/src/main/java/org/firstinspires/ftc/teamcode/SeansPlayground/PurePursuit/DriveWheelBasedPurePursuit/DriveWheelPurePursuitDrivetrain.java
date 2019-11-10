@@ -95,7 +95,7 @@ public class DriveWheelPurePursuitDrivetrain {
                 "   |                |\n" +
                 "|%d|lr------------rr|%d|\n" +
                 "   |----------------|\n",
-                lfPower, rfPower, lrPower, rrPower);//Sorry Evan
+                lfPower, rfPower, lrPower, rrPower);//Sorry Evan. I had to be done for my sake.
         telemetry.update();
     }
 }

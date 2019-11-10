@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansPlayground.TeleOp;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -29,6 +29,12 @@ public class PIDTest extends LinearOpMode {
             }
             if (gamepad1.b) {
                 enc.gyroTurn(enc.TURN_SPEED, 90);
+            }
+            if (gamepad2.b) {//GAMEPAD 2 Strafe left
+                enc.steeringStrafe(24, enc.LEFT, true);
+            }
+            if (gamepad2.x) {//GAMEPAD 2 Strafe right
+                enc.steeringStrafe(24,enc.RIGHT, true);
             }
 
 
