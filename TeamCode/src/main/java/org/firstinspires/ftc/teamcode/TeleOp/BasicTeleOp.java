@@ -2,17 +2,19 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.SeansPlayground.Subsystems.RobotMedia;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
-
+import com.qualcomm.robotcore.hardware.Servo;
 /*
  * Created by Sean Cardosi on 9/22/2019.
  */
 @TeleOp(name = "BasicTeleOp", group = "Drive")
 public class BasicTeleOp extends OpMode {
 
+    Servo lgrab , rgrab;
     private Drivetrain robot;
     private RobotComponents component;
     private RobotMedia media;//:D
@@ -24,6 +26,10 @@ public class BasicTeleOp extends OpMode {
     @Override
     public void init() {
 
+        lgrab = hardwareMap.servo.get("lgrab");
+        rgrab = hardwareMap.servo.get("rgrab");
+        rgrab.setDirection(Servo.Direction.REVERSE);
+
         //Initialize robot
         robot = new Drivetrain(hardwareMap, telemetry);
         robot.runUsingEncoders();
@@ -33,6 +39,12 @@ public class BasicTeleOp extends OpMode {
         media = new RobotMedia(hardwareMap);//:D
 
         isReady = true;
+
+
+            lgrab.setPosition(0.25);
+            rgrab.setPosition(0.25);
+
+
     }
 
     @Override
@@ -56,6 +68,15 @@ public class BasicTeleOp extends OpMode {
 
         if (gamepad1.x) {
             robot.resetHeading();
+        }
+
+        if (gamepad1.y) {
+            lgrab.setPosition(1);
+            rgrab.setPosition(1);
+        }
+        if (gamepad1.a) {
+            lgrab.setPosition(0.25);
+            rgrab.setPosition(0.25);
         }
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
 

@@ -332,13 +332,13 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
 
 
-    /**
-     * getError determines the error between the target angle and the robot's current heading
-     * @param   targetAngle  Desired angle (relative to global reference established at last Gyro Reset).
-     * @return  error angle: Degrees in the range +/- 180. Centered on the robot's frame of reference
-     *          +ve error means the robot should turn LEFT (CCW) to reduce error.
-     */
-
+//    /**
+//     * getError determines the error between the target angle and the robot's current heading
+//     * @param   targetAngle  Desired angle (relative to global reference established at last Gyro Reset).
+//     * @return  error angle: Degrees in the range +/- 180. Centered on the robot's frame of reference
+//     *          +ve error means the robot should turn LEFT (CCW) to reduce error.
+//     */
+//
 //    public double getErrorUltra(double targetDistance, boolean isBack) {
 //
 //        double ultrasonicValue;
@@ -461,8 +461,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 //            right_front_drive.setPower(0);
 //        }
 //    }
-
-    //    public void gyroDrive ( double speed,
+//
+//        public void gyroDrive ( double speed,
 //                            double distance,
 //                            double angle,
 //                            boolean steeringToggle) {
@@ -526,31 +526,31 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 //                left_back_drive.setPower(-leftSpeed);
 //                left_front_drive.setPower(-leftSpeed);
 //                right_back_drive.setPower(-rightSpeed);
-//                right_front_drive.setPower(-rightSpeed);
+////                right_front_drive.setPower(-rightSpeed);
+////
+////                // Display drive status for the driver.
+////                telemetry.addData("Err/St",  "%5.1f/%5.1f",  error, steer);
+////                telemetry.addData("Target",  "%7d:%7d",      newLeftTarget,  newRightTarget);
+////                telemetry.addData("Actual",  "%7d:%7d",      left_back_drive.getCurrentPosition(),
+////                        right_back_drive.getCurrentPosition());
+////                telemetry.addData("Speed",   "%5.2f:%5.2f",  -leftSpeed, -rightSpeed);
+////                telemetry.update();
+////            }
+////
+////            // Stop all motion;
+////            left_back_drive.setPower(0);
+////            left_front_drive.setPower(0);
+////            right_back_drive.setPower(0);
+////            right_front_drive.setPower(0);
+////
+////            telemetry.addData("LErr/RErr", "%5.2f", angle);
+////            telemetry.addData("HeadingErr/CurrentHeading", "%5.2f:%5.2f", turnPID.getError(),gyro_angle.firstAngle);
+////            telemetry.addData("Coef ", turnPID.getState());
+//////            telemetry.addData("Speed.", "%5.2f:%5.2f", -motorSpeed, motorSpeed);
+////            telemetry.update();
+////
+////        }
+////    }
 //
-//                // Display drive status for the driver.
-//                telemetry.addData("Err/St",  "%5.1f/%5.1f",  error, steer);
-//                telemetry.addData("Target",  "%7d:%7d",      newLeftTarget,  newRightTarget);
-//                telemetry.addData("Actual",  "%7d:%7d",      left_back_drive.getCurrentPosition(),
-//                        right_back_drive.getCurrentPosition());
-//                telemetry.addData("Speed",   "%5.2f:%5.2f",  -leftSpeed, -rightSpeed);
-//                telemetry.update();
-//            }
 //
-//            // Stop all motion;
-//            left_back_drive.setPower(0);
-//            left_front_drive.setPower(0);
-//            right_back_drive.setPower(0);
-//            right_front_drive.setPower(0);
-//
-//            telemetry.addData("LErr/RErr", "%5.2f", angle);
-//            telemetry.addData("HeadingErr/CurrentHeading", "%5.2f:%5.2f", turnPID.getError(),gyro_angle.firstAngle);
-//            telemetry.addData("Coef ", turnPID.getState());
-////            telemetry.addData("Speed.", "%5.2f:%5.2f", -motorSpeed, motorSpeed);
-//            telemetry.update();
-//
-//        }
-//    }
-
-
 }
