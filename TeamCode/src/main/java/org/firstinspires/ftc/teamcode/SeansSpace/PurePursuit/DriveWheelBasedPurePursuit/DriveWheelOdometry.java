@@ -100,13 +100,22 @@ public class DriveWheelOdometry {
         changeLeft = ((lr.getCurrentPosition() + lf.getCurrentPosition()) / 2.0) - previousLeftValue;
 
         distance = (changeRight + changeLeft) / 2.0;
-        xLocation += (distance * Math.cos(angles.firstAngle));// * COUNTS_PER_CM;
-        yLocation += (distance * Math.sin(angles.firstAngle));// * COUNTS_PER_CM;
+        xLocation += (distance * Math.cos(angles.firstAngle - Math.toRadians(90)));// * COUNTS_PER_CM;
+        yLocation += (distance * Math.sin(angles.firstAngle - Math.toRadians(90)));// * COUNTS_PER_CM;
 
-//        telemetry.addData("Location in CM: ", "(%d,%d)", xLocation, yLocation);
         telemetry.addData("xLocation", xLocation);
         telemetry.addData("yLocation", yLocation);
 
         previousValues();
+    }
+
+    /**
+     * Allows you to manually change the robots position/location. By default it is (0,0).
+     * @param x The robots new x location.
+     * @param y The robots new y location.
+     */
+    public void RobotPosition(double x, double y) {
+        xLocation = x;
+        yLocation = y;
     }
 }

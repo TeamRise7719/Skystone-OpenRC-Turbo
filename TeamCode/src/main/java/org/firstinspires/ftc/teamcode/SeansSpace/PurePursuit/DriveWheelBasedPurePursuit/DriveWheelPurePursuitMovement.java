@@ -20,7 +20,7 @@ import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBase
 
 /**
  * Created by Sean Cardosi on 11/6/2019
- * PurePursuitMovement is a class containing all of the functions to find and
+ * DriveWheelPurePursuitMovement is a class containing all of the functions to find and
  * provide movement to the drivetrain while following a set of given points.
  *
  * EVERYTHING IS CURRENTLY IN CENTIMETERS!!! ALL GRYO ANGLES ARE IN RADIANS!!!

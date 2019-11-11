@@ -10,7 +10,7 @@ import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBa
 
 /**
  * Created by Sean Cardosi on 11/6/2019
- * PurePursuitDrivetrain is the drivetrain class to only be used with Pure Pursuit.
+ * DriveWheelPurePursuitDrivetrain is the drivetrain class to only be used with Pure Pursuit.
  */
 public class DriveWheelPurePursuitDrivetrain {
 
@@ -88,13 +88,13 @@ public class DriveWheelPurePursuitDrivetrain {
 
         telemetry.addData("MotorPowers\n",
                 "   |lf------------rf|\n" +
-                "|%d|----------------|%d|\n" +
+                "|%f|----------------|%f|\n" +
                 "   |                |\n" +
                 "   |                |\n" +
                 "   |                |\n" +
-                "|%d|lr------------rr|%d|\n" +
+                "|%f|lr------------rr|%f|\n" +
                 "   |----------------|\n",
-                lfPower, rfPower, lrPower, rrPower);//Sorry Evan. I had to be done for my sake.
+                lfPower, rfPower, lrPower, rrPower);//Sorry Evan.
         telemetry.update();
     }
 }

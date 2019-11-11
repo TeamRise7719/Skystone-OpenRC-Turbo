@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.opencv.core.Rect;
+
 @TeleOp(name = "DogeCV Skystone Detector Test", group = "DogeCV")
 public class DogeCVSkystoneDetectorTest extends OpMode {
 
