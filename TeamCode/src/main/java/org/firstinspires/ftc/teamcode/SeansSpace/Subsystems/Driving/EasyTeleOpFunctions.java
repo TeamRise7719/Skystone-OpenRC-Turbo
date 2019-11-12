@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.Subsystems;
+package org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Driving;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,6 +10,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
+/**
+ * @Author Sean Cardosi
+ * @Date 11/11/19
+ */
 
 public class EasyTeleOpFunctions {
 

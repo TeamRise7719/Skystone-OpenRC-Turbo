@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.RobotMedia;
+import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Memes.RobotMedia;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
-import com.qualcomm.robotcore.hardware.Servo;
+
 /*
  * Created by Sean Cardosi on 9/22/2019.
  */

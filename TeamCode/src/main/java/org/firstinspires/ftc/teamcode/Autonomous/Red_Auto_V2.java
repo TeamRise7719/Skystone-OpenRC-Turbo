@@ -3,16 +3,13 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.AutonomousPathing;
+import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Driving.AutonomousPathing;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.Transitioning.AutoTransitioner;
 import org.firstinspires.ftc.teamcode.Subsystems.VisionTargeting.SkystoneDetectionPhone;
-import org.firstinspires.ftc.teamcode.Subsystems.VisionTargeting.SkystoneDetectionWebcam;
 
 @Autonomous (name = "Red_Auto_V2" , group = "Autonomous" )
 public class Red_Auto_V2 extends LinearOpMode {

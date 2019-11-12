@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.RobotMedia;
+import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Memes.RobotMedia;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
-import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.EasyTeleOpFunctions;
+import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Driving.EasyTeleOpFunctions;
 
 import com.qualcomm.robotcore.hardware.Servo;
 /**
@@ -104,6 +104,7 @@ public class SeansTeleOp extends OpMode {
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
         media.playSounds(gamepad1, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
+
 
         //----------------------------------------------=+(EZ Drive)+=----------------------------------------------\\
 
