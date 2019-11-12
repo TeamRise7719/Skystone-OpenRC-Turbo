@@ -69,15 +69,6 @@ public class BasicTeleOp extends OpMode {
         if (gamepad1.x) {
             robot.resetHeading();
         }
-
-        if (gamepad1.y) {
-            lgrab.setPosition(1);
-            rgrab.setPosition(1);
-        }
-        if (gamepad1.a) {
-            lgrab.setPosition(0.25);
-            rgrab.setPosition(0.25);
-        }
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
 
 
@@ -92,31 +83,25 @@ public class BasicTeleOp extends OpMode {
         //----------------------------------------------=+(Intake)+=----------------------------------------------\\
 
 
-        //TODO: Check the correct encoder values for max and min. Check the correct motor directions
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
         component.liftControlUp(gamepad2);
-
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 
-//        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-//        if (gamepad1.dpad_left) {
-//            turn -= 0.05;
-//            component.rotate(yeet);
-//        } else if (gamepad1.dpad_right) {
-//            turn += 0.05;
-//            component.rotate(yeet);
-//        }
-//        if (gamepad1.y) {
-//            component.release();
-//        } else if (gamepad1.a) {
-//            component.grab();
-//        }
-//        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+        if (gamepad1.y) {
+            lgrab.setPosition(1);
+            rgrab.setPosition(1);
+        }
+        if (gamepad1.a) {
+            lgrab.setPosition(0.25);
+            rgrab.setPosition(0.25);
+        }
+        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-//        media.playSounds(gamepad1, hardwareMap);//:D
+        media.playSounds(gamepad1, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
     }
 }
