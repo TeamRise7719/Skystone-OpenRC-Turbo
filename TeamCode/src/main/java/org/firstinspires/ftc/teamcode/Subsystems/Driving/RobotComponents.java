@@ -34,7 +34,7 @@ public class RobotComponents {
         telemetry = _telemetry;
 
         intake = hardwareMap.dcMotor.get("intake");
-        intake.setDirection(DcMotor.Direction.REVERSE);
+        intake.setDirection(DcMotor.Direction.FORWARD);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         liftL = hardwareMap.dcMotor.get("liftL");
@@ -60,7 +60,7 @@ public class RobotComponents {
         intake.setPower(1);
     }
     public void ejectStone() {
-        intake.setPower(-1);
+        intake.setPower(-0.5);
     }
     public void stopStone() {
         intake.setPower(0.0);
