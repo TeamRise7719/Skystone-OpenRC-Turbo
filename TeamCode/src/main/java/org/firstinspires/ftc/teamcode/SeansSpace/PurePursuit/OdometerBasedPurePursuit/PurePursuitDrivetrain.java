@@ -3,9 +3,14 @@ package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPureP
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement;
+
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.movementTurn;
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.movementX;
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.movementY;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.telemetry;
+
+
 
 /**
  * Created by Sean Cardosi.
@@ -15,7 +20,10 @@ public class PurePursuitDrivetrain {
 
     public static DcMotor lf, lr, rf, rr;
     private final HardwareMap hardwareMap;
-
+    double lfPower = 0.0;
+    double lrPower = 0.0;
+    double rfPower = 0.0;
+    double rrPower = 0.0;
 
     public PurePursuitDrivetrain(final HardwareMap _hardwareMap) {
         hardwareMap = _hardwareMap;
@@ -40,17 +48,23 @@ public class PurePursuitDrivetrain {
         rf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    double lfPower = 0.0;
-    double lrPower = 0.0;
-    double rfPower = 0.0;
-    double rrPower = 0.0;
+    public void init() {
+        lfPower = 0.0;
+        lrPower = 0.0;
+        rfPower = 0.0;
+        rrPower = 0.0;
+        lr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);//This night need to be done in Odometry classes
+        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 
     public void ApplyPower() {
 
-        lfPower = movementY - movementTurn + movementX*1.5;
-        lrPower = movementY - movementTurn - movementX*1.5;
-        rfPower = -movementY - movementTurn + movementX*1.5;
-        rrPower = -movementY - movementTurn - movementX*1.5;
+        lfPower = movementX - movementTurn - movementY;//Maybe *1.5 movementY - movementTurn + movementX
+        lrPower = movementX - movementTurn + movementY;//movementY - movementTurn - movementX
+        rfPower = movementX + movementTurn + movementY;//-movementY - movementTurn + movementX
+        rrPower = movementX + movementTurn - movementY;//-movementY - movementTurn - movementX
 
         //find the maximum of the powers
         double maxRawPower = Math.abs(lfPower);
@@ -70,9 +84,20 @@ public class PurePursuitDrivetrain {
         rrPower *= scaleDownAmount;
         rfPower *= scaleDownAmount;
 
-        lf.setPower(lfPower);
+        lf.setPower(lfPower);//Power is negative because location was updated in the wrong direction (negative)
         lr.setPower(lrPower);
         rf.setPower(rfPower);
         rr.setPower(rrPower);
+
+        telemetry.addData("MotorPowers\n",
+                "   |lf------------rf|\n" +
+                        "|%f|----------------|%f|\n" +
+                        "   |                |\n" +
+                        "   |                |\n" +
+                        "   |                |\n" +
+                        "|%f|lr------------rr|%f|\n" +
+                        "   |----------------|\n",
+                lfPower, rfPower, lrPower, rrPower);//Sorry Evan.
+        telemetry.update();
     }
 }

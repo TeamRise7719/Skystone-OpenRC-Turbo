@@ -50,7 +50,7 @@ public class DriveWheelPurePursuitDrivetrain {
         lrPower = 0.0;
         rfPower = 0.0;
         rrPower = 0.0;
-        lr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);//This might need to be done in Odometry classes
         lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

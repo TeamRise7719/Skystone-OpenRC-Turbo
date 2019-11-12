@@ -14,8 +14,11 @@ import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBase
 @Autonomous(name = "Pure Pursuit Test", group = "Pure Pursuit")
 public class PurePursuitTest extends OpMode {
 
+    PurePursuitMovement movement;
     @Override
     public void init() {
+        movement = new PurePursuitMovement(telemetry, hardwareMap);
+        movement.init(hardwareMap, telemetry);
 
     }
 

@@ -57,6 +57,7 @@ public class DriveWheelPurePursuitMovement {
     }
     public void init(HardwareMap hardwareMap, Telemetry tel) {
         pwr = new DriveWheelPurePursuitDrivetrain(hardwareMap);
+        pwr.init();
         odometry = new DriveWheelOdometry(hardwareMap, tel);
         odometry.init();
         movementX = 0.0;

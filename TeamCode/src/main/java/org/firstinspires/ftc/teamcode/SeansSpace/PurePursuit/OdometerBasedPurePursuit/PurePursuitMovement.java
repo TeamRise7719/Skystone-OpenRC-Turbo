@@ -9,6 +9,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelOdometry;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitDrivetrain;
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.Math.Point;
 
 import java.util.ArrayList;
@@ -54,6 +56,16 @@ public class PurePursuitMovement {
 
         gyro.initialize(parameters);
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+    }
+
+    public void init(HardwareMap hardwareMap, Telemetry tel) {
+        pwr = new PurePursuitDrivetrain(hardwareMap);
+        pwr.init();
+        odometry = new Odometry(hardwareMap, tel);
+        odometry.init();
+        movementX = 0.0;
+        movementY = 0.0;
+        movementTurn = 0.0;
     }
 
 //    private static CurvePoint extendLine(CurvePoint firstPoint, CurvePoint secondPoint, double distance) {
