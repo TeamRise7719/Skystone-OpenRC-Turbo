@@ -61,7 +61,7 @@ public class RobotMedia {
 
         //----------------------------------------------=+(Endgame)+=----------------------------------------------\\
         if (endgameTimer.seconds() >= 90 && endgamePlayed == false) {
-            endgame.start();//We in da endgame now
+            endgame.start();//We are in the endgame now
             endgamePlayed = true;
         }
         //----------------------------------------------=+(Endgame)+=----------------------------------------------\\
