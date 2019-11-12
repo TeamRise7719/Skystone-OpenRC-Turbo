@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-import org.firstinspires.ftc.teamcode.SeansPlayground.Subsystems.AutonomousPathing;
+import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.AutonomousPathing;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;

@@ -36,7 +36,7 @@ public class BasicTeleOp extends OpMode {
 
         component = new RobotComponents(hardwareMap, telemetry);
 
-        media = new RobotMedia(hardwareMap);//:D
+//        media = new RobotMedia(hardwareMap);//:D
 
         isReady = true;
 
@@ -116,7 +116,7 @@ public class BasicTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-        media.playSounds(gamepad1, hardwareMap);//:D
+//        media.playSounds(gamepad1, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
     }
 }

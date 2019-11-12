@@ -151,6 +151,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     public void steeringDrive(double distance,
                               boolean steeringToggle){
 
+        //TODO: Figure out what to change so that this isn't necessary
         distance = -distance;
 
         double steeringSpeed;
@@ -198,16 +199,19 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
             if (steeringToggle){
                 gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                steeringSpeed = turnPID.calculate(gyro_angle.firstAngle);
+                turnPID.calcInit();
+                steeringSpeed = turnPID.timedCalculate(gyro_angle.firstAngle);
             } else {
                 steeringSpeed = 0;
             }
 
             encLeft = left_back_drive.getCurrentPosition();
-            leftDriveSpeed = leftDrivingPID.calculate(encLeft);
+            leftDrivingPID.calcInit();
+            leftDriveSpeed = leftDrivingPID.timedCalculate(encLeft);
 
             encRight = right_back_drive.getCurrentPosition();
-            rightDriveSpeed = rightDrivingPID.calculate(encRight);
+            rightDrivingPID.calcInit();
+            rightDriveSpeed = rightDrivingPID.timedCalculate(encRight);
 
 
             left_back_drive.setPower(leftDriveSpeed + steeringSpeed);
@@ -220,111 +224,100 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
             telemetry.update();
         }
-//        telemetry.addData("Loop total","%s",sum);
-//        telemetry.update();
-        stop_all_motors();
 
-    }
-
-    /**
-     * Use PID to strafe... I'm Tired. This won't work. Please help me.
-     * @param distance Distance in inches
-     * @param steeringToggle true or false to stay in a straight line
-     * @param direction Left should be -1. Right should be +1. You can also call LEFT or RIGHT.
-     */
-    public void steeringStrafe(double distance,
-                               int direction,
-                               boolean steeringToggle){
-
-        distance = -distance;
-
-        double steeringSpeed;
-        double leftDriveSpeed;
-        double rightDriveSpeed;
-
-        leftDrivingPID.reset();
-        rightDrivingPID.reset();
-        turnPID.reset();
-
-        int moveCounts = ((int)(distance * COUNTS_PER_INCH));
-        int newLeftTarget = left_back_drive.getCurrentPosition() + (-direction * moveCounts);
-        int newRightTarget = right_back_drive.getCurrentPosition() + (direction * moveCounts);
-
-        int encLeft;
-        int encRight;
-        ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-        etime.reset();
-
-
-        turnPID.setContinuous(true);
-        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        turnPID.setSetpoint(gyro_angle.firstAngle);
-        turnPID.setOutputRange(-0.6,0.6);
-
-
-        leftDrivingPID.setContinuous(false);
-        leftDrivingPID.setSetpoint(newLeftTarget);
-        leftDrivingPID.setOutputRange(-0.8,0.8);
-
-
-        rightDrivingPID.setContinuous(false);
-        rightDrivingPID.setSetpoint(newRightTarget);
-        rightDrivingPID.setOutputRange(-0.8,0.8);
-
-        int sum = 0;
-
-        while (linearOpMode.opModeIsActive()) {
-
-            sum++;
-            if((((Math.abs(newLeftTarget-left_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD)
-                    && ((((Math.abs(newRightTarget-right_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD))))){
-                break;
-            }
-
-            if (steeringToggle){
-                gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                steeringSpeed = turnPID.calculate(gyro_angle.firstAngle);
-            } else {
-                steeringSpeed = 0;
-            }
-
-            encLeft = left_back_drive.getCurrentPosition();
-            leftDriveSpeed = leftDrivingPID.calculate(encLeft);
-
-            encRight = right_back_drive.getCurrentPosition();
-            rightDriveSpeed = rightDrivingPID.calculate(encRight);
-
-
-            //In my head this works although steering toggle will be an issue.
-            left_back_drive.setPower(-direction * (leftDriveSpeed + steeringSpeed));
-            left_front_drive.setPower(direction * (leftDriveSpeed + steeringSpeed));
-            right_back_drive.setPower(direction * (rightDriveSpeed - steeringSpeed));
-            right_front_drive.setPower(-direction * (rightDriveSpeed - steeringSpeed));
-
-            telemetry.addData("LErr/RErr", "%s:%s",newLeftTarget - encLeft, newRightTarget - encRight);
-            telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(),gyro_angle.firstAngle);
-            telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
-            telemetry.update();
-        }
-//        telemetry.addData("Loop total","%s",sum);
-//        telemetry.update();
         stop_all_motors();
 
     }
 
 
+    //TODO Sean just make this a toggleable option on steering drive
+//    /**
+//     * Use PID to strafe... I'm Tired. This won't work. Please help me.
+//     * @param distance Distance in inches
+//     * @param steeringToggle true or false to stay in a straight line
+//     * @param direction Left should be -1. Right should be +1. You can also call LEFT or RIGHT.
+//     */
+//    public void steeringStrafe(double distance,
+//                               int direction,
+//                               boolean steeringToggle){
+//
+//        distance = -distance;
+//
+//        double steeringSpeed;
+//        double leftDriveSpeed;
+//        double rightDriveSpeed;
+//
+//        leftDrivingPID.reset();
+//        rightDrivingPID.reset();
+//        turnPID.reset();
+//
+//        int moveCounts = ((int)(distance * COUNTS_PER_INCH));
+//        int newLeftTarget = left_back_drive.getCurrentPosition() + (-direction * moveCounts);
+//        int newRightTarget = right_back_drive.getCurrentPosition() + (direction * moveCounts);
+//
+//        int encLeft;
+//        int encRight;
+//        ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+//        etime.reset();
+//
+//
+//        turnPID.setContinuous(true);
+//        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//        turnPID.setSetpoint(gyro_angle.firstAngle);
+//        turnPID.setOutputRange(-0.6,0.6);
+//
+//
+//        leftDrivingPID.setContinuous(false);
+//        leftDrivingPID.setSetpoint(newLeftTarget);
+//        leftDrivingPID.setOutputRange(-0.8,0.8);
+//
+//
+//        rightDrivingPID.setContinuous(false);
+//        rightDrivingPID.setSetpoint(newRightTarget);
+//        rightDrivingPID.setOutputRange(-0.8,0.8);
+//
+//        int sum = 0;
+//
+//        while (linearOpMode.opModeIsActive()) {
+//
+//            sum++;
+//            if((((Math.abs(newLeftTarget-left_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD)
+//                    && ((((Math.abs(newRightTarget-right_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD))))){
+//                break;
+//            }
+//
+//            if (steeringToggle){
+//                gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//                steeringSpeed = turnPID.calculate(gyro_angle.firstAngle);
+//            } else {
+//                steeringSpeed = 0;
+//            }
+//
+//            encLeft = left_back_drive.getCurrentPosition();
+//            leftDriveSpeed = leftDrivingPID.calculate(encLeft);
+//
+//            encRight = right_back_drive.getCurrentPosition();
+//            rightDriveSpeed = rightDrivingPID.calculate(encRight);
+//
+//
+//            //In my head this works although steering toggle will be an issue.
+//            left_back_drive.setPower(-direction * (leftDriveSpeed + steeringSpeed));
+//            left_front_drive.setPower(direction * (leftDriveSpeed + steeringSpeed));
+//            right_back_drive.setPower(direction * (rightDriveSpeed - steeringSpeed));
+//            right_front_drive.setPower(-direction * (rightDriveSpeed - steeringSpeed));
+//
+//            telemetry.addData("LErr/RErr", "%s:%s",newLeftTarget - encLeft, newRightTarget - encRight);
+//            telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(),gyro_angle.firstAngle);
+//            telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
+//            telemetry.update();
+//        }
+////        telemetry.addData("Loop total","%s",sum);
+////        telemetry.update();
+//        stop_all_motors();
+//
+//    }
 
-    /**
-     *  Method to spin on central axis to point in a new direction.
-     *  Move will stop if either of these conditions occur:
-     *  1) Move gets to the heading (angle)
-     *  2) Driver stops the opmode running.
-     *
-     * @param speed Desired speed of turn.
-     * @param angle      Absolute Angle (in Degrees) relative to last gyro reset.
-     *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
-     *                   If a relative angle is required, add/subtract from current heading.
-     */
+
     public void gyroTurn(double speed, double angle) {
         turnPID.reset();
         turnPID.setContinuous(true);
@@ -353,16 +346,6 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
     }
 
-    /**
-     *  Method to obtain & hold a heading for a finite amount of time
-     *  Move will stop once the requested time has elapsed
-     *
-     * @param speed      Desired speed of turn.
-     * @param angle      Absolute Angle (in Degrees) relative to last gyro reset.
-     *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
-     *                   If a relative angle is required, add/subtract from current heading.
-     * @param holdTime   Length of time (in seconds) to hold the specified heading.
-     */
     public void gyroHold( double speed, double angle, double holdTime) {
 
         turnPID.reset();
@@ -387,20 +370,13 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         right_front_drive.setPower(0);
     }
 
-    /**
-     * Perform one cycle of closed loop heading control.
-     *
-     * @param angle     Absolute Angle (in Degrees) relative to last gyro reset.
-     *                  0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
-     *                  If a relative angle is required, add/subtract from current heading.
-     * @return
-     */
     boolean onHeading(double angle) {
 
         double motorSpeed;
         gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-        motorSpeed = turnPID.calculate(gyro_angle.firstAngle);
+        turnPID.calcInit();
+        motorSpeed = turnPID.timedCalculate(gyro_angle.firstAngle);
 
         // Send desired speeds to motors.
         left_front_drive.setPower(motorSpeed);

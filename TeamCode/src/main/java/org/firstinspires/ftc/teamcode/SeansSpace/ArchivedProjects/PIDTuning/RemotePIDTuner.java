@@ -21,7 +21,7 @@
 
 package org.firstinspires.ftc.teamcode.SeansSpace.ArchivedProjects.PIDTuning;
 
-import com.qualcomm.robotcore.eventloop.opmode.Archived;
+//import com.qualcomm.robotcore.eventloop.opmode.Archived;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -32,7 +32,7 @@ import java.text.DecimalFormat;
  * Created by Sean Cardosi on 10/27/19
  *
  */
-@Archived
+//@Archived
 @TeleOp(name="Remote Tune PID", group="PID")
 public class RemotePIDTuner extends LinearOpMode
 {

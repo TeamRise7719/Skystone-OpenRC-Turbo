@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems.Driving;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 public class SynchronousPID {
     private double m_P; // factor for "proportional" control
     private double m_I; // factor for "integral" control
@@ -21,9 +23,10 @@ public class SynchronousPID {
     private double m_result = 0.0;
     private double m_last_input = Double.NaN;
     private double m_deadband = 0.0; // If the absolute error is less than
-    // deadband
-    // then treat error for the proportional
-    // term as 0
+    public double timeDiff;
+
+    ElapsedTime time = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+
 
     /**
      * Allocate a PID object with the given constants for P, I, D
@@ -41,6 +44,10 @@ public class SynchronousPID {
         m_D = Kd;
     }
 
+    public void calcInit(){ // Always call before timedCalculate --- there's a better way to do this but it's 2 am
+        time.reset();
+    }
+
     /**
      * Read the input, calculate the output accordingly, and write to the
      * output. This should be called at a constant rate by the user (ex. in a
@@ -50,6 +57,7 @@ public class SynchronousPID {
      *            the input
      */
     public double calculate(double input) {
+
         m_last_input = input;
         m_error = m_setpoint - input;
         if (m_continuous) {
@@ -71,7 +79,7 @@ public class SynchronousPID {
         // Don't blow away m_error so as to not break derivative
         double proportionalError = Math.abs(m_error) < m_deadband ? 0 : m_error;
 
-        m_result = ((m_P * proportionalError) + (m_I * m_totalError) + (m_D * (m_error - m_prevError)));
+        m_result = ((m_P * proportionalError) + (m_I * m_totalError) - (m_D * (m_error - m_prevError)));
         m_prevError = m_error;
 
         if (m_result > m_maximumOutput) {
@@ -81,6 +89,50 @@ public class SynchronousPID {
         }
         return m_result;
     }
+
+
+
+    /**
+     * Read the input, calculate the output accordingly, and write to the
+     * output. The out calculation is done using the system time difference per
+     * loop.
+     */
+
+    public double timedCalculate(double input) {
+        timeDiff = time.startTime();
+        time.reset();
+        m_last_input = input;
+        m_error = m_setpoint - input;
+        if (m_continuous) {
+            if (Math.abs(m_error) > (m_maximumInput - m_minimumInput) / 2) {
+                if (m_error > 0) {
+                    m_error = m_error - m_maximumInput + m_minimumInput;
+                } else {
+                    m_error = m_error + m_maximumInput - m_minimumInput;
+                }
+            }
+        }
+
+        if ((m_error * m_P < m_maximumOutput) && (m_error * m_P > m_minimumOutput)) {
+            m_totalError += m_error;
+        } else {
+            m_totalError = 0;
+        }
+
+        // Don't blow away m_error so as to not break derivative
+        double proportionalError = Math.abs(m_error) < m_deadband ? 0 : m_error;
+
+        m_result = ((m_P * proportionalError) + (m_I * m_totalError * timeDiff) - (m_D * (m_error - m_prevError) / timeDiff));
+        m_prevError = m_error;
+
+        if (m_result > m_maximumOutput) {
+            m_result = m_maximumOutput;
+        } else if (m_result < m_minimumOutput) {
+            m_result = m_minimumOutput;
+        }
+        return m_result;
+    }
+
 
     /**
      * Set the PID controller gain parameters. Set the proportional, integral,
