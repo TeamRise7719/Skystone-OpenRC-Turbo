@@ -44,7 +44,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
     public double     COUNTS_PER_MOTOR_REV    = 537.6;
     public double     EXTERNAL_GEAR_RATIO     = 0.78125;     // This is < 1.0 if geared UP
-    public double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
+    public double     WHEEL_DIAMETER_INCHES   = 3.937;     // For figuring circumference
     public double     COUNTS_PER_INCH         = ((COUNTS_PER_MOTOR_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * 3.1415));
 
     // These constants define the desired driving/control characteristics
@@ -325,7 +325,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
      *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
      *                   If a relative angle is required, add/subtract from current heading.
      */
-    public void gyroTurn ( double speed, double angle) {
+    public void gyroTurn(double speed, double angle) {
         turnPID.reset();
         turnPID.setContinuous(true);
         turnPID.setSetpoint(-angle);

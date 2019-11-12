@@ -53,7 +53,4 @@ public class Blue_Auto_Depot_V2 extends LinearOpMode{
         enc.gyroTurn(enc.TURN_SPEED, 90);
 
     }
-
-
-
 }
