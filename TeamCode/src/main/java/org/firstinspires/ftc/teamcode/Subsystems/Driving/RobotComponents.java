@@ -74,7 +74,7 @@ public class RobotComponents {
 
     /**
      * Uses a gamepad input to assign the upward movement of the lift to
-     * @param gamepad The gamepad to be sued to control the upward movement of the lift
+     * @param gamepad The gamepad to be used to control the upward movement of the lift
      */
     public void liftControlUp(Gamepad gamepad) {//For driver control
         liftL.setPower(gamepad.left_stick_y);

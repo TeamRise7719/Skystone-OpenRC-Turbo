@@ -43,7 +43,7 @@ public class RobotMedia {
             myaah.start();
         }
 
-        backState = gamepad.a;
+        backState = gamepad.back;
 
         if(myaah.isPlaying()&&!backState){
             myaah.stop();
