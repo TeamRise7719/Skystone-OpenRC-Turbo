@@ -20,9 +20,9 @@ public class DogeCVSkystoneDetectorTest extends OpMode {
         detector = new SkystoneDetector();
         detector.useDefaults();
         detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA;
-        detector.maxAreaScorer.weight = 0.005;
-        detector.ratioScorer.weight = 5;
-        detector.ratioScorer.perfectRatio = 1.0;
+        detector.maxAreaScorer.weight = 0.01;
+        detector.ratioScorer.weight = 3;
+        detector.ratioScorer.perfectRatio = 1.25;
     }
 
     @Override
