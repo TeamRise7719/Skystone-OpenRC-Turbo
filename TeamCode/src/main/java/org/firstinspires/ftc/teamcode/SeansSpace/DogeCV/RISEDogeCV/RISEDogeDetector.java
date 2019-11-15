@@ -73,16 +73,16 @@ public class RISEDogeDetector {
 
     public SkystonePosition getStoneSkystonePosition(){
         double x = getStoneX();
-        if(x < 160) return SkystonePosition.LEFT;
-        else if(x >= 160 && x <= 320) return SkystonePosition.MIDDLE;
-        else if(x > 320) return SkystonePosition.RIGHT;
+        if(x < 160) return SkystonePosition.LEFT;//Maybe x < 100
+        else if(x >= 160 && x <= 320) return SkystonePosition.MIDDLE;//x >= 100 and x<=150
+        else if(x > 320) return SkystonePosition.RIGHT;//x >150
         return null;
     }
 
     public RISEVector getStoneSkystoneVector(){
         SkystonePosition position = getStoneSkystonePosition();
         if(position.equals(SkystonePosition.LEFT)) return new RISEVector(-8,29);
-        else if(position.equals(SkystonePosition.MIDDLE)) return new RISEVector(0,29);
+        else if(position.equals(SkystonePosition.MIDDLE)) return new RISEVector(0,29);//Maybe 0, 20
         else if(position.equals(SkystonePosition.RIGHT)) return new RISEVector(8,29);
         return null;
     }
