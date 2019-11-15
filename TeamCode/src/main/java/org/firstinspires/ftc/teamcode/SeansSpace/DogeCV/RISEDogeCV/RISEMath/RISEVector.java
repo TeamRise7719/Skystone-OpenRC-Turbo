@@ -1,23 +1,23 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.CustomDogeCV.DogeMath;
+package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.RISEDogeCV.RISEMath;
 
-import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.CustomDogeCV.DogeHardware.DogeHardware;
+import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.RISEDogeCV.RISEHardware.RISEHardware;
 
 /**
  * @Author Sean Cardosi
  * @Date 11/14/19
  */
 
-public class DogeVector implements DogeHardware {
+public class RISEVector implements RISEHardware {
     private double x;
     private double y;
     private String name;
-    public DogeVector(double x, double y, String name) {
+    public RISEVector(double x, double y, String name) {
         this.x = x;
         this.y = y;
         this.name = name;
     }
 
-    public DogeVector(double x, double y) {
+    public RISEVector(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -30,8 +30,8 @@ public class DogeVector implements DogeHardware {
         this.x = x;
     }
 
-    public DogePoint toPoint() {
-        return new DogePoint(getX(), getY());
+    public RISEPoint toPoint() {
+        return new RISEPoint(getX(), getY());
     }
 
     public double getY() {
@@ -42,44 +42,44 @@ public class DogeVector implements DogeHardware {
         this.y = y;
     }
 
-    public DogeVector unitVector () {
-        return new DogeVector(getX()/getMagnitude(), getY()/getMagnitude());
+    public RISEVector unitVector () {
+        return new RISEVector(getX()/getMagnitude(), getY()/getMagnitude());
     }
 
-    public static DogeVector multiply(double scalar, DogeVector v) {
-        return new DogeVector(v.getX() * scalar, v.getY() * scalar);
+    public static RISEVector multiply(double scalar, RISEVector v) {
+        return new RISEVector(v.getX() * scalar, v.getY() * scalar);
     }
 
     public double getMagnitude () {
         return Math.hypot(getX(), getY());
     }
 
-    public double dotProduct(DogeVector v) {
+    public double dotProduct(RISEVector v) {
         return (this.getX() * v.getX()) + (this.getY() * v.getY());
     }
 
-    public double angleRad(DogeVector v) {
+    public double angleRad(RISEVector v) {
         return (Math.acos(dotProduct(v) / (v.getMagnitude() * this.getMagnitude())));
     }
-    public double angleDeg(DogeVector v) {
+    public double angleDeg(RISEVector v) {
         double deg = Math.toDegrees(Math.acos(dotProduct(v) / (v.getMagnitude() * this.getMagnitude())));
         if (Double.isNaN(deg)) return 0;
         return deg;
     }
 
-    public double distanceToVector(DogeVector point) {
+    public double distanceToVector(RISEVector point) {
         return Math.hypot(point.getX() - getX(), point.getY() - getY());
     }
 
-    public boolean equal(double radius, DogeVector v) {
+    public boolean equal(double radius, RISEVector v) {
         return distanceToVector(v) < radius;
     }
 
-    public DogeVector displacement(DogeVector v) {
-        return new DogeVector(v.getX() - getX(), v.getY() - getY());
+    public RISEVector displacement(RISEVector v) {
+        return new RISEVector(v.getX() - getX(), v.getY() - getY());
     }
 
-    public DogeVector projectOnTo(DogeVector v) {
+    public RISEVector projectOnTo(RISEVector v) {
         return multiply(dotProduct(v) / (v.getMagnitude() * v.getMagnitude()), v);
     }
 

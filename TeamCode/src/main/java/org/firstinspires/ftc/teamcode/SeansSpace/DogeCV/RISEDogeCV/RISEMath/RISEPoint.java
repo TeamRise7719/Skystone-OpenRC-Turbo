@@ -1,21 +1,21 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.CustomDogeCV.DogeMath;
+package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.RISEDogeCV.RISEMath;
 
 
-import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.CustomDogeCV.DogeHardware.DogeHardware;
+import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.RISEDogeCV.RISEHardware.RISEHardware;
 
 /**
  * @Author Sean Cardosi
  * @Date 11/14/19
  */
 
-public class DogePoint implements DogeHardware {
+public class RISEPoint implements RISEHardware {
     private double x, y, h;
 
-    public DogePoint(double x, double y) {
+    public RISEPoint(double x, double y) {
         this.x = x;
         this.y = y;
     }
-    public DogePoint(double x, double y, double h) {
+    public RISEPoint(double x, double y, double h) {
         this.x = x;
         this.y = y;
         this.h = h;
@@ -44,7 +44,7 @@ public class DogePoint implements DogeHardware {
     public void setY(double y) {
         this.y = y;
     }
-    public boolean equals(DogePoint point) {
+    public boolean equals(RISEPoint point) {
         double x = Math.abs(getX());
         double y = Math.abs(getY());
         double x1 = Math.abs(point.getX());
@@ -53,8 +53,8 @@ public class DogePoint implements DogeHardware {
         else return false;
     }
 
-    public DogeVector toVector() {
-        return new DogeVector(getX(), getY());
+    public RISEVector toVector() {
+        return new RISEVector(getX(), getY());
     }
 
     @Override

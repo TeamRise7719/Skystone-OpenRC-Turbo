@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.CustomDogeCV;
+package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.RISEDogeCV;
 
 import com.disnodeteam.dogecv.detectors.skystone.SkystoneDetector;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.CustomDogeCV.DogeMath.DogeVector;
+import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.RISEDogeCV.RISEMath.RISEVector;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
@@ -14,7 +14,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
  * @Author Sean Cardosi
  * @Date 11/14/19
  */
-public class CustomDogeDetector {
+public class RISEDogeDetector {
     private OpenCvCamera phoneCamera;
     private OpenCvWebcam webcam;
     public SkystoneDetector skystoneDetector;
@@ -24,7 +24,7 @@ public class CustomDogeDetector {
         PHONE, WEBCAM
     }
 
-    public CustomDogeDetector(Cam cam, HardwareMap hardwareMap){
+    public RISEDogeDetector(Cam cam, HardwareMap hardwareMap){
         this.cam = cam;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         if(cam.equals(Cam.PHONE)){
@@ -79,11 +79,11 @@ public class CustomDogeDetector {
         return null;
     }
 
-    public DogeVector getStoneSkystoneVector(){
+    public RISEVector getStoneSkystoneVector(){
         SkystonePosition position = getStoneSkystonePosition();
-        if(position.equals(SkystonePosition.LEFT)) return new DogeVector(-8,29);
-        else if(position.equals(SkystonePosition.MIDDLE)) return new DogeVector(0,20);
-        else if(position.equals(SkystonePosition.RIGHT)) return new DogeVector(8,29);
+        if(position.equals(SkystonePosition.LEFT)) return new RISEVector(-8,29);
+        else if(position.equals(SkystonePosition.MIDDLE)) return new RISEVector(0,29);
+        else if(position.equals(SkystonePosition.RIGHT)) return new RISEVector(8,29);
         return null;
     }
 

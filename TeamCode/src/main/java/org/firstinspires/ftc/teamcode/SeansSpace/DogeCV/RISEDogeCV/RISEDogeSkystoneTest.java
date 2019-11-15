@@ -1,24 +1,26 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.CustomDogeCV;
+package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.RISEDogeCV;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
  * @Author Sean Cardosi
  * @Date 11/14/19
  */
 @Autonomous(name = "Custom Doge Skystone Test", group = "DogeCV")
-public class CustomDogeSkystoneTest extends OpMode {
+public class RISEDogeSkystoneTest extends LinearOpMode {
 
-    CustomDogeDetector detector;
-    CustomDogeDetector.SkystonePosition skystonePosition;
-    @Override
-    public void init() {
+    RISEDogeDetector detector;
+    RISEDogeDetector.SkystonePosition skystonePosition;
+
+
+    public void runOpMode() throws InterruptedException {
+
+
+        waitForStart();
         detector.start();
         telemetry.addData("Stone Detected: ", detector.isDetected());
-    }
-        public void loop() {
-
+    while (opModeIsActive()) {
         if (!detector.isDetected()) {
             telemetry.addData("SkystoneStatus", detector.isDetected());
         } else {
@@ -26,16 +28,15 @@ public class CustomDogeSkystoneTest extends OpMode {
 
             if (skystonePosition == null) {
                 telemetry.addData("Skystone Position: ", "UNKNOWN");
-            } else if (skystonePosition == CustomDogeDetector.SkystonePosition.LEFT) {
+            } else if (skystonePosition == RISEDogeDetector.SkystonePosition.LEFT) {
                 telemetry.addData("Skystone Position: ", "LEFT");
-            } else if (skystonePosition == CustomDogeDetector.SkystonePosition.RIGHT) {
+            } else if (skystonePosition == RISEDogeDetector.SkystonePosition.RIGHT) {
                 telemetry.addData("Skystone Position: ", "RIGHT");
-            } else if (skystonePosition == CustomDogeDetector.SkystonePosition.MIDDLE) {
+            } else if (skystonePosition == RISEDogeDetector.SkystonePosition.MIDDLE) {
                 telemetry.addData("Skystone Position: ", "LEFT");
             }
         }
     }
-    public void stop() {
-        detector.stop();
+    detector.stop();
     }
 }
