@@ -20,6 +20,7 @@ public class RobotComponents {
     private final DcMotor liftR;
     private int liftMax = 2000;
     private int liftMin = 50;
+    Servo lgrab , rgrab;
 //    private final Servo rot;
 //    private final Servo grab;
 //    private final Servo arm;
@@ -45,6 +46,11 @@ public class RobotComponents {
         liftR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftR.setDirection(DcMotor.Direction.REVERSE);
         liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        lgrab = hardwareMap.servo.get("lgrab");
+        rgrab = hardwareMap.servo.get("rgrab");
+        rgrab.setDirection(Servo.Direction.REVERSE);
+
 //        rot = hardwareMap.servo.get("rot");
 //        grab = hardwareMap.servo.get("grab");
 //        arm = hardwareMap.servo.get("arm");
