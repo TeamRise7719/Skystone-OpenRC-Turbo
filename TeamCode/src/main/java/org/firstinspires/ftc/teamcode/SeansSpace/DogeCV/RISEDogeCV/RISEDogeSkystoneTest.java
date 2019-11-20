@@ -17,16 +17,19 @@ public class RISEDogeSkystoneTest extends LinearOpMode {
 
 
     public void runOpMode() throws InterruptedException {
-
-        waitForStart();
+        detector = new RISEDogeDetector(RISEDogeDetector.Cam.PHONE, hardwareMap);
 
         detector.start();
+
         telemetry.addData("Stone Detected: ", detector.isDetected());
+
+        waitForStart();
 
     while (opModeIsActive()) {
         telemetry.addData("Write Down x and y", " for each stone location");
         telemetry.addData("Skystone X: ",detector.getStoneX());
         telemetry.addData("Skystone Y: ",detector.getStoneY());
+        telemetry.update();
 //        if (!detector.isDetected()) {
 //            telemetry.addData("SkystoneStatus", detector.isDetected());
 //        } else {

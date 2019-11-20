@@ -31,11 +31,10 @@ public class DriveWheelOdometry {
     double changeLeft = 0.0;
     double previousRightValue = 0.0;
     double previousLeftValue = 0.0;
-    private double COUNTS_PER_REVOLUTION = 360;
-    private double WHEEL_DIAMETER_MM = 38;
-    private double WHEEL_DIAMETER_CM = WHEEL_DIAMETER_MM * 10;
-    private double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER_CM;
-    private double COUNTS_PER_CM = COUNTS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE;
+    double COUNTS_PER_REV = 537.6;
+    double EXTERNAL_GEAR_RATIO = 0.78125;     // This is < 1.0 if geared UP
+    double WHEEL_DIAMETER_INCHES = 3.937;     // For figuring circumference
+    double COUNTS_PER_INCH = ((COUNTS_PER_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * 3.1415));
 
 
     public DriveWheelOdometry(HardwareMap hardwareMap, Telemetry tel) {
@@ -99,12 +98,12 @@ public class DriveWheelOdometry {
         changeRight = ((rr.getCurrentPosition() + rf.getCurrentPosition()) / 2.0) - previousRightValue;
         changeLeft = ((lr.getCurrentPosition() + lf.getCurrentPosition()) / 2.0) - previousLeftValue;
 
-        distance = (changeRight + changeLeft) / 2.0;
-        xLocation += (distance * Math.cos(angles.firstAngle - Math.toRadians(90)));// * COUNTS_PER_CM;
-        yLocation += (distance * Math.sin(angles.firstAngle - Math.toRadians(90)));// * COUNTS_PER_CM;
+        distance = ((changeRight + changeLeft) / 2.0);
+        xLocation += (distance * Math.cos(getRawHeading())) / COUNTS_PER_INCH;
+        yLocation += (distance * Math.sin(getRawHeading())) / COUNTS_PER_INCH;
 
-        telemetry.addData("xLocation", xLocation);
-        telemetry.addData("yLocation", yLocation);
+        telemetry.addData("(x,y)", "(%f,%f)",xLocation,yLocation);
+
 
         previousValues();
     }
@@ -117,5 +116,11 @@ public class DriveWheelOdometry {
     public void RobotPosition(double x, double y) {
         xLocation = x;
         yLocation = y;
+    }
+    public double getRawHeading() {
+        return angles.firstAngle;
+    }
+    public void loop() {
+        angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
     }
 }

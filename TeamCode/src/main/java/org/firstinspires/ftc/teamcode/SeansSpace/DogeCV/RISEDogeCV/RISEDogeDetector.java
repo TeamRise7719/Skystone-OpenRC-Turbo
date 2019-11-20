@@ -28,7 +28,7 @@ public class RISEDogeDetector {
         this.cam = cam;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         if(cam.equals(Cam.PHONE)){
-            phoneCamera = new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.FRONT, cameraMonitorViewId);
+            phoneCamera = new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
             skystoneDetector = new SkystoneDetector();
             phoneCamera.setPipeline(skystoneDetector);
         }
@@ -42,11 +42,11 @@ public class RISEDogeDetector {
     public void start(){
         if(cam.equals(Cam.PHONE)){
             phoneCamera.openCameraDevice();
-            phoneCamera.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
+            phoneCamera.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
         }
         else if(cam.equals(Cam.WEBCAM)){
             webcam.openCameraDevice();
-            webcam.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
+            webcam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
         }
     }
 

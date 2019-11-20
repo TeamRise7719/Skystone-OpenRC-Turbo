@@ -58,43 +58,60 @@ public class DriveWheelPurePursuitDrivetrain {
 
     public void ApplyPower() {
 
-        lfPower = movementX - movementTurn - movementY;//Maybe *1.5 movementY - movementTurn + movementX
-        lrPower = movementX - movementTurn + movementY;//movementY - movementTurn - movementX
-        rfPower = movementX + movementTurn + movementY;//-movementY - movementTurn + movementX
-        rrPower = movementX + movementTurn - movementY;//-movementY - movementTurn - movementX
+        double x = movementX;
+        double y = movementY;
+        double r = movementTurn;
+
+        lfPower = x + y + r;//Maybe *1.5 movementY - movementTurn + movementX
+        lrPower = x - y + r;//movementY - movementTurn - movementX
+        rfPower = x - y - r;//-movementY - movementTurn + movementX
+        rrPower = x + y - r;//-movementY - movementTurn - movementX
 
         //find the maximum of the powers
-        double maxRawPower = Math.abs(lfPower);
-        if(Math.abs(lrPower) > maxRawPower){ maxRawPower = Math.abs(lrPower);}
-        if(Math.abs(rrPower) > maxRawPower){ maxRawPower = Math.abs(rrPower);}
-        if(Math.abs(rfPower) > maxRawPower){ maxRawPower = Math.abs(rfPower);}
+        double lfmaxRawPower = Math.abs(lfPower);
+        double rfmaxRawPower = Math.abs(rfPower);
+        double lrmaxRawPower = Math.abs(lrPower);
+        double rrmaxRawPower = Math.abs(rrPower);
+        if(Math.abs(lfPower) > lfmaxRawPower){ lfmaxRawPower = Math.abs(lrPower);}
+        if(Math.abs(lrPower) > lrmaxRawPower){ lrmaxRawPower = Math.abs(lrPower);}
+        if(Math.abs(rrPower) > rrmaxRawPower){ rrmaxRawPower = Math.abs(rrPower);}
+        if(Math.abs(rfPower) > rfmaxRawPower){ rfmaxRawPower = Math.abs(rfPower);}
 
         //if the maximum is greater than 1, scale all the powers down to preserve the shape
-        double scaleDownAmount = 1.0;
-        if(maxRawPower > 1.0){
+        double lfscaleDownAmount = 1.0;
+        double lrscaleDownAmount = 1.0;
+        double rrscaleDownAmount = 1.0;
+        double rfscaleDownAmount = 1.0;
+        if(lfmaxRawPower > 1.0){
             //when max power is multiplied by this ratio, it will be 1.0, and others less
-            scaleDownAmount = 1.0/maxRawPower;
+            lfscaleDownAmount = 1.0/lfmaxRawPower;
+        }
+        if(lrmaxRawPower > 1.0){
+            //when max power is multiplied by this ratio, it will be 1.0, and others less
+            lrscaleDownAmount = 1.0/lrmaxRawPower;
+        }
+        if(rrmaxRawPower > 1.0){
+            //when max power is multiplied by this ratio, it will be 1.0, and others less
+            rrscaleDownAmount = 1.0/rrmaxRawPower;
+        }
+        if(rfmaxRawPower > 1.0){
+            //when max power is multiplied by this ratio, it will be 1.0, and others less
+            rfscaleDownAmount = 1.0/rfmaxRawPower;
         }
 
-        lfPower *= scaleDownAmount;
-        lrPower *= scaleDownAmount;
-        rrPower *= scaleDownAmount;
-        rfPower *= scaleDownAmount;
+        lfPower *= lfscaleDownAmount;
+        lrPower *= lrscaleDownAmount;
+        rrPower *= rrscaleDownAmount;
+        rfPower *= rfscaleDownAmount;
 
         lf.setPower(lfPower);//Power is negative because location was updated in the wrong direction (negative)
         lr.setPower(lrPower);
         rf.setPower(rfPower);
         rr.setPower(rrPower);
 
-        telemetry.addData("MotorPowers\n",
-                "   |lf------------rf|\n" +
-                "|%f|----------------|%f|\n" +
-                "   |                |\n" +
-                "   |                |\n" +
-                "   |                |\n" +
-                "|%f|lr------------rr|%f|\n" +
-                "   |----------------|\n",
-                lfPower, rfPower, lrPower, rrPower);//Sorry Evan.
-        telemetry.update();
+        telemetry.addData("LeftFront ", lfPower);
+        telemetry.addData("LeftBack ", lrPower);
+        telemetry.addData("RightFront ", rfPower);
+        telemetry.addData("RightBack ", rrPower);
     }
 }

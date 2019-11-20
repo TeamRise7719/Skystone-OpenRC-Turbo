@@ -127,7 +127,7 @@ public class DriveWheelPurePursuitMovement {
             for (Point thisIntersection : intersections) {
 
                 double angle = Math.atan2(thisIntersection.y - odometry.yLocation, thisIntersection.x - odometry.xLocation);
-                double deltaAngle = Math.abs(PurePursuitMath.AngleWrap(angle - angles.firstAngle));
+                double deltaAngle = Math.abs(PurePursuitMath.AngleWrap(angle - odometry.getRawHeading()));
 
                 if (deltaAngle < closestAngle) {
                     closestAngle = deltaAngle;
@@ -147,14 +147,14 @@ public class DriveWheelPurePursuitMovement {
      */
     public static void goToPosition(double x, double y, double movementSpeed, double preferredAngle, double turnSpeed) {
 
-        double distanceToTarget = Math.hypot(x - odometry.xLocation, y - odometry.yLocation);
+        double distanceToTarget = (Math.hypot(x - odometry.xLocation, y - odometry.yLocation));
 
         double absoluteAngleToTarget = Math.atan2(y - odometry.yLocation, x - odometry.xLocation);
 
-        double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (angles.firstAngle - Math.toRadians(90)));
+        double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (odometry.getRawHeading()));
 
-        double relativeXToPoint = Math.cos(relativeAngleToPoint) * distanceToTarget;
-        double relativeYToPoint = Math.sin(relativeAngleToPoint * distanceToTarget);
+        double relativeXToPoint = (Math.cos(relativeAngleToPoint) * distanceToTarget) / odometry.COUNTS_PER_INCH;
+        double relativeYToPoint = (Math.sin(relativeAngleToPoint) * distanceToTarget) / odometry.COUNTS_PER_INCH;
 
         double movementXPower = relativeXToPoint / (Math.abs(relativeXToPoint) + Math.abs(relativeYToPoint));
         double movementYPower = relativeYToPoint / (Math.abs(relativeXToPoint) + Math.abs(relativeYToPoint));
@@ -168,8 +168,8 @@ public class DriveWheelPurePursuitMovement {
         double relativeTurnAngle = relativeAngleToPoint - Math.toRadians(180) + preferredAngle;
         movementTurn = Range.clip(relativeTurnAngle / Math.toRadians(30), -1,1) * turnSpeed;//movement Turn is power to turn angles
 
-        if (distanceToTarget < 10) {// < 10cm
-            movementTurn = 0;
-        }
+//        if (distanceToTarget < 10) {//Stop turning if close to point
+//            movementTurn = 0;
+//        }
     }
 }
