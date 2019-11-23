@@ -37,20 +37,20 @@ public class Blue_Auto_V1 extends LinearOpMode {
 
 
         //Position 1 (4 from wall)
-        enc.steeringDrive( 48, false);
-        enc.steeringDrive(-24,false);
+        enc.steeringDrive( 48, false, false, 1);
+        enc.steeringDrive(-24,false,false,1);
         //strafing here
         enc.gyroTurn(enc.TURN_SPEED, -90);
         mech.intakeStone();
         enc.gyroTurn(enc.TURN_SPEED, 180);
-        enc.steeringDrive(80, false);
+        enc.steeringDrive(80, false,false, 1);
 
         //sample
         //vision code goes here
         mech.intakeStone();
-        enc.steeringDrive(-12,  false);
+        enc.steeringDrive(-12,  false,false, 1);
         enc.gyroTurn(enc.TURN_SPEED, 90);
-        enc.steeringDrive(80, false);
+        enc.steeringDrive(80, false,false, 1);
 
 
 // other side

@@ -89,6 +89,7 @@ public class BasicTeleOp extends OpMode {
 
         //----------------------------------------------=+(Block build)+=----------------------------------------------\\
 
+        //TODO: Create a function to do this automatically
         if (gamepad2.right_bumper){
             component.clawGrab();
         }
