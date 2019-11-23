@@ -18,12 +18,12 @@ public class RobotComponents {
     private final DcMotor intake;
     private final DcMotor liftL;
     private final DcMotor liftR;
+
     private int liftMax = 2000;
     private int liftMin = 50;
-    Servo lgrab , rgrab;
-//    private final Servo rot;
-//    private final Servo grab;
-//    private final Servo arm;
+    Servo lgrab , rgrab, shoulder,wrist,claw;
+
+
 
 
 
@@ -51,9 +51,9 @@ public class RobotComponents {
         rgrab = hardwareMap.servo.get("rgrab");
         rgrab.setDirection(Servo.Direction.REVERSE);
 
-//        rot = hardwareMap.servo.get("rot");
-//        grab = hardwareMap.servo.get("grab");
-//        arm = hardwareMap.servo.get("arm");
+        shoulder = hardwareMap.servo.get("shoulder");
+        wrist = hardwareMap.servo.get("wrist");
+        claw = hardwareMap.servo.get("claw");
     }
     public void init() {
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -83,8 +83,8 @@ public class RobotComponents {
      * @param gamepad The gamepad to be used to control the upward movement of the lift
      */
     public void liftControlUp(Gamepad gamepad) {//For driver control
-        liftL.setPower(gamepad.left_stick_y);
-        liftR.setPower(gamepad.left_stick_y);
+        liftL.setPower(gamepad.left_stick_y/2);
+        liftR.setPower(gamepad.left_stick_y/2);
     }
 
     /**
@@ -121,13 +121,54 @@ public class RobotComponents {
     //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 
-//    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-//    public void returnPosition() {
+
+
+    //----------------------------------------------=+(Block build)+=----------------------------------------------\\
+
+
+    public void clawGrab(){
+        claw.setPosition(0.6);
+    }
+
+    public void clawRelease(){
+        claw.setPosition(0);
+    }
+
+    public void wrist(Gamepad gamepad){
+        wrist.setPosition(0.5 + gamepad.left_trigger/5 - gamepad.right_trigger/5);
+    }
 //
+//    public void wristLeft(Gamepad gamepad){
+//        wrist.setPosition(gamepad.right_trigger/5);
 //    }
-//    public void outPosition() {
-//
-//    }
+
+    public void shoulderUp(){
+        shoulder.setPosition(0.8);
+    }
+
+    public void shoulderDown(){
+        shoulder.setPosition(0.2);
+    }
+
+
+
+    //----------------------------------------------=+(Block build)+=----------------------------------------------\\
+
+
 //    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+    public void returnPosition() {
+        lgrab.setPosition(1);
+        rgrab.setPosition(1);
+
+    }
+    public void outPosition() {
+        lgrab.setPosition(0.25);
+        rgrab.setPosition(0.25);
+
+    }
+//    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+
+
+
 
 }
