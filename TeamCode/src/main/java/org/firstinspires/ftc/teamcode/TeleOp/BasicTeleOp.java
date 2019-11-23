@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 @TeleOp(name = "BasicTeleOp", group = "Drive")
 public class BasicTeleOp extends OpMode {
 
-    Servo lgrab , rgrab;
+
     private Drivetrain robot;
     private RobotComponents component;
-    private RobotMedia media;//:D
+    //private RobotMedia media;//:D
 
     private boolean isReady = false;
 
@@ -26,9 +26,7 @@ public class BasicTeleOp extends OpMode {
     @Override
     public void init() {
 
-        lgrab = hardwareMap.servo.get("lgrab");
-        rgrab = hardwareMap.servo.get("rgrab");
-        rgrab.setDirection(Servo.Direction.REVERSE);
+
 
         //Initialize robot
         robot = new Drivetrain(hardwareMap, telemetry);
@@ -41,8 +39,7 @@ public class BasicTeleOp extends OpMode {
         isReady = true;
 
 
-            lgrab.setPosition(0.25);
-            rgrab.setPosition(0.25);
+
 
 
     }
@@ -62,6 +59,9 @@ public class BasicTeleOp extends OpMode {
 
     @Override
     public void loop() {
+
+
+
 
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
         robot.drive(gamepad1, telemetry);
@@ -87,21 +87,44 @@ public class BasicTeleOp extends OpMode {
         component.liftControlUp(gamepad2);
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
+        //----------------------------------------------=+(Block build)+=----------------------------------------------\\
+
+        if (gamepad2.right_bumper){
+            component.clawGrab();
+        }
+
+        if (gamepad2.left_bumper){
+            component.clawRelease();
+        }
+
+        component.wrist(gamepad2);
+
+        if (gamepad2.a){
+            component.shoulderDown();
+
+        }
+
+        if (gamepad2.y){
+            component.shoulderUp();
+        }
+
+
+
+        //----------------------------------------------=+(Block build)+=----------------------------------------------\\
+
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-        if (gamepad1.y) {
-            lgrab.setPosition(1);
-            rgrab.setPosition(1);
-        }
         if (gamepad1.a) {
-            lgrab.setPosition(0.25);
-            rgrab.setPosition(0.25);
+            component.returnPosition();
+        }
+        if (gamepad1.y) {
+            component.outPosition();
         }
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-        media.playSounds(gamepad1, hardwareMap);//:D
+        //media.playSounds(gamepad1, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
     }
 }
