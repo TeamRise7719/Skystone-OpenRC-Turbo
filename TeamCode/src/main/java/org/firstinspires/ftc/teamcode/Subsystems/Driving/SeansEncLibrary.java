@@ -148,8 +148,20 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         right_front_drive.setPower(0);
     }
 
+
+    /**
+     * Function to move forwards, backwards, left, or right using PID.
+     * @param distance Distance in inches to move. A positive distance makes the robot move
+     *                 forwards and a negative distance makes the robot move backwards.
+     * @param steeringToggle Steering to stay in a straight line. Just put true or false here.
+     * @param strafe Option to strafe instead of moving forwards/backwards. Put true or false here.
+     * @param strafeDirection If strafe is true then putting a -1 here will move left while a +1
+     *                        will move right.
+     */
     public void steeringDrive(double distance,
-                              boolean steeringToggle){
+                              boolean steeringToggle,
+                              boolean strafe,
+                              int strafeDirection) {
 
         //TODO: Figure out what to change so that this isn't necessary
         distance = -distance;
@@ -162,161 +174,137 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         rightDrivingPID.reset();
         turnPID.reset();
 
-        int moveCounts = ((int)(distance * COUNTS_PER_INCH));
-        int newLeftTarget = left_back_drive.getCurrentPosition() + moveCounts;
-        int newRightTarget = right_back_drive.getCurrentPosition() + moveCounts;
+        if (strafe == false) {
+            int moveCounts = ((int) (distance * COUNTS_PER_INCH));
+            int newLeftTarget = left_back_drive.getCurrentPosition() + moveCounts;
+            int newRightTarget = right_back_drive.getCurrentPosition() + moveCounts;
 
-        int encLeft;
-        int encRight;
-        ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-        etime.reset();
-
-
-        turnPID.setContinuous(true);
-        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        turnPID.setSetpoint(gyro_angle.firstAngle);
-        turnPID.setOutputRange(-0.6,0.6);
+            int encLeft;
+            int encRight;
+            ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+            etime.reset();
 
 
-        leftDrivingPID.setContinuous(false);
-        leftDrivingPID.setSetpoint(newLeftTarget);
-        leftDrivingPID.setOutputRange(-0.8,0.8);
+            turnPID.setContinuous(true);
+            gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            turnPID.setSetpoint(gyro_angle.firstAngle);
+            turnPID.setOutputRange(-0.6, 0.6);
 
 
-        rightDrivingPID.setContinuous(false);
-        rightDrivingPID.setSetpoint(newRightTarget);
-        rightDrivingPID.setOutputRange(-0.8,0.8);
+            leftDrivingPID.setContinuous(false);
+            leftDrivingPID.setSetpoint(newLeftTarget);
+            leftDrivingPID.setOutputRange(-0.8, 0.8);
 
-        int sum = 0;
 
-        while (linearOpMode.opModeIsActive()) {
+            rightDrivingPID.setContinuous(false);
+            rightDrivingPID.setSetpoint(newRightTarget);
+            rightDrivingPID.setOutputRange(-0.8, 0.8);
 
-            sum++;
-            if((((Math.abs(newLeftTarget-left_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD)
-                    && ((((Math.abs(newRightTarget-right_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD))))){
-                break;
+            int sum = 0;
+
+            while (linearOpMode.opModeIsActive()) {
+
+                sum++;
+                if ((((Math.abs(newLeftTarget - left_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD)
+                        && ((((Math.abs(newRightTarget - right_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD))))) {
+                    break;
+                }
+
+                if (steeringToggle) {
+                    gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    turnPID.calcInit();
+                    steeringSpeed = turnPID.timedCalculate(gyro_angle.firstAngle);
+                } else {
+                    steeringSpeed = 0;
+                }
+
+                encLeft = left_back_drive.getCurrentPosition();
+                leftDrivingPID.calcInit();
+                leftDriveSpeed = leftDrivingPID.timedCalculate(encLeft);
+
+                encRight = right_back_drive.getCurrentPosition();
+                rightDrivingPID.calcInit();
+                rightDriveSpeed = rightDrivingPID.timedCalculate(encRight);
+
+
+                left_back_drive.setPower(leftDriveSpeed + steeringSpeed);
+                left_front_drive.setPower(leftDriveSpeed + steeringSpeed);
+                right_back_drive.setPower(rightDriveSpeed - steeringSpeed);
+                right_front_drive.setPower(rightDriveSpeed - steeringSpeed);
+
+                telemetry.addData("LErr/RErr", "%s:%s", newLeftTarget - encLeft, newRightTarget - encRight);
+                telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(), gyro_angle.firstAngle);
+                telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
+                telemetry.update();
             }
 
-            if (steeringToggle){
-                gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                turnPID.calcInit();
-                steeringSpeed = turnPID.timedCalculate(gyro_angle.firstAngle);
-            } else {
-                steeringSpeed = 0;
-            }
-
-            encLeft = left_back_drive.getCurrentPosition();
-            leftDrivingPID.calcInit();
-            leftDriveSpeed = leftDrivingPID.timedCalculate(encLeft);
-
-            encRight = right_back_drive.getCurrentPosition();
-            rightDrivingPID.calcInit();
-            rightDriveSpeed = rightDrivingPID.timedCalculate(encRight);
-
-
-            left_back_drive.setPower(leftDriveSpeed + steeringSpeed);
-            left_front_drive.setPower(leftDriveSpeed + steeringSpeed);
-            right_back_drive.setPower(rightDriveSpeed - steeringSpeed);
-            right_front_drive.setPower(rightDriveSpeed - steeringSpeed);
-
-            telemetry.addData("LErr/RErr", "%s:%s",newLeftTarget - encLeft, newRightTarget - encRight);
-            telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(),gyro_angle.firstAngle);
-            telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
-            telemetry.update();
+            stop_all_motors();
         }
+        if (strafe == true) {
 
-        stop_all_motors();
+            int moveCounts = ((int) (distance * COUNTS_PER_INCH));
+            int newLeftTarget = left_back_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
+            int newRightTarget = right_back_drive.getCurrentPosition() + (strafeDirection * moveCounts);
 
+            int encLeft;
+            int encRight;
+            ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+            etime.reset();
+
+
+            turnPID.setContinuous(true);
+            gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            turnPID.setSetpoint(gyro_angle.firstAngle);
+            turnPID.setOutputRange(-0.6, 0.6);
+
+
+            leftDrivingPID.setContinuous(false);
+            leftDrivingPID.setSetpoint(newLeftTarget);
+            leftDrivingPID.setOutputRange(-0.8, 0.8);
+
+
+            rightDrivingPID.setContinuous(false);
+            rightDrivingPID.setSetpoint(newRightTarget);
+            rightDrivingPID.setOutputRange(-0.8, 0.8);
+
+            int sum = 0;
+
+            while (linearOpMode.opModeIsActive()) {
+
+                sum++;
+                if ((((Math.abs(newLeftTarget - left_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD)
+                        && ((((Math.abs(newRightTarget - right_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD))))) {
+                    break;
+                }
+
+                if (steeringToggle) {
+                    gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    steeringSpeed = turnPID.calculate(gyro_angle.firstAngle);
+                } else {
+                    steeringSpeed = 0;
+                }
+
+                encLeft = left_back_drive.getCurrentPosition();
+                leftDriveSpeed = leftDrivingPID.calculate(encLeft);
+
+                encRight = right_back_drive.getCurrentPosition();
+                rightDriveSpeed = rightDrivingPID.calculate(encRight);
+
+
+                //In my head this works although steering toggle will be an issue.
+                left_back_drive.setPower(-strafeDirection * (leftDriveSpeed + steeringSpeed));
+                left_front_drive.setPower(strafeDirection * (leftDriveSpeed + steeringSpeed));
+                right_back_drive.setPower(strafeDirection * (rightDriveSpeed - steeringSpeed));
+                right_front_drive.setPower(-strafeDirection * (rightDriveSpeed - steeringSpeed));
+
+                telemetry.addData("LErr/RErr", "%s:%s", newLeftTarget - encLeft, newRightTarget - encRight);
+                telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(), gyro_angle.firstAngle);
+                telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
+                telemetry.update();
+            }
+            stop_all_motors();
+        }
     }
-
-
-    //TODO Sean just make this a toggleable option on steering drive
-//    /**
-//     * Use PID to strafe... I'm Tired. This won't work. Please help me.
-//     * @param distance Distance in inches
-//     * @param steeringToggle true or false to stay in a straight line
-//     * @param direction Left should be -1. Right should be +1. You can also call LEFT or RIGHT.
-//     */
-//    public void steeringStrafe(double distance,
-//                               int direction,
-//                               boolean steeringToggle){
-//
-//        distance = -distance;
-//
-//        double steeringSpeed;
-//        double leftDriveSpeed;
-//        double rightDriveSpeed;
-//
-//        leftDrivingPID.reset();
-//        rightDrivingPID.reset();
-//        turnPID.reset();
-//
-//        int moveCounts = ((int)(distance * COUNTS_PER_INCH));
-//        int newLeftTarget = left_back_drive.getCurrentPosition() + (-direction * moveCounts);
-//        int newRightTarget = right_back_drive.getCurrentPosition() + (direction * moveCounts);
-//
-//        int encLeft;
-//        int encRight;
-//        ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-//        etime.reset();
-//
-//
-//        turnPID.setContinuous(true);
-//        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//        turnPID.setSetpoint(gyro_angle.firstAngle);
-//        turnPID.setOutputRange(-0.6,0.6);
-//
-//
-//        leftDrivingPID.setContinuous(false);
-//        leftDrivingPID.setSetpoint(newLeftTarget);
-//        leftDrivingPID.setOutputRange(-0.8,0.8);
-//
-//
-//        rightDrivingPID.setContinuous(false);
-//        rightDrivingPID.setSetpoint(newRightTarget);
-//        rightDrivingPID.setOutputRange(-0.8,0.8);
-//
-//        int sum = 0;
-//
-//        while (linearOpMode.opModeIsActive()) {
-//
-//            sum++;
-//            if((((Math.abs(newLeftTarget-left_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD)
-//                    && ((((Math.abs(newRightTarget-right_back_drive.getCurrentPosition()))<ENCODER_THRESHOLD))))){
-//                break;
-//            }
-//
-//            if (steeringToggle){
-//                gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//                steeringSpeed = turnPID.calculate(gyro_angle.firstAngle);
-//            } else {
-//                steeringSpeed = 0;
-//            }
-//
-//            encLeft = left_back_drive.getCurrentPosition();
-//            leftDriveSpeed = leftDrivingPID.calculate(encLeft);
-//
-//            encRight = right_back_drive.getCurrentPosition();
-//            rightDriveSpeed = rightDrivingPID.calculate(encRight);
-//
-//
-//            //In my head this works although steering toggle will be an issue.
-//            left_back_drive.setPower(-direction * (leftDriveSpeed + steeringSpeed));
-//            left_front_drive.setPower(direction * (leftDriveSpeed + steeringSpeed));
-//            right_back_drive.setPower(direction * (rightDriveSpeed - steeringSpeed));
-//            right_front_drive.setPower(-direction * (rightDriveSpeed - steeringSpeed));
-//
-//            telemetry.addData("LErr/RErr", "%s:%s",newLeftTarget - encLeft, newRightTarget - encRight);
-//            telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(),gyro_angle.firstAngle);
-//            telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
-//            telemetry.update();
-//        }
-////        telemetry.addData("Loop total","%s",sum);
-////        telemetry.update();
-//        stop_all_motors();
-//
-//    }
-
 
     public void gyroTurn(double speed, double angle) {
         turnPID.reset();
