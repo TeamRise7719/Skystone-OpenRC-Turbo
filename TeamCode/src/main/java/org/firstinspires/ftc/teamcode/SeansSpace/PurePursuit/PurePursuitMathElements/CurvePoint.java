@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit;
+package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements;
 
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.Math.Point;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
 
 /**
  * Created by Sean Cardosi.
@@ -14,18 +14,18 @@ public class CurvePoint {
     public double turnSpeed;
     public double followDistance;
     public double pointLength;
-    public double slowDownTurnRadians;
-    public double slowDownTurnAmount;
+//    public double slowDownTurnRadians;
+//    public double slowDownTurnAmount;
 
-    public CurvePoint(double x, double y, double moveSpeed, double turnSpeed, double followDistance, double slowDownTurnRadians, double slowDownTurnAmount) {
+    public CurvePoint(double x, double y, double moveSpeed, double turnSpeed, double followDistance) {
 
         this.x = x;
         this.y = y;
         this.moveSpeed = moveSpeed;
         this.turnSpeed = turnSpeed;
         this.followDistance = followDistance;
-        this.slowDownTurnRadians = slowDownTurnRadians;
-        this.slowDownTurnAmount = slowDownTurnAmount;
+//        this.slowDownTurnRadians = slowDownTurnRadians;
+//        this.slowDownTurnAmount = slowDownTurnAmount;
     }
 
     public CurvePoint(CurvePoint thisPoint) {
@@ -35,8 +35,8 @@ public class CurvePoint {
         moveSpeed = thisPoint.moveSpeed;
         turnSpeed = thisPoint.turnSpeed;
         followDistance = thisPoint.followDistance;
-        slowDownTurnRadians = thisPoint.slowDownTurnRadians;
-        slowDownTurnAmount = thisPoint.slowDownTurnAmount;
+//        slowDownTurnRadians = thisPoint.slowDownTurnRadians;
+//        slowDownTurnAmount = thisPoint.slowDownTurnAmount;
         pointLength = thisPoint.pointLength;
     }
 

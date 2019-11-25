@@ -45,6 +45,10 @@ public class DriveWheelOdometry {
         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
         param.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         param.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        param.loggingEnabled       = true;
+        param.useExternalCrystal   = true;
+        param.mode                 = BNO055IMU.SensorMode.IMU;
+        param.loggingTag           = "IMU";
         param.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         gyro.initialize(param);
@@ -79,6 +83,7 @@ public class DriveWheelOdometry {
         changeLeft = 0.0;
         previousRightValue = 0.0;
         previousLeftValue = 0.0;
+
     }
 
     /*
@@ -86,8 +91,9 @@ public class DriveWheelOdometry {
      */
     public void previousValues() {
 
-        previousRightValue = (rr.getCurrentPosition() + rf.getCurrentPosition()) / 2.0;
-        previousLeftValue = (lr.getCurrentPosition() + lf.getCurrentPosition()) / 2.0;
+        previousRightValue = ((rr.getCurrentPosition() + rf.getCurrentPosition()) / 2.0);
+        previousLeftValue = ((lr.getCurrentPosition() + lf.getCurrentPosition()) / 2.0);
+
     }
 
     /*
@@ -95,30 +101,36 @@ public class DriveWheelOdometry {
      */
     public void updateLocation() {
 
+
+        loop();
+
         changeRight = ((rr.getCurrentPosition() + rf.getCurrentPosition()) / 2.0) - previousRightValue;
         changeLeft = ((lr.getCurrentPosition() + lf.getCurrentPosition()) / 2.0) - previousLeftValue;
 
         distance = ((changeRight + changeLeft) / 2.0);
-        xLocation += (distance * Math.cos(getRawHeading())) / COUNTS_PER_INCH;
-        yLocation += (distance * Math.sin(getRawHeading())) / COUNTS_PER_INCH;
+        xLocation += (distance * Math.cos((getRawHeading())));
+        yLocation += (distance * Math.sin((getRawHeading())));
 
-        telemetry.addData("(x,y)", "(%f,%f)",xLocation,yLocation);
+        telemetry.addData("x,y ", "%f,%f",xLocation/COUNTS_PER_INCH, yLocation/COUNTS_PER_INCH);
+        telemetry.addData("Heading", Math.toDegrees(getRawHeading()));
 
+
+//        telemetry.addData("Distance",distance);
+//        telemetry.addData("ChangeRight",changeRight);
+//        telemetry.addData("ChnageLeft",changeLeft);
+//        telemetry.addData("lf", lf.getCurrentPosition());
+//        telemetry.addData("lr", lr.getCurrentPosition());
+//        telemetry.addData("rf", rf.getCurrentPosition());
+//        telemetry.addData("rr", rr.getCurrentPosition());
 
         previousValues();
     }
 
-    /**
-     * Allows you to manually change the robots position/location. By default it is (0,0).
-     * @param x The robots new x location.
-     * @param y The robots new y location.
-     */
-    public void RobotPosition(double x, double y) {
-        xLocation = x;
-        yLocation = y;
-    }
+
     public double getRawHeading() {
-        return angles.firstAngle;
+
+        double raw = angles.firstAngle + Math.toRadians(90);
+        return AngleUnit.normalizeRadians(raw);// + Math.toRadians(90);
     }
     public void loop() {
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);

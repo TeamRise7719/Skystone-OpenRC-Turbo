@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Memes;
+package org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes;
 
 import android.media.MediaPlayer;
 

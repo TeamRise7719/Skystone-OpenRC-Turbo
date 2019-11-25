@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Driving;
+package org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.CurvePoint;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.CurvePoint;
 
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.followCurve;
 
@@ -41,17 +41,17 @@ public class AutonomousPathing {
         if (path14 == true) {
 
             //Code to follow to get Skystones in this position
-            allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50, Math.toRadians(50), 1.0));
+            allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50));
 
         } else if (path25 == true) {
 
             //Code to follow to get Skystones in this position
-            allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50, Math.toRadians(50), 1.0));
+            allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50));
 
         } else if (path36 == true) {
 
             //Code to follow to get Skystones in this position
-            allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50, Math.toRadians(50), 1.0));
+            allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50));
 
         }
         followCurve(allPoints, Math.toRadians(90));//Robot will get stuck spinning while looking for another point to go to at the endPoint.

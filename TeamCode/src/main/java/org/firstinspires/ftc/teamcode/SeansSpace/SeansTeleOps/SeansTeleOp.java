@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.TeleOp;
+package org.firstinspires.ftc.teamcode.SeansSpace.SeansTeleOps;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Memes.RobotMedia;
+import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes.RobotMedia;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
-import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Driving.EasyTeleOpFunctions;
+import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.EasyTeleOpFunctions;
 
 import com.qualcomm.robotcore.hardware.Servo;
 /**

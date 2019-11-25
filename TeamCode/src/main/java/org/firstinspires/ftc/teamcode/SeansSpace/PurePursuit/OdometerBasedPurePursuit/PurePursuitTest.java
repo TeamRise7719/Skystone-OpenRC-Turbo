@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPureP
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.CurvePoint;
+
 import java.util.ArrayList;
 
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.followCurve;
@@ -26,7 +28,7 @@ public class PurePursuitTest extends OpMode {
     public void loop() {
 
         ArrayList<CurvePoint> allPoints = new ArrayList<>();
-        allPoints.add(new CurvePoint(0,0,1.0,1.0,50,Math.toRadians(50),1.0));
+        allPoints.add(new CurvePoint(0,0,1.0,1.0,50));
 
         followCurve(allPoints, Math.toRadians(90));//Robot will get stuck spinning while looking for another point to go to at the endPoint.
     }

@@ -50,7 +50,8 @@ public class DriveWheelPurePursuitDrivetrain {
         lrPower = 0.0;
         rfPower = 0.0;
         rrPower = 0.0;
-        lr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);//This might need to be done in Odometry classes
+
+        lr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -58,15 +59,17 @@ public class DriveWheelPurePursuitDrivetrain {
 
     public void ApplyPower() {
 
+
         double x = movementX;
         double y = movementY;
         double r = movementTurn;
 
-        lfPower = x + y + r;//Maybe *1.5 movementY - movementTurn + movementX
-        lrPower = x - y + r;//movementY - movementTurn - movementX
-        rfPower = x - y - r;//-movementY - movementTurn + movementX
-        rrPower = x + y - r;//-movementY - movementTurn - movementX
+        lfPower = x + y + r;
+        rfPower = x - y - r;
+        lrPower = x - y + r;
+        rrPower = x + y - r;
 
+        //TODO: Maybe just use Range.clip() to clip the motor speeds between -1 and +1
         //find the maximum of the powers
         double lfmaxRawPower = Math.abs(lfPower);
         double rfmaxRawPower = Math.abs(rfPower);
@@ -104,14 +107,19 @@ public class DriveWheelPurePursuitDrivetrain {
         rrPower *= rrscaleDownAmount;
         rfPower *= rfscaleDownAmount;
 
-        lf.setPower(lfPower);//Power is negative because location was updated in the wrong direction (negative)
+
+        lf.setPower(lfPower);
         lr.setPower(lrPower);
         rf.setPower(rfPower);
         rr.setPower(rrPower);
 
-        telemetry.addData("LeftFront ", lfPower);
-        telemetry.addData("LeftBack ", lrPower);
-        telemetry.addData("RightFront ", rfPower);
-        telemetry.addData("RightBack ", rrPower);
+//        telemetry.addData("LeftFront ", lfPower);
+//        telemetry.addData("LeftBack ", lrPower);
+//        telemetry.addData("RightFront ", rfPower);
+//        telemetry.addData("RightBack ", rrPower);
+//        telemetry.addData("MovementX", x);
+//        telemetry.addData("MovementY", y);
+//        telemetry.addData("MovementTurn", r);
+
     }
 }

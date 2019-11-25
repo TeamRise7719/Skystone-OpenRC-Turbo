@@ -9,21 +9,19 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.CurvePoint;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.Math.Point;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.CurvePoint;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.PurePursuitMath;
 
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.AngleWrap;
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMath.lineCircleIntersection;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.PurePursuitMath.AngleWrap;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.PurePursuitMath.lineCircleIntersection;
 
 /**
- * Created by Sean Cardosi on 11/6/2019
- * DriveWheelPurePursuitMovement is a class containing all of the functions to find and
+ * Created by Sean Cardosi.
+ * PurePursuitMovement is a class containing all of the functions to find and
  * provide movement to the drivetrain while following a set of given points.
- *
- * EVERYTHING IS CURRENTLY IN CENTIMETERS!!! ALL GRYO ANGLES ARE IN RADIANS!!!
  */
 public class DriveWheelPurePursuitMovement {
 
@@ -37,11 +35,13 @@ public class DriveWheelPurePursuitMovement {
     static double movementTurn = 0.0;
 
     private static DriveWheelPurePursuitDrivetrain pwr;
-    public static DriveWheelOdometry odometry;
+    private static DriveWheelOdometry odometry;
 
     public DriveWheelPurePursuitMovement(Telemetry tel, HardwareMap hardwareMap) {
         telemetry = tel;
 
+        pwr = new DriveWheelPurePursuitDrivetrain(hardwareMap);
+        odometry = new DriveWheelOdometry(hardwareMap, tel);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit            = BNO055IMU.AngleUnit.RADIANS;
@@ -55,6 +55,7 @@ public class DriveWheelPurePursuitMovement {
         gyro.initialize(parameters);
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
     }
+
     public void init(HardwareMap hardwareMap, Telemetry tel) {
         pwr = new DriveWheelPurePursuitDrivetrain(hardwareMap);
         pwr.init();
@@ -65,53 +66,17 @@ public class DriveWheelPurePursuitMovement {
         movementTurn = 0.0;
     }
 
-//    private static CurvePoint extendLine(CurvePoint firstPoint, CurvePoint secondPoint, double distance) {
-//
-//        /**
-//         * Since we are pointing to this point, extend the line if it is the last line
-//         * but do nothing if it isn't the last line
-//         *
-//         * So if you imagine the robot is almost done its path, without this algorithm
-//         * it will just point to the last point on its path creating craziness around
-//         * the end (although this is covered by some sanity checks later).
-//         * With this, it will imagine the line extends further and point to a location
-//         * outside the endpoint of the line only if it's the last point. This makes the
-//         * last part a lot smoother, almost looking like a curve but not.
-//         */
-//
-//        //get the angle of this line
-//        double lineAngle = Math.atan2(secondPoint.y - firstPoint.y,secondPoint.x - firstPoint.x);
-//        //get this line's length
-//        double lineLength = Math.hypot(secondPoint.x - firstPoint.x,secondPoint.y - firstPoint.y);
-//        //extend the line by 1.5 pointLengths so that we can still point to it when we
-//        //are at the end
-//        double extendedLineLength = lineLength + distance;
-//
-//        CurvePoint extended = new CurvePoint(secondPoint);
-//        extended.x = Math.cos(lineAngle) * extendedLineLength + firstPoint.x;
-//        extended.y = Math.sin(lineAngle) * extendedLineLength + firstPoint.y;
-//        return extended;
-//    }
-
-
     public static void followCurve(ArrayList<CurvePoint> allPoints, double followAngle) {
 
-//        //This should allow you to extend the final point. Should just be able to change "allPoints" in followMe to pathExtended
-//        ArrayList<CurvePoint> pathExtended = (ArrayList<CurvePoint>) allPoints.clone();
-
-        //Change                                 this \/         to pathExtended
         CurvePoint followMe = getFollowPointPath(allPoints, new Point(odometry.xLocation,odometry.yLocation), allPoints.get(0).followDistance);
-
-//        //This is the math that actually extends the final point
-//        pathExtended.set(pathExtended.size()-1, extendLine(allPoints.get(allPoints.size()-2),allPoints.get(allPoints.size()-1), allPoints.get(allPoints.size()-1).pointLength * 1.5));
 
         goToPosition(followMe.x, followMe.y, followMe.moveSpeed, followAngle, followMe.turnSpeed);
 
         telemetry.addData("FollowMePoint", "(%f,%f)", followMe.x, followMe.y);
-
     }
 
-    public static CurvePoint getFollowPointPath(ArrayList<CurvePoint> pathPoints, Point robotLocation, double followRadius) {//NOTE: I took out xPos and yPos. I did not use them.
+    public static CurvePoint getFollowPointPath(ArrayList<CurvePoint> pathPoints, Point robotLocation, double followRadius) {
+
 
         CurvePoint followMe = new CurvePoint(pathPoints.get(0));
 
@@ -120,14 +85,16 @@ public class DriveWheelPurePursuitMovement {
             CurvePoint startLine = pathPoints.get(i);
             CurvePoint endLine = pathPoints.get(i + 1);
 
-            ArrayList<Point> intersections = lineCircleIntersection(robotLocation, followRadius, startLine.toPoint(), endLine.toPoint());
+            ArrayList<Point> intersections = lineCircleIntersection(robotLocation, followRadius, startLine.toPoint(), endLine.toPoint(), telemetry);
 
+            telemetry.addData("Intersections", intersections);
             double closestAngle = 10000000;
 
             for (Point thisIntersection : intersections) {
-
                 double angle = Math.atan2(thisIntersection.y - odometry.yLocation, thisIntersection.x - odometry.xLocation);
                 double deltaAngle = Math.abs(PurePursuitMath.AngleWrap(angle - odometry.getRawHeading()));
+
+                telemetry.addData("IntersectionAngle", Math.toDegrees(angle));
 
                 if (deltaAngle < closestAngle) {
                     closestAngle = deltaAngle;
@@ -140,36 +107,42 @@ public class DriveWheelPurePursuitMovement {
 
 
     /**
-     * Basic run to a position. Better to use followCurve as it implements this and uses it better.
+     * Basic run to a position. Used in followCurve.
      * @param x
      * @param y
      * @param movementSpeed
      */
     public static void goToPosition(double x, double y, double movementSpeed, double preferredAngle, double turnSpeed) {
 
-        double distanceToTarget = (Math.hypot(x - odometry.xLocation, y - odometry.yLocation));
+        double distanceToTarget = Math.hypot(x*odometry.COUNTS_PER_INCH - odometry.xLocation, y*odometry.COUNTS_PER_INCH - odometry.yLocation);
 
-        double absoluteAngleToTarget = Math.atan2(y - odometry.yLocation, x - odometry.xLocation);
+        telemetry.addData("DistanceToTarget", distanceToTarget / odometry.COUNTS_PER_INCH);
+
+        double absoluteAngleToTarget = Math.atan2(y*odometry.COUNTS_PER_INCH - odometry.yLocation, x*odometry.COUNTS_PER_INCH - odometry.xLocation);
 
         double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (odometry.getRawHeading()));
 
-        double relativeXToPoint = (Math.cos(relativeAngleToPoint) * distanceToTarget) / odometry.COUNTS_PER_INCH;
-        double relativeYToPoint = (Math.sin(relativeAngleToPoint) * distanceToTarget) / odometry.COUNTS_PER_INCH;
+        telemetry.addData("RelativeAngleToPoint", Math.toDegrees(relativeAngleToPoint));
+
+        double relativeXToPoint = Math.cos(relativeAngleToPoint) * distanceToTarget;
+        double relativeYToPoint = Math.sin(relativeAngleToPoint) * distanceToTarget;
+
+        telemetry.addData("x,y to point", "%f,%f", relativeXToPoint/odometry.COUNTS_PER_INCH, relativeYToPoint/odometry.COUNTS_PER_INCH);
 
         double movementXPower = relativeXToPoint / (Math.abs(relativeXToPoint) + Math.abs(relativeYToPoint));
         double movementYPower = relativeYToPoint / (Math.abs(relativeXToPoint) + Math.abs(relativeYToPoint));
 
-        movementX = movementXPower * movementSpeed;//Movement X and Y are the power to apply to the motors
+        movementX = movementXPower * movementSpeed;
         movementY = movementYPower * movementSpeed;
 
-        pwr.ApplyPower();//This "should" apply power to the robot correctly. It should work.
-        odometry.updateLocation();//This "should" update the robots x and y locations
+        pwr.ApplyPower();
+        odometry.updateLocation();
 
-        double relativeTurnAngle = relativeAngleToPoint - Math.toRadians(180) + preferredAngle;
-        movementTurn = Range.clip(relativeTurnAngle / Math.toRadians(30), -1,1) * turnSpeed;//movement Turn is power to turn angles
+        double relativeTurnAngle = -(relativeAngleToPoint + preferredAngle);//Maybe needs -Math.toRadians(180)
+        movementTurn = Range.clip(relativeTurnAngle / Math.toRadians(30), -1,1) * turnSpeed;
 
-//        if (distanceToTarget < 10) {//Stop turning if close to point
-//            movementTurn = 0;
-//        }
+        if (distanceToTarget < 4*odometry.COUNTS_PER_INCH) {// < 4 inches
+            movementTurn = 0;
+        }
     }
 }
