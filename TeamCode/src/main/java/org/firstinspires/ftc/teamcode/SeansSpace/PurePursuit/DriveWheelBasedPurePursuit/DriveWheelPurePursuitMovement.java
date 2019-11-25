@@ -9,14 +9,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.CurvePoint;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.PurePursuitMath;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.PurePursuitMath;
 
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.PurePursuitMath.AngleWrap;
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.PurePursuitMath.lineCircleIntersection;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.PurePursuitMath.AngleWrap;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.PurePursuitMath.lineCircleIntersection;
 
 /**
  * Created by Sean Cardosi.
@@ -91,7 +91,7 @@ public class DriveWheelPurePursuitMovement {
             double closestAngle = 10000000;
 
             for (Point thisIntersection : intersections) {
-                double angle = Math.atan2(thisIntersection.y - odometry.yLocation, thisIntersection.x - odometry.xLocation);
+                double angle = Math.atan2(thisIntersection.y - odometry.yLocation/odometry.COUNTS_PER_INCH, thisIntersection.x - odometry.xLocation/odometry.COUNTS_PER_INCH);
                 double deltaAngle = Math.abs(PurePursuitMath.AngleWrap(angle - odometry.getRawHeading()));
 
                 telemetry.addData("IntersectionAngle", Math.toDegrees(angle));

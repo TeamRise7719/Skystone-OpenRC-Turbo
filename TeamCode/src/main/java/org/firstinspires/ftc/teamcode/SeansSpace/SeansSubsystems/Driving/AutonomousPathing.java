@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.CurvePoint;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
 
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.followCurve;
 

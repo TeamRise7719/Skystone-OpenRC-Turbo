@@ -10,13 +10,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.CurvePoint;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.PurePursuitMath;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.PurePursuitMath;
 
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.PurePursuitMath.AngleWrap;
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements.PurePursuitMath.lineCircleIntersection;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.PurePursuitMath.AngleWrap;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.PurePursuitMath.lineCircleIntersection;
 
 /**
  * Created by Sean Cardosi.
@@ -123,7 +123,7 @@ public class PurePursuitMovement {
             CurvePoint startLine = pathPoints.get(i);
             CurvePoint endLine = pathPoints.get(i + 1);
 
-            ArrayList<Point> intersections = lineCircleIntersection(robotLocation, followRadius, startLine.toPoint(), endLine.toPoint());
+            ArrayList<Point> intersections = lineCircleIntersection(robotLocation, followRadius, startLine.toPoint(), endLine.toPoint(),telemetry);
 
             double closestAngle = 10000000;
 

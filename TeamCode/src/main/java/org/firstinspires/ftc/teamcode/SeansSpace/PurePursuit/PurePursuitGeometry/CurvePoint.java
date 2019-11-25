@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements;
+package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry;
 
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
 

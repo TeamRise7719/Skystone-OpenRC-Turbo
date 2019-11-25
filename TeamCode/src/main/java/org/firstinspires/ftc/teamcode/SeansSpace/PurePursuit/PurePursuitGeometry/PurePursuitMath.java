@@ -1,7 +1,6 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitMathElements;
+package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelOdometry;
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
 
 import java.util.ArrayList;
