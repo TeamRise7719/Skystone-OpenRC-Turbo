@@ -15,7 +15,7 @@ dependencies {
      * Other Modules
      */
     implementation project(':FtcRobotController')
-<<<<<<< HEAD
+
     implementation 'com.github.dogecv:dogecv:2020.4-alpha'
 
     turboImplementation project(':Hardware')
@@ -25,6 +25,4 @@ dependencies {
     extremeTurboImplementation project(':Hardware')
     extremeTurboImplementation project(':RobotCore')
     extremeTurboImplementation project(':FtcCommon')
-=======
->>>>>>> OpenFTC/master
 }
