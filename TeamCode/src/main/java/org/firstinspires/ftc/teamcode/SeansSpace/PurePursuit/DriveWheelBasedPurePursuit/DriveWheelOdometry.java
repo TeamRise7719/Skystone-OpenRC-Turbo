@@ -127,11 +127,19 @@ public class DriveWheelOdometry {
     }
 
 
+    /**
+     * Finds the robot's current heading on a scale equivalent with atan2.
+     * @return Return the robot's angle
+     */
     public double getRawHeading() {
 
         double raw = angles.firstAngle + Math.toRadians(90);
         return AngleUnit.normalizeRadians(raw);// + Math.toRadians(90);
     }
+
+    /**
+     * This updates the robot's angles. Should be called every loop.
+     */
     public void loop() {
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
     }

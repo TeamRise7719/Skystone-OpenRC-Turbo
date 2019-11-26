@@ -33,6 +33,7 @@ public class DriveWheelPurePursuitMovement {
     static double movementX = 0.0;
     static double movementY = 0.0;
     static double movementTurn = 0.0;
+    static int lastClosestPoint = 0;
 
     private static DriveWheelPurePursuitDrivetrain pwr;
     private static DriveWheelOdometry odometry;
@@ -56,6 +57,7 @@ public class DriveWheelPurePursuitMovement {
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
     }
 
+
     public void init(HardwareMap hardwareMap, Telemetry tel) {
         pwr = new DriveWheelPurePursuitDrivetrain(hardwareMap);
         pwr.init();
@@ -64,8 +66,14 @@ public class DriveWheelPurePursuitMovement {
         movementX = 0.0;
         movementY = 0.0;
         movementTurn = 0.0;
+        lastClosestPoint = 0;
     }
 
+    /**
+     * Follows a set of given waypoints using a curving algorithm.
+     * @param allPoints The array of waypoints to follow.
+     * @param followAngle The robot angle to follow the path in.
+     */
     public static void followCurve(ArrayList<CurvePoint> allPoints, double followAngle) {
 
         CurvePoint followMe = getFollowPointPath(allPoints, new Point(odometry.xLocation,odometry.yLocation), allPoints.get(0).followDistance);
@@ -75,26 +83,58 @@ public class DriveWheelPurePursuitMovement {
         telemetry.addData("FollowMePoint", "(%f,%f)", followMe.x, followMe.y);
     }
 
+
+    /**
+     * Finds the waypoint closest to the robot.
+     * @param points An array of points to test.
+     * @param robotPose The robot's current location.
+     * @return Returns the closest point.
+     */
+    public static int getClosestPointIndex(ArrayList<CurvePoint> points,Point robotPose) {
+        double shortestDistance  = Double.MAX_VALUE;
+        int closestPoint = 0;
+        for (int i=lastClosestPoint; i<points.size()-1; i++) {
+            if (Math.hypot(points.get(i).x*odometry.COUNTS_PER_INCH-robotPose.x, points.get(i).y*odometry.COUNTS_PER_INCH-robotPose.y) < shortestDistance) {
+                closestPoint = i;
+                shortestDistance = Math.hypot(points.get(i).x*odometry.COUNTS_PER_INCH-robotPose.x, points.get(i).y*odometry.COUNTS_PER_INCH-robotPose.y);
+            }
+        }
+        lastClosestPoint = closestPoint;
+        return closestPoint;
+    }
+
+    /**
+     * Gets the path for the robot to follow based on path intersections
+     * @param pathPoints This should be and array of the path points
+     * @param robotLocation This should be the robots location
+     * @param followRadius This should be the follow distance of the path
+     * @return Returns a point to follow
+     * Note: Inputs should be in encoder counts. The array of points is in inches.
+     */
     public static CurvePoint getFollowPointPath(ArrayList<CurvePoint> pathPoints, Point robotLocation, double followRadius) {
 
+        int closestPointIndex = getClosestPointIndex(pathPoints,robotLocation);
 
-        CurvePoint followMe = new CurvePoint(pathPoints.get(0));
+        CurvePoint followMe = new CurvePoint(pathPoints.get(closestPointIndex));
 
-        for (int i=0; i<pathPoints.size() - 1; i++) {
+        for (int i=closestPointIndex+1; i<pathPoints.size(); i++) {
 
-            CurvePoint startLine = pathPoints.get(i);
-            CurvePoint endLine = pathPoints.get(i + 1);
+            CurvePoint startLine = pathPoints.get(i-1);
+            CurvePoint endLine = pathPoints.get(i);
 
             ArrayList<Point> intersections = lineCircleIntersection(robotLocation, followRadius, startLine.toPoint(), endLine.toPoint(), telemetry);
 
             telemetry.addData("Intersections", intersections);
             double closestAngle = 10000000;
 
+            telemetry.addData("startLine",startLine.toPoint());
+            telemetry.addData("endLine",endLine.toPoint());
             for (Point thisIntersection : intersections) {
+
                 double angle = Math.atan2(thisIntersection.y - odometry.yLocation/odometry.COUNTS_PER_INCH, thisIntersection.x - odometry.xLocation/odometry.COUNTS_PER_INCH);
                 double deltaAngle = Math.abs(PurePursuitMath.AngleWrap(angle - odometry.getRawHeading()));
 
-                telemetry.addData("IntersectionAngle", Math.toDegrees(angle));
+//                telemetry.addData("IntersectionAngle", Math.toDegrees(angle));
 
                 if (deltaAngle < closestAngle) {
                     closestAngle = deltaAngle;
@@ -107,22 +147,25 @@ public class DriveWheelPurePursuitMovement {
 
 
     /**
-     * Basic run to a position. Used in followCurve.
-     * @param x
-     * @param y
-     * @param movementSpeed
+     * Basic run to a position. Better to use followCurve as it implements this and uses it better.
+     * Note: Inputs should be in inches.
+     * @param x The x location to run to
+     * @param y The y location to run to
+     * @param movementSpeed The speed scaling factor to run forwards and backwards movement
+     * @param preferredAngle The robot angle to follow the path with in radians
+     * @param turnSpeed The speed scaling factor for turning movement
      */
     public static void goToPosition(double x, double y, double movementSpeed, double preferredAngle, double turnSpeed) {
 
         double distanceToTarget = Math.hypot(x*odometry.COUNTS_PER_INCH - odometry.xLocation, y*odometry.COUNTS_PER_INCH - odometry.yLocation);
 
-        telemetry.addData("DistanceToTarget", distanceToTarget / odometry.COUNTS_PER_INCH);
+//        telemetry.addData("DistanceToTarget", distanceToTarget / odometry.COUNTS_PER_INCH);
 
         double absoluteAngleToTarget = Math.atan2(y*odometry.COUNTS_PER_INCH - odometry.yLocation, x*odometry.COUNTS_PER_INCH - odometry.xLocation);
 
         double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (odometry.getRawHeading()));
 
-        telemetry.addData("RelativeAngleToPoint", Math.toDegrees(relativeAngleToPoint));
+//        telemetry.addData("RelativeAngleToPoint", Math.toDegrees(relativeAngleToPoint));
 
         double relativeXToPoint = Math.cos(relativeAngleToPoint) * distanceToTarget;
         double relativeYToPoint = Math.sin(relativeAngleToPoint) * distanceToTarget;
@@ -138,7 +181,7 @@ public class DriveWheelPurePursuitMovement {
         pwr.ApplyPower();
         odometry.updateLocation();
 
-        double relativeTurnAngle = -(relativeAngleToPoint + preferredAngle);//Maybe needs -Math.toRadians(180)
+        double relativeTurnAngle = -(relativeAngleToPoint + preferredAngle);
         movementTurn = Range.clip(relativeTurnAngle / Math.toRadians(30), -1,1) * turnSpeed;
 
         if (distanceToTarget < 4*odometry.COUNTS_PER_INCH) {// < 4 inches

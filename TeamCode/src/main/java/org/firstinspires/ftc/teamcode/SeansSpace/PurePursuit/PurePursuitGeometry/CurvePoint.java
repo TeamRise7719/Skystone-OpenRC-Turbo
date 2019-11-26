@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
 
 /**
  * Created by Sean Cardosi.
- * CurvePoint is a class containing the point functions to use in other Pure Pursuit classes.
+ * CurvePoint is a custom Point class.
  */
 public class CurvePoint {
 
@@ -13,9 +13,6 @@ public class CurvePoint {
     public double moveSpeed;
     public double turnSpeed;
     public double followDistance;
-    public double pointLength;
-//    public double slowDownTurnRadians;
-//    public double slowDownTurnAmount;
 
     public CurvePoint(double x, double y, double moveSpeed, double turnSpeed, double followDistance) {
 
@@ -24,8 +21,6 @@ public class CurvePoint {
         this.moveSpeed = moveSpeed;
         this.turnSpeed = turnSpeed;
         this.followDistance = followDistance;
-//        this.slowDownTurnRadians = slowDownTurnRadians;
-//        this.slowDownTurnAmount = slowDownTurnAmount;
     }
 
     public CurvePoint(CurvePoint thisPoint) {
@@ -35,9 +30,6 @@ public class CurvePoint {
         moveSpeed = thisPoint.moveSpeed;
         turnSpeed = thisPoint.turnSpeed;
         followDistance = thisPoint.followDistance;
-//        slowDownTurnRadians = thisPoint.slowDownTurnRadians;
-//        slowDownTurnAmount = thisPoint.slowDownTurnAmount;
-        pointLength = thisPoint.pointLength;
     }
 
     public Point toPoint() {

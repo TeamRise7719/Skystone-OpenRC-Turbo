@@ -19,8 +19,8 @@ public class PurePursuitMath {
     public PurePursuitMath() {}
     /**
      * Makes sure the angle is within the range -180 to 180 degrees.
-     * @param angle
-     * @return
+     * @param angle The angle to normalize in radians
+     * @return Return the normalized angle
      */
     public static double AngleWrap(double angle) {
 
@@ -33,29 +33,26 @@ public class PurePursuitMath {
         return angle;
     }
 
+    /**
+     * Finds all the points of intersection of the robot's extended circle and the path.
+     * @param circleCenter The robot's location.
+     * @param radius The follow distance in inches.
+     * @param linePoint1 The first point on the line segment.
+     * @param linePoint2 The second point on the line segment.
+     * @param telemetry Display helpful data.
+     * @return Returns all the intersections.
+     */
     public static ArrayList<Point> lineCircleIntersection(Point circleCenter, double radius, Point linePoint1, Point linePoint2, Telemetry telemetry) {
 
         circleCenter.x /= COUNTS_PER_INCH;
         circleCenter.y /= COUNTS_PER_INCH;
 
-//        if (Math.abs(linePoint2.y - linePoint1.y) < 0.003) {
-//            linePoint1.y = linePoint2.y + 0.003;
-//        }
-//        if (Math.abs(linePoint2.x - linePoint1.x) < 0.003) {
-//            linePoint1.x = linePoint2.x + 0.003;
-//        }
         if (linePoint1.y == linePoint2.y) {
             linePoint1.y += 0.001;
         }
         if (linePoint1.x == linePoint2.x) {
             linePoint1.x += 0.001;
         }
-
-        double m1 = ((linePoint2.y - linePoint1.y) / (linePoint2.x - linePoint1.x));
-
-//        telemetry.addData("m1", m1);
-
-        double quadraticA = 1.0 + Math.pow(m1,2);
 
         double x1 = linePoint1.x - circleCenter.x;
         double y1 = linePoint1.y - circleCenter.y;
@@ -72,7 +69,7 @@ public class PurePursuitMath {
         if (A == 0) {//No infinities
             A += 0.001;
         }
-        if (-B + discriminant == 0 || -B - discriminant == 0) {
+        if (-B + Math.sqrt(discriminant) == 0 || -B - Math.sqrt(discriminant) == 0) {
             B +=0.001;
         }
 
@@ -84,16 +81,7 @@ public class PurePursuitMath {
         double t1 = (-B + Math.sqrt(discriminant)) / (2 * A);
         double t2 = (-B - Math.sqrt(discriminant)) / (2 * A);
 
-        double quadraticB = (2.0 * m1 * y1) - (2.0 * Math.pow(m1,2));
-
-        double quadraticC = ((Math.pow(m1,2) * Math.pow(x1,2))) - (2.0 * y1 * m1 * x1) + Math.pow(y1,2) - Math.pow(radius,2);
-
         ArrayList<Point> allPoints = new ArrayList<>();
-
-//        telemetry.addData("Discriminant", Math.pow(quadraticB,2) - (4 * quadraticA * quadraticC));
-//        telemetry.addData("A", quadraticA);
-//        telemetry.addData("B", quadraticB);
-//        telemetry.addData("C", quadraticC);
 
         try {
 
@@ -101,40 +89,24 @@ public class PurePursuitMath {
             double y1Root = (y_1-y0) * t1 + y0;
             double x2Root = (x_1-x0) * t2 + x0;
             double y2Root = (y_1-y0) * t2 + y0;
+
             telemetry.addData("x1,y1","%f,%f",x1Root,y1Root);
             telemetry.addData("x2,y2","%f,%f",x2Root,y2Root);
-
-            double xRoot1 = (-quadraticB + Math.sqrt(Math.pow(quadraticB,2) - (4 * quadraticA * quadraticC))) / (2 * quadraticA);
-            double yRoot1 = m1 * (xRoot1 - x1) + y1;
-
-            //put back the offset
-            xRoot1 += circleCenter.x;
-            yRoot1 += circleCenter.y;
-
 
             double minX = Math.min(linePoint1.x, linePoint2.x);
             double maxX = Math.max(linePoint1.x, linePoint2.x);
             double minY = Math.min(linePoint1.y, linePoint2.y);
             double maxY = Math.max(linePoint1.y, linePoint2.y);
 
-//            if (xRoot1 > minX && xRoot1 < maxX && yRoot1 > minY && yRoot1 < maxY) {
-////                allPoints.add(new Point(xRoot1, yRoot1));
-//            }
-            if (x1Root > minX && x1Root < maxX && y1Root > minY && y1Root < maxY) {
-                allPoints.add(new Point(x1Root, y1Root));
+            if (t1 >= 0 && t1 <= 1) {
+                if (x1Root > minX && x1Root < maxX && y1Root > minY && y1Root < maxY) {
+                    allPoints.add(new Point(x1Root, y1Root));
+                }
             }
-
-            double xRoot2 = (-quadraticB - Math.sqrt(Math.pow(quadraticB,2) - (4 * quadraticA * quadraticC))) / (2 * quadraticA);
-            double yRoot2 = m1 * (xRoot2 - x1) + y1;
-
-            xRoot2 += circleCenter.x;
-            yRoot2 += circleCenter.y;
-
-//            if (xRoot2 > minX && xRoot2 < maxX && yRoot1 > minY && yRoot1 < maxY) {
-//                allPoints.add(new Point(xRoot2, yRoot2));
-//            }
-            if (x2Root > minX && x2Root < maxX && y2Root > minY && y2Root < maxY) {
-                allPoints.add(new Point(x2Root, y2Root));
+            if (t2 >= 0 && t2 <= 1) {
+                if (x2Root > minX && x2Root < maxX && y2Root > minY && y2Root < maxY) {
+                    allPoints.add(new Point(x2Root, y2Root));
+                }
             }
 
         } catch(Exception e) {

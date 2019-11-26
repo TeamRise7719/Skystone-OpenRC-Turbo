@@ -69,44 +69,21 @@ public class DriveWheelPurePursuitDrivetrain {
         lrPower = x - y + r;
         rrPower = x + y - r;
 
-        //TODO: Maybe just use Range.clip() to clip the motor speeds between -1 and +1
         //find the maximum of the powers
         double lfmaxRawPower = Math.abs(lfPower);
-        double rfmaxRawPower = Math.abs(rfPower);
-        double lrmaxRawPower = Math.abs(lrPower);
-        double rrmaxRawPower = Math.abs(rrPower);
-        if(Math.abs(lfPower) > lfmaxRawPower){ lfmaxRawPower = Math.abs(lrPower);}
-        if(Math.abs(lrPower) > lrmaxRawPower){ lrmaxRawPower = Math.abs(lrPower);}
-        if(Math.abs(rrPower) > rrmaxRawPower){ rrmaxRawPower = Math.abs(rrPower);}
-        if(Math.abs(rfPower) > rfmaxRawPower){ rfmaxRawPower = Math.abs(rfPower);}
 
+        if(Math.abs(lfPower) > lfmaxRawPower){ lfmaxRawPower = Math.abs(lfPower);}
         //if the maximum is greater than 1, scale all the powers down to preserve the shape
-        double lfscaleDownAmount = 1.0;
-        double lrscaleDownAmount = 1.0;
-        double rrscaleDownAmount = 1.0;
-        double rfscaleDownAmount = 1.0;
+        double scaleDownAmount = 1.0;
         if(lfmaxRawPower > 1.0){
             //when max power is multiplied by this ratio, it will be 1.0, and others less
-            lfscaleDownAmount = 1.0/lfmaxRawPower;
-        }
-        if(lrmaxRawPower > 1.0){
-            //when max power is multiplied by this ratio, it will be 1.0, and others less
-            lrscaleDownAmount = 1.0/lrmaxRawPower;
-        }
-        if(rrmaxRawPower > 1.0){
-            //when max power is multiplied by this ratio, it will be 1.0, and others less
-            rrscaleDownAmount = 1.0/rrmaxRawPower;
-        }
-        if(rfmaxRawPower > 1.0){
-            //when max power is multiplied by this ratio, it will be 1.0, and others less
-            rfscaleDownAmount = 1.0/rfmaxRawPower;
+            scaleDownAmount = 1.0/lfmaxRawPower;
         }
 
-        lfPower *= lfscaleDownAmount;
-        lrPower *= lrscaleDownAmount;
-        rrPower *= rrscaleDownAmount;
-        rfPower *= rfscaleDownAmount;
-
+        lfPower *= scaleDownAmount;
+        lrPower *= scaleDownAmount;
+        rrPower *= scaleDownAmount;
+        rfPower *= scaleDownAmount;
 
         lf.setPower(lfPower);
         lr.setPower(lrPower);
