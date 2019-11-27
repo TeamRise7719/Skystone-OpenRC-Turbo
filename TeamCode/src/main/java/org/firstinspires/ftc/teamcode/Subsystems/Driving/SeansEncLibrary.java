@@ -54,18 +54,18 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
-    public static final double     HEADING_THRESHOLD       = 0.01;      // As tight as we can make it with an integer gyro
+    public static final double     HEADING_THRESHOLD       = 0.02;      // As tight as we can make it with an integer gyro
     public static final int     ENCODER_THRESHOLD       = 5;      // As tight as we can make it with an integer gyro
 
 
-    private static  double     P_TURN_COEFF            = 0.015;//.007     // Larger is more responsive, but also less stable
-    private static  double     I_TURN_COEFF            = 0.0;//.00001   // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0.000003;//.000003     // Larger is more responsive, but also less stable
+    private static  double     P_TURN_COEFF            = 0;//.008     // Larger is more responsive, but also less stable
+    private static  double     I_TURN_COEFF            = 0.0000000001;//.0000000001   // Larger is more responsive, but also less stable
+    private static  double     D_TURN_COEFF            = 0;//.000003     // Larger is more responsive, but also less stable
 
 
-    private static final double     P_DRIVE_COEFF           = 0.0005;     // Larger is more responsive, but also less stable
-    private static final double     I_DRIVE_COEFF           = 0.000005;     // Larger is more responsive, but also less stable
-    private static final double     D_DRIVE_COEFF           = 0.0000006;     // Larger is more responsive, but also less stable
+    private static final double     P_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
+    private static final double     I_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
+    private static final double     D_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
     public int LEFT = -1;
     public int RIGHT = 1;
 
@@ -188,17 +188,17 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             turnPID.setContinuous(true);
             gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             turnPID.setSetpoint(gyro_angle.firstAngle);
-            turnPID.setOutputRange(-0.6, 0.6);
+            turnPID.setOutputRange(-0.8, 0.8);
 
 
             leftDrivingPID.setContinuous(false);
             leftDrivingPID.setSetpoint(newLeftTarget);
-            leftDrivingPID.setOutputRange(-0.8, 0.8);
+            leftDrivingPID.setOutputRange(-0.6, 0.6);
 
 
             rightDrivingPID.setContinuous(false);
             rightDrivingPID.setSetpoint(newRightTarget);
-            rightDrivingPID.setOutputRange(-0.8, 0.8);
+            rightDrivingPID.setOutputRange(-0.6, 0.6);
 
             int sum = 0;
 
@@ -320,7 +320,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         etime.reset();
 
         // keep looping while we are still active, and not on heading.
-        while (linearOpMode.opModeIsActive() && etime.time()<3.5) {
+        while (linearOpMode.opModeIsActive() /*&& etime.time()<3.5*/) {
              doneTurning = onHeading(angle);
              if(doneTurning){
                  break;

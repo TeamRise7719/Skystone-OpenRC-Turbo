@@ -122,7 +122,7 @@ public class SynchronousPID {
         // Don't blow away m_error so as to not break derivative
         double proportionalError = Math.abs(m_error) < m_deadband ? 0 : m_error;
 
-        m_result = ((m_P * proportionalError) + (m_I * m_totalError * timeDiff) - (m_D * (m_error - m_prevError) / timeDiff));
+        m_result = ((m_P * proportionalError) + (m_I * m_totalError * (timeDiff/1000)) - (m_D * (m_error - m_prevError) / (timeDiff / 1000)));
         m_prevError = m_error;
 
         if (m_result > m_maximumOutput) {
