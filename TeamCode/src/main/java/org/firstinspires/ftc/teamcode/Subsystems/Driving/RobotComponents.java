@@ -24,6 +24,7 @@ public class RobotComponents {
     Servo lgrab , rgrab, shoulder,wrist,claw;
 
 
+    private double posit = 0.14;
 
 
 
@@ -35,7 +36,7 @@ public class RobotComponents {
         telemetry = _telemetry;
 
         intake = hardwareMap.dcMotor.get("intake");
-        intake.setDirection(DcMotor.Direction.FORWARD);
+        intake.setDirection(DcMotor.Direction.REVERSE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         liftL = hardwareMap.dcMotor.get("liftL");
@@ -63,10 +64,10 @@ public class RobotComponents {
 
     //----------------------------------------------=+(Intake)+=----------------------------------------------\\
     public void intakeStone() {
-        intake.setPower(1);
+        intake.setPower(-0.75);
     }
     public void ejectStone() {
-        intake.setPower(-0.5);
+        intake.setPower(1);
     }
     public void stopStone() {
         intake.setPower(0.0);
@@ -135,20 +136,28 @@ public class RobotComponents {
     }
 
     public void wrist(Gamepad gamepad){
-        wrist.setPosition(0.5 + gamepad.left_trigger/5 - gamepad.right_trigger/5);
+        wrist.setPosition(0.47 + gamepad.left_trigger/5 - gamepad.right_trigger/5);
     }
 //
 //    public void wristLeft(Gamepad gamepad){
 //        wrist.setPosition(gamepad.right_trigger/5);
 //    }
 
-    public void shoulderUp(){
-        shoulder.setPosition(0.8);
-    }
+    public void shoulder(Gamepad gamepad){
+        double down = 0.13;
+        double up = 0.9;
+        if (gamepad.a){
+            posit = down;
+        } else if (gamepad.y){
+            posit = up;
+        }
 
-    public void shoulderDown(){
-        shoulder.setPosition(0.2);
+        shoulder.setPosition(posit + gamepad.right_stick_y/10);
     }
+//
+//    public void shoulderDown(Gamepad gamepad){
+//        shoulder.setPosition(0.140);
+//    }
 
 
 

@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.SeansSpace.Subsystems.Memes.RobotMedia;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 
@@ -87,7 +89,6 @@ public class BasicTeleOp extends OpMode {
 
         //----------------------------------------------=+(Block build)+=----------------------------------------------\\
 
-        //TODO: Create a function to do this automatically
         if (gamepad2.right_bumper){
             component.clawGrab();
         }
@@ -98,14 +99,8 @@ public class BasicTeleOp extends OpMode {
 
         component.wrist(gamepad2);
 
-        if (gamepad2.a){
-            component.shoulderDown();
 
-        }
 
-        if (gamepad2.y){
-            component.shoulderUp();
-        }
 
 
 

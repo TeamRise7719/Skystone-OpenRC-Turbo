@@ -54,13 +54,13 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
-    public static final double     HEADING_THRESHOLD       = 0.05;      // As tight as we can make it with an integer gyro
-    public static final int     ENCODER_THRESHOLD       = 20;      // As tight as we can make it with an integer gyro
+    public static final double     HEADING_THRESHOLD       = 0.01;      // As tight as we can make it with an integer gyro
+    public static final int     ENCODER_THRESHOLD       = 5;      // As tight as we can make it with an integer gyro
 
 
-    private static  double     P_TURN_COEFF            = 0.03;//.007     // Larger is more responsive, but also less stable
-    private static  double     I_TURN_COEFF            = 0.0015;//.00001   // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0.000075;//.000003     // Larger is more responsive, but also less stable
+    private static  double     P_TURN_COEFF            = 0.015;//.007     // Larger is more responsive, but also less stable
+    private static  double     I_TURN_COEFF            = 0.0;//.00001   // Larger is more responsive, but also less stable
+    private static  double     D_TURN_COEFF            = 0.000003;//.000003     // Larger is more responsive, but also less stable
 
 
     private static final double     P_DRIVE_COEFF           = 0.0005;     // Larger is more responsive, but also less stable
