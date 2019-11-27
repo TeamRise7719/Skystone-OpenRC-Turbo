@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 
 /*
- * Created by Sean Cardosi on 9/22/2019.
+ * Created by Sean Cardosi on 9/22/2019. (Mainly Jordan:)
  */
 @TeleOp(name = "BasicTeleOp", group = "Drive")
 public class BasicTeleOp extends OpMode {
