@@ -32,8 +32,7 @@ public class DriveWheelBasedPurePursuitTest extends OpMode {
         allPoints.add(new CurvePoint(50, 0, 0.3, 0.3, 25));
         allPoints.add(new CurvePoint(0, 0, 0.3, 0.3, 25));
         //TODO: MAKE THIS BETTER
-        //WARNING: If a point in the middle of the path is closer to the robot than the next point, the robot will skip to that point.
-        //WARNING: Robot will get stuck spinning while looking for another point to go to at the endPoint.
+        //WARNING: Robot will get stuck oscillating while looking for another point to go to at the endPoint.
         DriveWheelPurePursuitMovement.followCurve(allPoints, Math.toRadians(0));
     }
 }
