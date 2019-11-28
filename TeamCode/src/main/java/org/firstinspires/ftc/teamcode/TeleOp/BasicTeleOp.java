@@ -9,7 +9,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 
 /*
- * Created by Sean Cardosi on 9/22/2019. (Mainly Jordan:)
+ * Created by Sean Cardosi on 9/22/2019.
+ * Contributors: Sean Cardosi and Jordan Nuthalpaty
  */
 @TeleOp(name = "BasicTeleOp", group = "Drive")
 public class BasicTeleOp extends OpMode {
@@ -88,7 +89,6 @@ public class BasicTeleOp extends OpMode {
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
         //----------------------------------------------=+(Block build)+=----------------------------------------------\\
-
         if (gamepad2.right_bumper){
             component.clawGrab();
         }
@@ -99,11 +99,7 @@ public class BasicTeleOp extends OpMode {
 
         component.wrist(gamepad2);
 
-
-
-
-
-
+        component.shoulder(gamepad2);
         //----------------------------------------------=+(Block build)+=----------------------------------------------\\
 
 

@@ -58,14 +58,14 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     public static final int     ENCODER_THRESHOLD       = 5;      // As tight as we can make it with an integer gyro
 
 
-    private static  double     P_TURN_COEFF            = 0;//.008     // Larger is more responsive, but also less stable
-    private static  double     I_TURN_COEFF            = 0.0000000001;//.0000000001   // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0;//.000003     // Larger is more responsive, but also less stable
+    private static  double     P_TURN_COEFF            = 0.008;//.008     // Larger is more responsive, but also less stable
+    private static  double     I_TURN_COEFF            = 0;//  // Larger is more responsive, but also less stable
+    private static  double     D_TURN_COEFF            = 0.000001;//0.000001     // Larger is more responsive, but also less stable
 
 
-    private static final double     P_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
-    private static final double     I_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
-    private static final double     D_DRIVE_COEFF           = 0;     // Larger is more responsive, but also less stable
+    private static final double     P_DRIVE_COEFF           = 0.0015;     // Larger is more responsive, but also less stable
+    private static final double     I_DRIVE_COEFF           = 0.000000001 ;     // Larger is more responsive, but also less stable
+    private static final double     D_DRIVE_COEFF           = 0.0001;     // Larger is more responsive, but also less stable
     public int LEFT = -1;
     public int RIGHT = 1;
 
@@ -193,12 +193,12 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
             leftDrivingPID.setContinuous(false);
             leftDrivingPID.setSetpoint(newLeftTarget);
-            leftDrivingPID.setOutputRange(-0.6, 0.6);
+            leftDrivingPID.setOutputRange(-0.4, 0.4);
 
 
             rightDrivingPID.setContinuous(false);
             rightDrivingPID.setSetpoint(newRightTarget);
-            rightDrivingPID.setOutputRange(-0.6, 0.6);
+            rightDrivingPID.setOutputRange(-0.4, 0.4);
 
             int sum = 0;
 
@@ -260,12 +260,12 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
             leftDrivingPID.setContinuous(false);
             leftDrivingPID.setSetpoint(newLeftTarget);
-            leftDrivingPID.setOutputRange(-0.8, 0.8);
+            leftDrivingPID.setOutputRange(-0.3, 0.3);
 
 
             rightDrivingPID.setContinuous(false);
             rightDrivingPID.setSetpoint(newRightTarget);
-            rightDrivingPID.setOutputRange(-0.8, 0.8);
+            rightDrivingPID.setOutputRange(-0.3, 0.3);
 
             int sum = 0;
 
@@ -292,8 +292,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
 
                 //In my head this works although steering toggle will be an issue.
-                left_back_drive.setPower(-strafeDirection * (leftDriveSpeed + steeringSpeed));
-                left_front_drive.setPower(strafeDirection * (leftDriveSpeed + steeringSpeed));
+                left_back_drive.setPower(-strafeDirection * (-leftDriveSpeed + steeringSpeed));
+                left_front_drive.setPower(strafeDirection * (-leftDriveSpeed + steeringSpeed));
                 right_back_drive.setPower(strafeDirection * (rightDriveSpeed - steeringSpeed));
                 right_front_drive.setPower(-strafeDirection * (rightDriveSpeed - steeringSpeed));
 

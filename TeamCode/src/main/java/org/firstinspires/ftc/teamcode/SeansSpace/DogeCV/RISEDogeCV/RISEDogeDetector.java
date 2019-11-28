@@ -75,7 +75,7 @@ public class RISEDogeDetector {
         double x = getStoneX();
         if(x < 160) return SkystonePosition.LEFT;//Maybe x < 100
         else if(x >= 160 && x <= 320) return SkystonePosition.MIDDLE;//x >= 100 and x<=150
-        else if(x > 320) return SkystonePosition.RIGHT;//x >150
+        else if(x > 280) return SkystonePosition.RIGHT;//x >150
         return null;
     }
 
