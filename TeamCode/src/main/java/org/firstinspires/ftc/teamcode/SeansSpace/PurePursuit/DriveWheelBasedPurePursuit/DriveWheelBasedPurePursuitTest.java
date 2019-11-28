@@ -26,12 +26,14 @@ public class DriveWheelBasedPurePursuitTest extends OpMode {
     @Override
     public void loop() {
 
-        ArrayList<CurvePoint> waypoints = new ArrayList<>();
-        waypoints.add(new CurvePoint(0, 200, 1, 1, 20));
-        waypoints.add(new CurvePoint(200, 200, 1, 1, 20));
+        ArrayList<CurvePoint> allPoints = new ArrayList<>();
+        allPoints.add(new CurvePoint(0, 50, 0.3, 0.3, 25));
+        allPoints.add(new CurvePoint(50, 50, 0.3, 0.3, 25));
+        allPoints.add(new CurvePoint(50, 0, 0.3, 0.3, 25));
+        allPoints.add(new CurvePoint(0, 0, 0.3, 0.3, 25));
         //TODO: MAKE THIS BETTER
         //WARNING: If a point in the middle of the path is closer to the robot than the next point, the robot will skip to that point.
         //WARNING: Robot will get stuck spinning while looking for another point to go to at the endPoint.
-        DriveWheelPurePursuitMovement.followCurve(waypoints, Math.toRadians(0));
+        DriveWheelPurePursuitMovement.followCurve(allPoints, Math.toRadians(0));
     }
 }
