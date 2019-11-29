@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
@@ -13,6 +14,7 @@ import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBase
  * Created by Sean Cardosi.
  * Example of how to use Pure Pursuit to create an autonomous.
  */
+@Disabled
 @Autonomous(name = "Pure Pursuit Test", group = "Pure Pursuit")
 public class PurePursuitTest extends OpMode {
 

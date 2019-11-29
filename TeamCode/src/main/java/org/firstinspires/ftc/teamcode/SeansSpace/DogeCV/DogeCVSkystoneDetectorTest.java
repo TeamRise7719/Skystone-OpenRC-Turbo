@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV;
 
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.skystone.SkystoneDetector;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.opencv.core.Rect;
 
+@Disabled
 @TeleOp(name = "DogeCV Skystone Detector Test", group = "DogeCV")
 public class DogeCVSkystoneDetectorTest extends OpMode {
 
