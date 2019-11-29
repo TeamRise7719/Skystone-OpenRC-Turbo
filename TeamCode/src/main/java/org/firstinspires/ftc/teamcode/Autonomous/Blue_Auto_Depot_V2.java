@@ -37,17 +37,17 @@ public class Blue_Auto_Depot_V2 extends LinearOpMode{
 
         }
 
-        enc.steeringDrive(6, true,false, 1);
+        enc.steeringDrive(6, true,false);
 
         enc.gyroTurn(enc.TURN_SPEED,-90);
 
-        enc.steeringDrive(12, true, false, 1);
+        enc.steeringDrive(12, true, false);
 
         enc.gyroTurn(enc.TURN_SPEED,0);
 
-        enc.steeringDrive(38, true, false, 1);
+        enc.steeringDrive(38, true, false);
 
-        enc.steeringDrive(-6,true,false,1);
+        enc.steeringDrive(-6,true,false);
 
         enc.gyroTurn(enc.TURN_SPEED, 90);
 

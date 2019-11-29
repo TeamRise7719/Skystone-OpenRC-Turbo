@@ -34,10 +34,10 @@ public class Blue_Auto_V2 extends LinearOpMode {
         waitForStart();
 
 
-         enc.steeringDrive(64, true,false, 1);
+         enc.steeringDrive(64, true,false);
          enc.gyroTurn(enc.TURN_SPEED, 90);
-         enc.steeringDrive(32, true,false, 1);
-         enc.steeringDrive(56,true,false, 1);
+         enc.steeringDrive(32, true,false);
+         enc.steeringDrive(56,true,false);
 //        enc.gyroTurn(enc.TURN_SPEED, -90);
 //        enc.steeringDrive(40, false);
 //        enc.steeringDrive(-24, false);
