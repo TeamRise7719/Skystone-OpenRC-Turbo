@@ -22,10 +22,10 @@ public class PIDTest extends LinearOpMode {
 
             if (gamepad1.x) {
 
-                enc.steeringDrive(60,true,false,1);//24 true
+                enc.steeringDrive(60,true,false);//24 true
             }
             if (gamepad1.y) {
-                enc.steeringDrive(12, false,true,1);
+                enc.steeringDrive(12, false,true);
             }
             if (gamepad1.b) {
                 enc.gyroTurn(enc.TURN_SPEED, 90);
