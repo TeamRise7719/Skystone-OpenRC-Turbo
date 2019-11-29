@@ -153,18 +153,18 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
      * Function to move forwards, backwards, left, or right using PID.
      * @param distance Distance in inches to move. A positive distance makes the robot move
      *                 forwards and a negative distance makes the robot move backwards.
+     *                 If strafe is enabled then forwards is right and backwards is left.
      * @param steeringToggle Steering to stay in a straight line. Just put true or false here.
      * @param strafe Option to strafe instead of moving forwards/backwards. Put true or false here.
-     * @param strafeDirection If strafe is true then putting a -1 here will move left while a +1
-     *                        will move right.
      */
     public void steeringDrive(double distance,
                               boolean steeringToggle,
-                              boolean strafe,
-                              int strafeDirection) {
+                              boolean strafe) {
 
         //TODO: Figure out what to change so that this isn't necessary
         distance = -distance;
+
+        int strafeDirection = (int)(Math.signum(distance));
 
         double steeringSpeed;
         double leftDriveSpeed;
