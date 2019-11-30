@@ -68,13 +68,20 @@ public class RobotMedia {
             endgame.start();//We are in the endgame now
             endgamePlayed = true;
         }
+        if (endgame.isLooping()) {
+            endgame.stop();
+        }
         //----------------------------------------------=+(Endgame)+=----------------------------------------------\\
     }
     //----------------------------------------------=+(Right Round)+=----------------------------------------------\\
-    public void rightRound(HardwareMap hardwareMap) {
-        round.reset();
-        round = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
-        round.start();
+    public void rightRound(HardwareMap hardwareMap, boolean start) {//This might keep getting reset. Needs Testing.
+        if (start == true) {
+            round.reset();
+            round = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
+            round.start();
+        } else if (start == false) {
+            round.stop();
+        }
     }
     //----------------------------------------------=+(Right Round)+=----------------------------------------------\\
 
