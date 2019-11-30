@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import android.util.Log;
+
+import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes.RobotMedia;
 import org.firstinspires.ftc.teamcode.Subsystems.Util.Threading;
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot.Robot;
@@ -30,6 +32,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     SynchronousPID turnPID;
     SynchronousPID leftDrivingPID;
     SynchronousPID rightDrivingPID;
+    RobotMedia areYouSpinningYet;
 
     public BNO055IMU gyro;
     public Orientation gyro_angle;
@@ -79,6 +82,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
         telemetry = tel;
         linearOpMode = opMode;
+        areYouSpinningYet = new RobotMedia(hardwareMap);
     }
 
 
@@ -322,7 +326,11 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         // keep looping while we are still active, and not on heading.
         while (linearOpMode.opModeIsActive() /*&& etime.time()<3.5*/) {
              doneTurning = onHeading(angle);
+             if (!doneTurning) {
+                 areYouSpinningYet.rightRound(true);
+             }
              if(doneTurning){
+                 areYouSpinningYet.rightRound(false);
                  break;
              }
         }
