@@ -35,6 +35,7 @@ public class DriveWheelPurePursuitMovement {
     static double movementTurn = 0.0;
     static int lastClosestPoint = 0;
     static int nextPossiblePoint=0;
+    static int previousPoint = -1;
 
     private static DriveWheelPurePursuitDrivetrain pwr;
     private static DriveWheelOdometry odometry;
@@ -69,6 +70,7 @@ public class DriveWheelPurePursuitMovement {
         movementTurn = 0.0;
         lastClosestPoint = 0;
         nextPossiblePoint = 0;
+        previousPoint = -1;
     }
 
     /**
@@ -96,7 +98,8 @@ public class DriveWheelPurePursuitMovement {
         double shortestDistance  = Double.MAX_VALUE;
         int closestPoint = 0;
         nextPossiblePoint = lastClosestPoint+1;
-        for (int i=-1; i<nextPossiblePoint && i<points.size()-1; i++) {
+        previousPoint = lastClosestPoint-1;
+        for (int i=previousPoint; i<nextPossiblePoint && i<points.size()-1; i++) {
             if (Math.hypot(points.get(i+1).x*odometry.COUNTS_PER_INCH-robotPose.x, points.get(i+1).y*odometry.COUNTS_PER_INCH-robotPose.y) < shortestDistance) {
                 closestPoint = i+1;
                 shortestDistance = Math.hypot(points.get(i+1).x*odometry.COUNTS_PER_INCH-robotPose.x, points.get(i+1).y*odometry.COUNTS_PER_INCH-robotPose.y);
