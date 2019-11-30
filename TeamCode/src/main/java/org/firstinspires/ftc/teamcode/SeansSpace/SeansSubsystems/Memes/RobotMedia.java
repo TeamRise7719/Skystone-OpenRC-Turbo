@@ -16,6 +16,7 @@ public class RobotMedia {
     MediaPlayer horn;
     MediaPlayer myaah;
     MediaPlayer endgame;
+    MediaPlayer round;
     private boolean startState = false;
     private boolean backState = false;
     private boolean endgamePlayed = false;
@@ -24,6 +25,7 @@ public class RobotMedia {
         horn = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.horn);
         myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
         endgame = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.endgame);
+        round = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
     }
     public void startTimer() {
         endgameTimer.reset();
@@ -61,9 +63,19 @@ public class RobotMedia {
 
         //----------------------------------------------=+(Endgame)+=----------------------------------------------\\
         if (endgameTimer.seconds() >= 90 && endgamePlayed == false) {
+            endgame.reset();
+            endgame = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.endgame);
             endgame.start();//We are in the endgame now
             endgamePlayed = true;
         }
         //----------------------------------------------=+(Endgame)+=----------------------------------------------\\
     }
+    //----------------------------------------------=+(Right Round)+=----------------------------------------------\\
+    public void rightRound(HardwareMap hardwareMap) {
+        round.reset();
+        round = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
+        round.start();
+    }
+    //----------------------------------------------=+(Right Round)+=----------------------------------------------\\
+
 }
