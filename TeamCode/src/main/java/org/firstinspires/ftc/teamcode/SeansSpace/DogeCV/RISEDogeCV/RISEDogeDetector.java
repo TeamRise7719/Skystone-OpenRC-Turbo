@@ -42,11 +42,11 @@ public class RISEDogeDetector {
     public void start(){
         if(cam.equals(Cam.PHONE)){
             phoneCamera.openCameraDevice();
-            phoneCamera.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+            phoneCamera.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_RIGHT);
         }
         else if(cam.equals(Cam.WEBCAM)){
             webcam.openCameraDevice();
-            webcam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+            webcam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_RIGHT);//This is wrong for a webcam I think
         }
     }
 

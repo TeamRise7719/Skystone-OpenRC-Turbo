@@ -18,7 +18,7 @@ public class RISEDogeSkystoneTest extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         detector = new RISEDogeDetector(RISEDogeDetector.Cam.PHONE, hardwareMap);
-
+        detector.skystoneDetector.useDefaults();
         detector.start();
 
         telemetry.addData("Stone Detected: ", detector.isDetected());
