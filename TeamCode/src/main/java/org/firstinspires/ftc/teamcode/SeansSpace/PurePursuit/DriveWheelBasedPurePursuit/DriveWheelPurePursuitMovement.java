@@ -95,6 +95,11 @@ public class DriveWheelPurePursuitMovement {
      * @return Returns the closest point.
      */
     public static int getClosestPointIndex(ArrayList<CurvePoint> points,Point robotPose) {
+        /**
+         * Currently if the point1 is closer than poin0, then the robot will go to point1.
+         * This only happens for point0-1.
+         * TODO: This needs a fix.
+         */
         double shortestDistance  = Double.MAX_VALUE;
         int closestPoint = 0;
         nextPossiblePoint = lastClosestPoint+1;
