@@ -1,51 +1,47 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.SeansTeleOps;
+package org.firstinspires.ftc.teamcode.MkI.TeleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes.RobotMedia;
+
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.RobotComponents;
-import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.EasyTeleOpFunctions;
+import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.Drivetrain;
 
-import com.qualcomm.robotcore.hardware.Servo;
-/**
- * @Author Sean Cardosi
- * @Date 11/11/19
+/*
+ * Created by Sean Cardosi on 9/22/2019.
+ * Contributors: Sean Cardosi and Jordan Nuthalpaty
  */
-@Disabled
-@TeleOp(name = "SeansTeleOp", group = "SeansTeleOp")
-public class SeansTeleOp extends OpMode {
+@TeleOp(name = "MkI TeleOp", group = "MkI")
+public class MkITeleOp extends OpMode {
 
-    Servo lgrab , rgrab;
-    private EasyTeleOpFunctions robot;
+
+    private Drivetrain robot;
     private RobotComponents component;
-    private RobotMedia media;//:D
+    //private RobotMedia media;//:D
 
     private boolean isReady = false;
-    boolean isCornered = false;
 
     double turn = 0;
 
     @Override
     public void init() {
 
-        lgrab = hardwareMap.servo.get("lgrab");
-        rgrab = hardwareMap.servo.get("rgrab");
-        rgrab.setDirection(Servo.Direction.REVERSE);
+
 
         //Initialize robot
-        robot = new EasyTeleOpFunctions(telemetry, hardwareMap);
+        robot = new Drivetrain(hardwareMap, telemetry);
         robot.runUsingEncoders();
 
         component = new RobotComponents(hardwareMap, telemetry);
 
-        media = new RobotMedia(hardwareMap);//:D
+//        media = new RobotMedia(hardwareMap);//:D
 
         isReady = true;
 
-        lgrab.setPosition(0.25);
-        rgrab.setPosition(0.25);
+
+
+
+
     }
 
     @Override
@@ -64,8 +60,11 @@ public class SeansTeleOp extends OpMode {
     @Override
     public void loop() {
 
+
+
+
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
-        robot.FieldOrientedDrive(gamepad1, telemetry);
+        robot.drive(gamepad1, telemetry);
 
         if (gamepad1.x) {
             robot.resetHeading();
@@ -88,30 +87,33 @@ public class SeansTeleOp extends OpMode {
         component.liftControlUp(gamepad2);
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
+        //----------------------------------------------=+(Block build)+=----------------------------------------------\\
+        if (gamepad2.right_bumper){
+            component.clawGrab();
+        }
+
+        if (gamepad2.left_bumper){
+            component.clawRelease();
+        }
+
+        component.wrist(gamepad2);
+
+        component.shoulder(gamepad2);
+        //----------------------------------------------=+(Block build)+=----------------------------------------------\\
+
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-        if (gamepad1.y) {
-            lgrab.setPosition(1);
-            rgrab.setPosition(1);
-        }
         if (gamepad1.a) {
-            lgrab.setPosition(0.25);
-            rgrab.setPosition(0.25);
+            component.returnPosition();
+        }
+        if (gamepad1.y) {
+            component.outPosition();
         }
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-        media.playSounds(gamepad1, hardwareMap);//:D
+        //media.playSounds(gamepad1, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-
-
-        //----------------------------------------------=+(EZ Drive)+=----------------------------------------------\\
-
-        //----------------------------------------------=+(EZ Drive)+=----------------------------------------------\\
-
-
-
-
     }
 }
