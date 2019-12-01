@@ -30,7 +30,10 @@ public class PurePursuitTest extends OpMode {
     public void loop() {
 
         ArrayList<CurvePoint> allPoints = new ArrayList<>();
-        allPoints.add(new CurvePoint(0,0,1.0,1.0,50));
+        allPoints.add(new CurvePoint(0,50,1.0,1.0,25));
+        allPoints.add(new CurvePoint(50,50,1.0,1.0,25));
+        allPoints.add(new CurvePoint(50,0,1.0,1.0,25));
+        allPoints.add(new CurvePoint(0,0,1.0,1.0,25));
 
         followCurve(allPoints, Math.toRadians(90));//Robot will get stuck spinning while looking for another point to go to at the endPoint.
     }

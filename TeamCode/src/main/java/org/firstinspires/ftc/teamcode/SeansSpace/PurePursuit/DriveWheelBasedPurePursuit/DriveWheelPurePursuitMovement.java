@@ -196,7 +196,7 @@ public class DriveWheelPurePursuitMovement {
         double relativeTurnAngle = -(relativeAngleToPoint + preferredAngle);
         movementTurn = Range.clip(relativeTurnAngle / Math.toRadians(30), -1,1) * turnSpeed;
 
-        if (distanceToTarget < 4*odometry.COUNTS_PER_INCH) {// < 4 inches
+        if (distanceToTarget < 4*odometry.COUNTS_PER_INCH) {// < 4 inches to fix orbiting
             movementTurn = 0;
         }
     }
