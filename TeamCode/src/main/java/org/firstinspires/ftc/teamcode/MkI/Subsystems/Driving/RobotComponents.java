@@ -143,15 +143,15 @@ public class RobotComponents {
 //    }
 
     public void shoulder(Gamepad gamepad){
-//        double down = 0.13;
-//        double up = 0.9;
-//        if (gamepad.a){
-//            posit = down;
-//        } else if (gamepad.y){
-//            posit = up;
-//        }
+        double down = 0.13;
+        double up = 0.9;
+        if (gamepad.a){
+            posit = down;
+        } else if (gamepad.y){
+            posit = up;
+        }
 
-//        shoulder.setPosition(posit + gamepad.right_stick_y/10);
+        shoulder.setPosition(posit + gamepad.right_stick_y/10);
         shoulder.setPosition(gamepad.right_stick_y);
     }
 //
