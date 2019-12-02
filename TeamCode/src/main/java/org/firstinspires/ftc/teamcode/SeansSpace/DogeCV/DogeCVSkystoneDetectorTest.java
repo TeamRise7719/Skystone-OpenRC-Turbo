@@ -19,7 +19,6 @@ import java.util.Locale;
  *
  * Ho ho ho
  * Now I have good vision code
- * I guess I'm a thief
  *
  *
  * NOTE: In the example video, only two stones are being read... not three.
