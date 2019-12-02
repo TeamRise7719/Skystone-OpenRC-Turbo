@@ -152,7 +152,7 @@ public class RobotComponents {
         }
 
         shoulder.setPosition(posit + gamepad.right_stick_y/10);
-        shoulder.setPosition(gamepad.right_stick_y);
+
     }
 //
 //    public void shoulderDown(Gamepad gamepad){
