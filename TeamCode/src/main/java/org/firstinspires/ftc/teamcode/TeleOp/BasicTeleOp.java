@@ -17,7 +17,7 @@ public class BasicTeleOp extends OpMode {
 
     private Drivetrain robot;
     private RobotComponents component;
-    //private RobotMedia media;//:D
+    //private RobotMedia media;//
 
     private boolean isReady = false;
 
