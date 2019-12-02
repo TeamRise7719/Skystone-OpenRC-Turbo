@@ -12,13 +12,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /*
- * Created by Sean Cardosi on 10/17/2019.
+ * Created by Sean Cardosi on 10/17/2019
  * Class used for finding the robots current angle and location on the field.
  */
 public class Odometry {
 
-    DcMotor leftOdometer;
-    DcMotor rightOdometer;
+    private final DcMotor lo, ro;
 
     public BNO055IMU gyro;
     public Orientation angles;
@@ -32,6 +31,8 @@ public class Odometry {
     double changeLeft = 0.0;
     double previousRightValue = 0.0;
     double previousLeftValue = 0.0;
+
+    //TODO: Update these values for odometers
     double COUNTS_PER_REV = 537.6;
     double EXTERNAL_GEAR_RATIO = 0.78125;     // This is < 1.0 if geared UP
     double WHEEL_DIAMETER_INCHES = 3.937;     // For figuring circumference
@@ -39,37 +40,32 @@ public class Odometry {
 
 
     public Odometry(HardwareMap hardwareMap, Telemetry tel) {
-        //GYRO IS IN RADIANS FOR PURE PURSUIT
 
+        //GYRO IS IN RADIANS FOR PURE PURSUIT
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
 
         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
         param.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         param.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        param.loggingEnabled       = true;
+        param.useExternalCrystal   = true;
+        param.mode                 = BNO055IMU.SensorMode.IMU;
+        param.loggingTag           = "IMU";
         param.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         gyro.initialize(param);
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
-        leftOdometer.setDirection(DcMotor.Direction.REVERSE);
-        leftOdometer.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lo = hardwareMap.dcMotor.get("lo");
+        lo.setDirection(DcMotor.Direction.FORWARD);
+        lo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        rightOdometer.setDirection(DcMotor.Direction.FORWARD);
-        rightOdometer.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
-        leftOdometer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightOdometer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        leftOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        leftOdometer = hardwareMap.dcMotor.get("encL");
-        rightOdometer = hardwareMap.dcMotor.get("encR");
+        ro = hardwareMap.dcMotor.get("ro");
+        ro.setDirection(DcMotor.Direction.REVERSE);
+        ro.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry = tel;
     }
-
     public void init () {
 
         xLocation = 0.0;
@@ -79,6 +75,10 @@ public class Odometry {
         changeLeft = 0.0;
         previousRightValue = 0.0;
         previousLeftValue = 0.0;
+
+        lo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ro.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
     }
 
     /*
@@ -86,8 +86,9 @@ public class Odometry {
      */
     public void previousValues() {
 
-        previousRightValue = rightOdometer.getCurrentPosition();
-        previousLeftValue = leftOdometer.getCurrentPosition();
+        previousRightValue = ro.getCurrentPosition();
+        previousLeftValue = lo.getCurrentPosition();
+
     }
 
     /*
@@ -95,23 +96,36 @@ public class Odometry {
      */
     public void updateLocation() {
 
+
         loop();
 
-        changeRight = rightOdometer.getCurrentPosition() - previousRightValue;
-        changeLeft = leftOdometer.getCurrentPosition() - previousLeftValue;
+        changeRight = ro.getCurrentPosition() - previousRightValue;
+        changeLeft = lo.getCurrentPosition() - previousLeftValue;
 
-        distance = (changeRight + changeLeft) / 2;
-        xLocation += (distance * Math.cos(getRawHeading())) / COUNTS_PER_INCH;
-        yLocation += (distance * Math.sin(getRawHeading())) / COUNTS_PER_INCH;
+        distance = ((changeRight + changeLeft) / 2.0);
+        xLocation += (distance * Math.cos((getRawHeading())));
+        yLocation += (distance * Math.sin((getRawHeading())));
 
-        telemetry.addData("xLocation", xLocation);
-        telemetry.addData("yLocation", yLocation);
+        telemetry.addData("x,y ", "%f,%f",xLocation/COUNTS_PER_INCH, yLocation/COUNTS_PER_INCH);
+        telemetry.addData("Heading", Math.toDegrees(getRawHeading()));
 
         previousValues();
     }
+
+
+    /**
+     * Finds the robot's current heading on a scale equivalent with atan2.
+     * @return Return the robot's angle
+     */
     public double getRawHeading() {
-        return angles.firstAngle;
+
+        double raw = angles.firstAngle + Math.toRadians(90);
+        return AngleUnit.normalizeRadians(raw);// + Math.toRadians(90);
     }
+
+    /**
+     * This updates the robot's angles. Should be called every loop.
+     */
     public void loop() {
         angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
     }

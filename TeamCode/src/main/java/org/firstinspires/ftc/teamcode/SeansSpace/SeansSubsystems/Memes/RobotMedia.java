@@ -16,14 +16,17 @@ public class RobotMedia {
     MediaPlayer horn;
     MediaPlayer myaah;
     MediaPlayer endgame;
+    MediaPlayer spinMe;
     private boolean startState = false;
     private boolean backState = false;
     private boolean endgamePlayed = false;
+    private boolean aState = false;
 
     public RobotMedia(HardwareMap hardwareMap) {
         horn = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.horn);
         myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
         endgame = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.endgame);
+        spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
     }
     public void startTimer() {
         endgameTimer.reset();
@@ -60,10 +63,44 @@ public class RobotMedia {
 
 
         //----------------------------------------------=+(Endgame)+=----------------------------------------------\\
-        if (endgameTimer.seconds() >= 90 && endgamePlayed == false) {
+        if (endgameTimer.seconds() >= 90 && !endgamePlayed) {
+            endgame.reset();
+            endgame = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.endgame);
             endgame.start();//We are in the endgame now
             endgamePlayed = true;
         }
+        if (endgame.isPlaying() && endgame.isLooping()) {
+            endgame.stop();
+        }
         //----------------------------------------------=+(Endgame)+=----------------------------------------------\\
+
+
+        //----------------------------------------------=+(Right Round)+=----------------------------------------------\\
+        if ((gamepad.a)&&(!aState)) {
+            spinMe.reset();
+            spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
+            spinMe.start();
+            aState = true;
+        }
+
+        aState = gamepad.a;
+
+        if (spinMe.isPlaying() && aState) {
+            spinMe.start();
+        }
+        //----------------------------------------------=+(Right Round)+=----------------------------------------------\\
     }
+    //----------------------------------------------=+(Right Round Only)+=----------------------------------------------\\
+    public void rightRound(boolean play) {//This might keep getting reset. Needs Testing.
+
+        if (play) {
+            spinMe.reset();
+//            spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
+            spinMe.start();
+        } else if (!play) {
+            spinMe.stop();
+        }
+    }
+    //----------------------------------------------=+(Right Round Only)+=----------------------------------------------\\
+
 }

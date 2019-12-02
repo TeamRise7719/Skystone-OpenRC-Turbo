@@ -34,6 +34,8 @@ public class DriveWheelPurePursuitMovement {
     static double movementY = 0.0;
     static double movementTurn = 0.0;
     static int lastClosestPoint = 0;
+    static int nextPossiblePoint=0;
+    static int previousPoint = -1;
 
     private static DriveWheelPurePursuitDrivetrain pwr;
     private static DriveWheelOdometry odometry;
@@ -67,6 +69,8 @@ public class DriveWheelPurePursuitMovement {
         movementY = 0.0;
         movementTurn = 0.0;
         lastClosestPoint = 0;
+        nextPossiblePoint = 0;
+        previousPoint = -1;
     }
 
     /**
@@ -91,12 +95,19 @@ public class DriveWheelPurePursuitMovement {
      * @return Returns the closest point.
      */
     public static int getClosestPointIndex(ArrayList<CurvePoint> points,Point robotPose) {
+        /**
+         * Currently if the point1 is closer than poin0, then the robot will go to point1.
+         * This only happens for point0-1.
+         * TODO: This needs a fix.
+         */
         double shortestDistance  = Double.MAX_VALUE;
         int closestPoint = 0;
-        for (int i=lastClosestPoint; i<points.size()-1; i++) {
-            if (Math.hypot(points.get(i).x*odometry.COUNTS_PER_INCH-robotPose.x, points.get(i).y*odometry.COUNTS_PER_INCH-robotPose.y) < shortestDistance) {
-                closestPoint = i;
-                shortestDistance = Math.hypot(points.get(i).x*odometry.COUNTS_PER_INCH-robotPose.x, points.get(i).y*odometry.COUNTS_PER_INCH-robotPose.y);
+        nextPossiblePoint = lastClosestPoint+1;
+        previousPoint = lastClosestPoint-1;
+        for (int i=previousPoint; i<nextPossiblePoint && i<points.size()-1; i++) {
+            if (Math.hypot(points.get(i+1).x*odometry.COUNTS_PER_INCH-robotPose.x, points.get(i+1).y*odometry.COUNTS_PER_INCH-robotPose.y) < shortestDistance) {
+                closestPoint = i+1;
+                shortestDistance = Math.hypot(points.get(i+1).x*odometry.COUNTS_PER_INCH-robotPose.x, points.get(i+1).y*odometry.COUNTS_PER_INCH-robotPose.y);
             }
         }
         lastClosestPoint = closestPoint;
@@ -116,11 +127,12 @@ public class DriveWheelPurePursuitMovement {
         int closestPointIndex = getClosestPointIndex(pathPoints,robotLocation);
 
         CurvePoint followMe = new CurvePoint(pathPoints.get(closestPointIndex));
+        telemetry.addData("closestPointIndex", closestPointIndex);
 
-        for (int i=closestPointIndex+1; i<pathPoints.size(); i++) {
+        for (int i=closestPointIndex; i<nextPossiblePoint && i<pathPoints.size()-1; i++) {
 
-            CurvePoint startLine = pathPoints.get(i-1);
-            CurvePoint endLine = pathPoints.get(i);
+            CurvePoint startLine = pathPoints.get(i);
+            CurvePoint endLine = pathPoints.get(i+1);
 
             ArrayList<Point> intersections = lineCircleIntersection(robotLocation, followRadius, startLine.toPoint(), endLine.toPoint(), telemetry);
 
@@ -184,7 +196,7 @@ public class DriveWheelPurePursuitMovement {
         double relativeTurnAngle = -(relativeAngleToPoint + preferredAngle);
         movementTurn = Range.clip(relativeTurnAngle / Math.toRadians(30), -1,1) * turnSpeed;
 
-        if (distanceToTarget < 4*odometry.COUNTS_PER_INCH) {// < 4 inches
+        if (distanceToTarget < 4*odometry.COUNTS_PER_INCH) {// < 4 inches to fix orbiting
             movementTurn = 0;
         }
     }
