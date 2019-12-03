@@ -130,6 +130,8 @@ public class RobotComponents {
         claw.setPosition(0.6);
     }
 
+
+
     public void clawRelease(){
         claw.setPosition(0);
     }

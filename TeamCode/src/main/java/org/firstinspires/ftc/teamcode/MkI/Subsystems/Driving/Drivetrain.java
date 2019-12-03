@@ -25,6 +25,7 @@ public class Drivetrain {
 
     private double headingOffset = 0.0;
     private Orientation angles;
+    public double driveSpeed = 1;
 
     public Drivetrain(final HardwareMap _hardwareMap, final Telemetry _telemetry) {
         hardwareMap = _hardwareMap;
@@ -155,11 +156,19 @@ public class Drivetrain {
         final double lr = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
         final double rr = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
-        if((gamepad1.right_trigger>0.1)) {
-            setMotors(lf / 2, lr / 2, rf / 2, rr / 2);
-        } else {
-            setMotors(lf, lr, rf, rr);
+//        if((gamepad1.right_trigger>0.1)) {
+//            setMotors(lf / 2, lr / 2, rf / 2, rr / 2);
+//        } else {
+//            setMotors(lf, lr, rf, rr);
+//        }
+
+        if (gamepad1.right_stick_button) {
+            driveSpeed = 4;
+        } else if (gamepad1.left_stick_button) {
+            driveSpeed = 1;
         }
+
+        setMotors(lf / driveSpeed, lr / driveSpeed, rf / driveSpeed, rr / driveSpeed);
 
         telemetry.addData("Speeds","%f,%f,%f,%f", lf,rf,lr,rr);
         telemetry.addData("RAW Gyro: ",getRawHeading());
