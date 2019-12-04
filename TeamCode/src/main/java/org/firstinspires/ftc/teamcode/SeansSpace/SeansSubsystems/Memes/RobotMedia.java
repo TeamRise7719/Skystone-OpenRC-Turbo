@@ -20,7 +20,7 @@ public class RobotMedia {
     private boolean startState = false;
     private boolean backState = false;
     private boolean endgamePlayed = false;
-    private boolean aState = false;
+    private boolean lBumperState = false;
 
     public RobotMedia(HardwareMap hardwareMap) {
         horn = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.horn);
@@ -76,16 +76,16 @@ public class RobotMedia {
 
 
         //----------------------------------------------=+(Right Round)+=----------------------------------------------\\
-        if ((gamepad.a)&&(!aState)) {
+        if ((gamepad.left_bumper)&&(!lBumperState)) {
             spinMe.reset();
             spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
             spinMe.start();
-            aState = true;
+            lBumperState = true;
         }
 
-        aState = gamepad.a;
+        lBumperState = gamepad.left_bumper;
 
-        if (spinMe.isPlaying() && aState) {
+        if (spinMe.isPlaying() && lBumperState) {
             spinMe.start();
         }
         //----------------------------------------------=+(Right Round)+=----------------------------------------------\\

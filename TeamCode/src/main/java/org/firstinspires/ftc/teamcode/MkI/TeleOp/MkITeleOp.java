@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.Drivetrain;
+import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes.RobotMedia;
 
 /*
  * Created by Sean Cardosi on 9/22/2019.
@@ -18,7 +19,7 @@ public class MkITeleOp extends OpMode {
     private Drivetrain robot;
     private RobotComponents component;
     //D: Don't do it...
-    //private RobotMedia media;//:D
+    private RobotMedia media;//:D
 
     private boolean isReady = false;
 
@@ -31,7 +32,7 @@ public class MkITeleOp extends OpMode {
 
         component = new RobotComponents(hardwareMap, telemetry);
         //D: Don't do it...
-//        media = new RobotMedia(hardwareMap);//:D
+        media = new RobotMedia(hardwareMap);//:D
 
         isReady = true;
     }
@@ -104,7 +105,7 @@ public class MkITeleOp extends OpMode {
 
         //D: Don't do it...
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-        //media.playSounds(gamepad1, hardwareMap);//:D
+        media.playSounds(gamepad1, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
     }
 }
