@@ -25,7 +25,8 @@ public class Drivetrain {
 
     private double headingOffset = 0.0;
     private Orientation angles;
-    public double driveSpeed = 1;
+
+    private boolean quartedSpeedDriveState = false;
 
     public Drivetrain(final HardwareMap _hardwareMap, final Telemetry _telemetry) {
         hardwareMap = _hardwareMap;
@@ -156,19 +157,21 @@ public class Drivetrain {
         final double lr = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
         final double rr = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
-//        if((gamepad1.right_trigger>0.1)) {
-//            setMotors(lf / 2, lr / 2, rf / 2, rr / 2);
-//        } else {
-//            setMotors(lf, lr, rf, rr);
-//        }
 
-        if (gamepad1.right_stick_button) {
-            driveSpeed = 4;
-        } else if (gamepad1.left_stick_button) {
-            driveSpeed = 1;
+        //TODO: Jordan just do this. It makes it easier for the driver.
+        // Your method could result in unintentional movements. Its also awkward...
+        // Jordan please read through this so you see how it works.
+        if (gamepad1.right_bumper && quartedSpeedDriveState) {//If right bumper is pressed and we are
+            quartedSpeedDriveState = false;                   //quartering speed then stop
+        } else if (gamepad1.right_bumper && !quartedSpeedDriveState) {//If right bumper is pressed and we
+            quartedSpeedDriveState = true;                            //aren't quartering speed then start
         }
 
-        setMotors(lf / driveSpeed, lr / driveSpeed, rf / driveSpeed, rr / driveSpeed);
+        if(quartedSpeedDriveState) {//If we are in a state where we want to quarter the drive speed then do so
+            setMotors(lf / 4, lr / 4, rf / 4, rr / 4);//Quarter Speed
+        } else {//If we are not in a state where we want to quarter the drive speed well... then don't
+            setMotors(lf, lr, rf, rr );//Full Speed
+        }
 
         telemetry.addData("Speeds","%f,%f,%f,%f", lf,rf,lr,rr);
         telemetry.addData("RAW Gyro: ",getRawHeading());
@@ -176,7 +179,5 @@ public class Drivetrain {
         telemetry.addData("Offset: ",headingOffset);
 
         telemetry.update();
-
-
     }
 }

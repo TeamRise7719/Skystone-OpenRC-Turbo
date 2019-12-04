@@ -22,13 +22,7 @@ public class RobotComponents {
     private int liftMin = 50;
     Servo lgrab , rgrab, shoulder,wrist,claw;
 
-
     private double posit = 0.14;
-
-
-
-
-
 
     public RobotComponents(final HardwareMap _hardwareMap, final Telemetry _telemetry) {
         hardwareMap = _hardwareMap;
@@ -129,8 +123,6 @@ public class RobotComponents {
     public void clawGrab(){
         claw.setPosition(0.6);
     }
-
-
 
     public void clawRelease(){
         claw.setPosition(0);

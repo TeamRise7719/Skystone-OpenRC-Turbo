@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.Drivetrain;
 
 /*
  * Created by Sean Cardosi on 9/22/2019.
- * Contributors: Sean Cardosi and Jordan Nuthalpaty
+ * Contributors: Sean Cardosi and D: DON'T TAKE AWAY MY :D FACES JORDAN
  */
 @TeleOp(name = "MkI TeleOp", group = "MkI")
 public class MkITeleOp extends OpMode {
@@ -17,31 +17,23 @@ public class MkITeleOp extends OpMode {
 
     private Drivetrain robot;
     private RobotComponents component;
-    //private RobotMedia media;//
+    //D: Don't do it...
+    //private RobotMedia media;//:D
 
     private boolean isReady = false;
 
-    double turn = 0;
-
     @Override
     public void init() {
-
-
 
         //Initialize robot
         robot = new Drivetrain(hardwareMap, telemetry);
         robot.runUsingEncoders();
 
         component = new RobotComponents(hardwareMap, telemetry);
-
+        //D: Don't do it...
 //        media = new RobotMedia(hardwareMap);//:D
 
         isReady = true;
-
-
-
-
-
     }
 
     @Override
@@ -59,8 +51,6 @@ public class MkITeleOp extends OpMode {
 
     @Override
     public void loop() {
-
-
 
 
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
@@ -87,6 +77,7 @@ public class MkITeleOp extends OpMode {
         component.liftControlUp(gamepad2);
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
+
         //----------------------------------------------=+(Block Build)+=----------------------------------------------\\
         if (gamepad2.right_bumper){
             component.clawGrab();
@@ -111,7 +102,7 @@ public class MkITeleOp extends OpMode {
         }
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
-
+        //D: Don't do it...
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
         //media.playSounds(gamepad1, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
