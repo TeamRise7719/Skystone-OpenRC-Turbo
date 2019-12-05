@@ -78,7 +78,8 @@ public class DriveWheelPurePursuitMovement {
         /*
          * Currently if the point1 is closer than point0, then the robot will go to point1.
          * This only happens for point0-1.
-         * TODO: This needs a fix.
+         * TODO: This needs a fix. A work around is to just put point0-1 closer together like
+         *  you are supposed to.
          */
         double shortestDistance  = Double.MAX_VALUE;
         int closestPoint = 0;

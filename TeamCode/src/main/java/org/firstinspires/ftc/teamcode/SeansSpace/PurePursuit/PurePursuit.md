@@ -53,6 +53,8 @@ pursuit, the robot will need a very good odometry system to accurately track its
 
     -   Put the motor updater into a thread for greater accuracy.
 
+    -   Rewrite Pure Pursuit D:
+
 
 
 
