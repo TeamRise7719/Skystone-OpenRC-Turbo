@@ -19,7 +19,7 @@ public class Blue_Auto_V1 extends LinearOpMode {
 
         //int position;
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
-        RobotComponents mech = new RobotComponents(hardwareMap, telemetry);
+        RobotComponents mech = new RobotComponents(hardwareMap);
 
         enc.init();
 

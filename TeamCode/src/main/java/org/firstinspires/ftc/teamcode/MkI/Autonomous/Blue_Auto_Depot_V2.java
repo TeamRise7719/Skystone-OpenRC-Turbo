@@ -17,7 +17,7 @@ public class Blue_Auto_Depot_V2 extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
 
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
-        RobotComponents mech = new RobotComponents(hardwareMap, telemetry);
+        RobotComponents mech = new RobotComponents(hardwareMap);
         SkystoneDetectionPhone cam = new SkystoneDetectionPhone(hardwareMap, telemetry);
 
         enc.init();

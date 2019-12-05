@@ -27,10 +27,10 @@ public class MkITeleOp extends OpMode {
     public void init() {
 
         //Initialize robot
-        robot = new Drivetrain(hardwareMap, telemetry);
+        robot = new Drivetrain(hardwareMap);
         robot.runUsingEncoders();
 
-        component = new RobotComponents(hardwareMap, telemetry);
+        component = new RobotComponents(hardwareMap);
         //D: Don't do it...
         media = new RobotMedia(hardwareMap);//:D
 
@@ -39,7 +39,7 @@ public class MkITeleOp extends OpMode {
 
     @Override
     public void init_loop() {
-        if(isReady==true) {
+        if(isReady) {
             telemetry.addData(">", "Robot Ready!");
             telemetry.update();
         }

@@ -4,14 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-
-
 @TeleOp(name = "SrvoTest", group = "testing")
 public class ServoTest extends OpMode {
 
 
 
-    Servo lgrab , rgrab;
+    private Servo lgrab , rgrab;
     @Override
     public void init() {
 

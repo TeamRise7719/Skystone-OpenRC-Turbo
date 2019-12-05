@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving;
 
+import android.util.Log;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -7,66 +9,58 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import android.util.Log;
-
-import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes.RobotMedia;
-import org.firstinspires.ftc.teamcode.MkI.Subsystems.Util.Threading;
-import org.firstinspires.ftc.teamcode.MkI.Subsystems.Robot.Robot;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.MkI.Subsystems.Util.Threading;
+import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes.RobotMedia;
 
 public class SeansEncLibrary {//TODO:Change this class to work using the new odometers.
 
-    DcMotor left_back_drive;
-    DcMotor left_front_drive;
-    DcMotor right_back_drive;
-    DcMotor right_front_drive;
-    SynchronousPID turnPID;
-    SynchronousPID leftDrivingPID;
-    SynchronousPID rightDrivingPID;
-    RobotMedia areYouSpinningYet;
+    private DcMotor left_back_drive;
+    private DcMotor left_front_drive;
+    private DcMotor right_back_drive;
+    private DcMotor right_front_drive;
+    private SynchronousPID turnPID;
+    private SynchronousPID leftDrivingPID;
+    private SynchronousPID rightDrivingPID;
+    private RobotMedia areYouSpinningYet;
 
     public BNO055IMU gyro;
-    public Orientation gyro_angle;
+    private Orientation gyro_angle;
 
-    Telemetry telemetry;
-    LinearOpMode linearOpMode;
-
-    Robot robot;
+    private Telemetry telemetry;
+    private LinearOpMode linearOpMode;
 
 //    I2CXL ultrasonicFront;
 //    I2CXL ultrasonicBack;
 
-    public double     COUNTS_PER_MOTOR_REV    = 537.6;
-    public double     EXTERNAL_GEAR_RATIO     = 0.78125;     // This is < 1.0 if geared UP
-    public double     WHEEL_DIAMETER_INCHES   = 3.937;     // For figuring circumference
-    public double     COUNTS_PER_INCH         = ((COUNTS_PER_MOTOR_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * 3.1415));
+    private double     COUNTS_PER_MOTOR_REV    = 537.6;
+    private double     EXTERNAL_GEAR_RATIO     = 0.78125;     // This is < 1.0 if geared UP
+    private double     WHEEL_DIAMETER_INCHES   = 3.937;     // For figuring circumference
+    private double     COUNTS_PER_INCH         = ((COUNTS_PER_MOTOR_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * 3.1415));
 
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
-    public  final double     DRIVE_SPEED             = 0.8;     // Nominal speed
-    public  final double     DRIVE_SPEED_SLOW             = 0.4;     // Slower speed for better accuracy.
+    public final double     DRIVE_SPEED             = 0.8;     // Nominal speed
+    public final double     DRIVE_SPEED_SLOW             = 0.4;     // Slower speed for better accuracy.
 
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
-    public static final double     HEADING_THRESHOLD       = 0.02;      // As tight as we can make it with an integer gyro
-    public static final int     ENCODER_THRESHOLD       = 5;      // As tight as we can make it with an integer gyro
+    private static final double     HEADING_THRESHOLD       = 0.02;      // As tight as we can make it with an integer gyro
+    private static final int     ENCODER_THRESHOLD       = 5;      // As tight as we can make it with an integer gyro
 
 
-    private static  double     P_TURN_COEFF            = 0.008;//.008     // Larger is more responsive, but also less stable
-    private static  double     I_TURN_COEFF            = 0;//  // Larger is more responsive, but also less stable
-    private static  double     D_TURN_COEFF            = 0.000001;//0.000001     // Larger is more responsive, but also less stable
+    private static final double     P_TURN_COEFF            = 0.008;//.008     // Larger is more responsive, but also less stable
+    private static final double     I_TURN_COEFF            = 0;//  // Larger is more responsive, but also less stable
+    private static final double     D_TURN_COEFF            = 0.000001;//0.000001     // Larger is more responsive, but also less stable
 
 
     private static final double     P_DRIVE_COEFF           = 0.0015;     // Larger is more responsive, but also less stable
     private static final double     I_DRIVE_COEFF           = 0.000000001 ;     // Larger is more responsive, but also less stable
     private static final double     D_DRIVE_COEFF           = 0.0001;     // Larger is more responsive, but also less stable
-    public int LEFT = -1;
-    public int RIGHT = 1;
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
@@ -174,7 +168,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         rightDrivingPID.reset();
         turnPID.reset();
 
-        if (strafe == false) {
+        if (!strafe) {
             int moveCounts = ((int) (distance * COUNTS_PER_INCH));
             int newLeftTarget = left_back_drive.getCurrentPosition() + moveCounts;
             int newRightTarget = right_back_drive.getCurrentPosition() + moveCounts;
@@ -200,11 +194,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             rightDrivingPID.setSetpoint(newRightTarget);
             rightDrivingPID.setOutputRange(-0.4, 0.4);
 
-            int sum = 0;
-
             while (linearOpMode.opModeIsActive()) {
 
-                sum++;
                 if ((((Math.abs(newLeftTarget - left_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD)
                         && ((((Math.abs(newRightTarget - right_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD))))) {
                     break;
@@ -240,7 +231,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
             stop_all_motors();
         }
-        if (strafe == true) {
+        if (strafe) {
 
             int moveCounts = ((int) (distance * COUNTS_PER_INCH));
             int newLeftTarget = left_back_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
@@ -267,11 +258,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             rightDrivingPID.setSetpoint(newRightTarget);
             rightDrivingPID.setOutputRange(-0.3, 0.3);
 
-            int sum = 0;
-
             while (linearOpMode.opModeIsActive()) {
 
-                sum++;
                 if ((((Math.abs(newLeftTarget - left_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD)
                         && ((((Math.abs(newRightTarget - right_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD))))) {
                     break;
@@ -314,7 +302,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
 
 
-        boolean doneTurning = false;
+        boolean doneTurning;
 
         ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         etime.reset();
@@ -386,8 +374,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         return turnPID.onTarget(HEADING_THRESHOLD);
     }
 
-
-
+    //TODO: Can we delete all of this?
 //    /**
 //     * getError determines the error between the target angle and the robot's current heading
 //     * @param   targetAngle  Desired angle (relative to global reference established at last Gyro Reset).

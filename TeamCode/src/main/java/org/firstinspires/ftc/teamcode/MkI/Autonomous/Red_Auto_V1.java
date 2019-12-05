@@ -16,7 +16,7 @@ public class Red_Auto_V1 extends LinearOpMode {
         //int position;
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         enc.init();
-        RobotComponents mech = new RobotComponents(hardwareMap, telemetry);
+        RobotComponents mech = new RobotComponents(hardwareMap);
 
         waitForStart();
 

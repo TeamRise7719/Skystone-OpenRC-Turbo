@@ -34,7 +34,7 @@ public class SeansTeleOp extends OpMode {
         robot = new EasyTeleOpFunctions(telemetry, hardwareMap);
         robot.runUsingEncoders();
 
-        component = new RobotComponents(hardwareMap, telemetry);
+        component = new RobotComponents(hardwareMap);
 
         media = new RobotMedia(hardwareMap);//:D
 
