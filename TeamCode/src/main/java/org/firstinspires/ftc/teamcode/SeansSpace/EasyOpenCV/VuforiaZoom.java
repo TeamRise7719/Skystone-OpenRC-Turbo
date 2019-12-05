@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.EasyOpenCV;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -22,16 +21,11 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-
 /**
  * Created by Sean Cardosi on 2019-12-03.
  */
 @TeleOp(name = "Vuforia With Zooming",group = "EasyOpenCV")
 public class VuforiaZoom extends LinearOpMode {
-
-    OpenCvInternalCamera phoneCam;
-    VuforiaLocalizer vuforia = null;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -43,7 +37,7 @@ public class VuforiaZoom extends LinearOpMode {
         parameters.vuforiaLicenseKey = "AUbWH2r/////AAABmTqIGJpUgkb9j4jexPb0CKYmpPjDhVyV5bE2RL866jD2AKG/pqN0P8mPlybMo3P0xERT+mK0uW04FHPso8OcJDLER7gW6Rjnv49Yzc7ks3zkCGtwmHx/sqInqUl4i2jlHTFiW8qYnAf/iOJ0O2jO7j8UjOuurbpGT+3iGwRprWQFe7/Wb6k08A1tMIwvDKgU3g+PudWyfefPeo2Oo3PYzIiGu+KlswOR26Jn3jRSGmlin3JrfLkvmV7AmTaFWGwb876eR21A5EP40EIBk8E9nDuJcVB60q9R7nnBvf/qjsSuUwKQWtn9xTBzWSIhEzXetUY5PMxckiugQLWHp7YAkrM7SGNte2JrUk9XslYRqV4z";
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK; //required for webcam
         parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
-        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+        VuforiaLocalizer vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
         VuforiaTrackables targetsSkyStone = vuforia.loadTrackablesFromAsset("Skystone");
 
@@ -74,13 +68,12 @@ public class VuforiaZoom extends LinearOpMode {
         VuforiaTrackable rear2 = targetsSkyStone.get(12);
         rear2.setName("Rear Perimeter 2");
 
-        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(targetsSkyStone);
+        List<VuforiaTrackable> allTrackables = new ArrayList<>(targetsSkyStone);
 
         targetsSkyStone.activate();
 
 
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, viewportContainerIds[1]);
+        OpenCvInternalCamera phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, viewportContainerIds[1]);
         phoneCam.openCameraDevice();
         phoneCam.setPipeline(new SamplePipeline());
         phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_RIGHT);
