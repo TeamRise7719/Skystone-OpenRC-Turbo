@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.EasyTel
 
 import com.qualcomm.robotcore.hardware.Servo;
 /**
- * Sean Cardosi on 2019-11-11
+ * Created by Sean Cardosi on 2019-11-11
  */
 @Disabled
 @TeleOp(name = "SeansTeleOp", group = "SeansTeleOp")

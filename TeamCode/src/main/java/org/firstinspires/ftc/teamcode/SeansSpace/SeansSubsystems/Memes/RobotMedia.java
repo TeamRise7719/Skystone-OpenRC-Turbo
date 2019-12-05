@@ -7,16 +7,15 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
- * @Author Sean Cardosi
- * @Date 11/8/19
+ * Created by Sean Cardosi on 2019-11-8
  */
 public class RobotMedia {
 
-    ElapsedTime endgameTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-    MediaPlayer horn;
-    MediaPlayer myaah;
-    MediaPlayer endgame;
-    MediaPlayer spinMe;
+    private ElapsedTime endgameTimer;
+    private MediaPlayer horn;
+    private MediaPlayer myaah;
+    private MediaPlayer endgame;
+    private MediaPlayer spinMe;
     private boolean startState = false;
     private boolean backState = false;
     private boolean endgamePlayed = false;
@@ -27,6 +26,7 @@ public class RobotMedia {
         myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
         endgame = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.endgame);
         spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
+        endgameTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
     }
     public void startTimer() {
         endgameTimer.reset();
