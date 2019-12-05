@@ -25,8 +25,6 @@ import java.util.Locale;
  */
 @TeleOp(name = "Better Skystone Detector OpMode", group = "DogeCV")
 public class DogeCVSkystoneDetectorTest extends LinearOpMode {
-    private OpenCvCamera phoneCam;
-    private SkystoneDetector skyStoneDetector;
 
     @Override
     public void runOpMode() {
@@ -39,7 +37,7 @@ public class DogeCVSkystoneDetectorTest extends LinearOpMode {
          * single-parameter constructor instead (commented out below)
          */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        OpenCvCamera phoneCam = new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
 
         // OR...  Do Not Activate the Camera Monitor View
         //phoneCam = new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.BACK);
@@ -54,7 +52,7 @@ public class DogeCVSkystoneDetectorTest extends LinearOpMode {
          * of a frame from the camera. Note that switching pipelines on-the-fly
          * (while a streaming session is in flight) *IS* supported.
          */
-        skyStoneDetector = new SkystoneDetector();
+        SkystoneDetector skyStoneDetector = new SkystoneDetector();
         phoneCam.setPipeline(skyStoneDetector);
 
         /*
