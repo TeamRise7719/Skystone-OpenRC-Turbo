@@ -14,29 +14,16 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.VisionTargeting.SkystoneDet
 @Autonomous(name = "Blue Auto V1", group = "MkI Blue Auto")
 public class Blue_Auto_V1 extends LinearOpMode {
 
-
-    private Drivetrain robot;
-    boolean isSkystone;
-    private RobotComponents mech;
-    private AutonomousPathing path;
-    //int position;
-    SeansEncLibrary enc;
-    SkystoneDetectionPhone phone;
-
-
-
     @Override
     public void runOpMode() throws InterruptedException {
 
-        enc = new SeansEncLibrary(hardwareMap, telemetry, this);
-        mech = new RobotComponents(hardwareMap,telemetry);
+        //int position;
+        SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
+        RobotComponents mech = new RobotComponents(hardwareMap, telemetry);
 
         enc.init();
 
         waitForStart();
-
-
-
 
         //Position 1 (4 from wall)
         enc.steeringDrive( 48, false, false);
