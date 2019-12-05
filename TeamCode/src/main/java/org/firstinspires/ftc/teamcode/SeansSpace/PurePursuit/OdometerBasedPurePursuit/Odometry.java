@@ -20,26 +20,26 @@ public class Odometry {
     private final DcMotor lo, ro;
 
     public BNO055IMU gyro;
-    public Orientation angles;
+    private Orientation angles;
 
-    Telemetry telemetry;
+    private Telemetry telemetry;
 
     double xLocation = 0.0;
     double yLocation = 0.0;
-    double distance = 0.0;
-    double changeRight = 0.0;
-    double changeLeft = 0.0;
-    double previousRightValue = 0.0;
-    double previousLeftValue = 0.0;
+    private double distance = 0.0;
+    private double changeRight = 0.0;
+    private double changeLeft = 0.0;
+    private double previousRightValue = 0.0;
+    private double previousLeftValue = 0.0;
 
     //TODO: Update these values for odometers
-    double COUNTS_PER_REV = 537.6;
-    double EXTERNAL_GEAR_RATIO = 0.78125;     // This is < 1.0 if geared UP
-    double WHEEL_DIAMETER_INCHES = 3.937;     // For figuring circumference
+    private double COUNTS_PER_REV = 537.6;
+    private double EXTERNAL_GEAR_RATIO = 0.78125;     // This is < 1.0 if geared UP
+    private double WHEEL_DIAMETER_INCHES = 3.937;     // For figuring circumference
     double COUNTS_PER_INCH = ((COUNTS_PER_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * 3.1415));
 
 
-    public Odometry(HardwareMap hardwareMap, Telemetry tel) {
+    Odometry(HardwareMap hardwareMap, Telemetry tel) {
 
         //GYRO IS IN RADIANS FOR PURE PURSUIT
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
@@ -84,7 +84,7 @@ public class Odometry {
     /*
      * Updates the previous encoder values..
      */
-    public void previousValues() {
+    private void previousValues() {
 
         previousRightValue = ro.getCurrentPosition();
         previousLeftValue = lo.getCurrentPosition();
@@ -94,7 +94,7 @@ public class Odometry {
     /*
      * Finds the robots (x,y) location using the previous encoder values and the robot heading.
      */
-    public void updateLocation() {
+    void updateLocation() {
 
 
         loop();
@@ -117,7 +117,7 @@ public class Odometry {
      * Finds the robot's current heading on a scale equivalent with atan2.
      * @return Return the robot's angle
      */
-    public double getRawHeading() {
+    double getRawHeading() {
 
         double raw = angles.firstAngle + Math.toRadians(90);
         return AngleUnit.normalizeRadians(raw);// + Math.toRadians(90);

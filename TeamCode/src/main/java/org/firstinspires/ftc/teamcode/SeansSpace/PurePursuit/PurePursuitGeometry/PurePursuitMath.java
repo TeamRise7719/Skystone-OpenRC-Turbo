@@ -11,10 +11,10 @@ import java.util.ArrayList;
  */
 public class PurePursuitMath {
 
-    static double COUNTS_PER_REV = 537.6;
-    static double EXTERNAL_GEAR_RATIO = 0.78125;     // This is < 1.0 if geared UP
-    static double WHEEL_DIAMETER_INCHES = 3.937;     // For figuring circumference
-    static double COUNTS_PER_INCH = ((COUNTS_PER_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * 3.1415));
+    private static double COUNTS_PER_REV = 537.6;
+    private static double EXTERNAL_GEAR_RATIO = 0.78125;     // This is < 1.0 if geared UP
+    private static double WHEEL_DIAMETER_INCHES = 3.937;     // For figuring circumference
+    private static double COUNTS_PER_INCH = ((COUNTS_PER_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * 3.1415));
 
     public PurePursuitMath() {}
     /**
@@ -53,9 +53,6 @@ public class PurePursuitMath {
         if (linePoint1.x == linePoint2.x) {
             linePoint1.x += 0.001;
         }
-
-        double x1 = linePoint1.x - circleCenter.x;
-        double y1 = linePoint1.y - circleCenter.y;
 
         double x0 = linePoint1.x;
         double y0 = linePoint1.y;
@@ -109,7 +106,7 @@ public class PurePursuitMath {
                 }
             }
 
-        } catch(Exception e) {
+        } catch(Exception ignored) {//Ha. Get your problems ignored.
 
         }
         return allPoints;

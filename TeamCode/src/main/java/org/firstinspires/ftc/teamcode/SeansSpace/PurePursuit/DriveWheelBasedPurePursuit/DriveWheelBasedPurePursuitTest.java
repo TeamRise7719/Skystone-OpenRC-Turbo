@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.followCurve;
 
 import java.util.ArrayList;
 
@@ -15,11 +16,9 @@ import java.util.ArrayList;
 @Autonomous(name = "Drive Wheel Pure Pursuit Test", group = "Pure Pursuit")
 public class DriveWheelBasedPurePursuitTest extends OpMode {
 
-    DriveWheelPurePursuitMovement movement;
-
     @Override
     public void init() {
-        movement = new DriveWheelPurePursuitMovement(telemetry, hardwareMap);
+        DriveWheelPurePursuitMovement movement = new DriveWheelPurePursuitMovement(telemetry, hardwareMap);
         movement.init(hardwareMap, telemetry);
     }
 
@@ -33,6 +32,6 @@ public class DriveWheelBasedPurePursuitTest extends OpMode {
         allPoints.add(new CurvePoint(0, 0, 0.3, 0.3, 25));
         //TODO: MAKE THIS BETTER
         //WARNING: Robot will get stuck oscillating while looking for another point to go to at the endPoint.
-        DriveWheelPurePursuitMovement.followCurve(allPoints, Math.toRadians(0));
+        followCurve(allPoints, Math.toRadians(0));
     }
 }

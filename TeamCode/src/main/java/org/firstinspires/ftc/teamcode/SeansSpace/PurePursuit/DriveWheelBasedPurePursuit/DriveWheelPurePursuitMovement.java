@@ -1,16 +1,11 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
+import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.PurePursuitMath;
 
 import java.util.ArrayList;
@@ -25,38 +20,23 @@ import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitG
  */
 public class DriveWheelPurePursuitMovement {
 
-    static Telemetry telemetry;
-
-    static BNO055IMU gyro;
-    static Orientation angles;
+    private static Telemetry telemetry;
 
     static double movementX = 0.0;
     static double movementY = 0.0;
     static double movementTurn = 0.0;
-    static int lastClosestPoint = 0;
-    static int nextPossiblePoint=0;
-    static int previousPoint = -1;
+    private static int lastClosestPoint = 0;
+    private static int nextPossiblePoint=0;
+    private static int previousPoint = -1;
 
     private static DriveWheelPurePursuitDrivetrain pwr;
     private static DriveWheelOdometry odometry;
 
-    public DriveWheelPurePursuitMovement(Telemetry tel, HardwareMap hardwareMap) {
+    DriveWheelPurePursuitMovement(Telemetry tel, HardwareMap hardwareMap) {
         telemetry = tel;
 
         pwr = new DriveWheelPurePursuitDrivetrain(hardwareMap);
         odometry = new DriveWheelOdometry(hardwareMap, tel);
-
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit            = BNO055IMU.AngleUnit.RADIANS;
-        parameters.accelUnit            = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled       = true;
-        parameters.useExternalCrystal   = true;
-        parameters.mode                 = BNO055IMU.SensorMode.IMU;
-        parameters.loggingTag           = "IMU";
-        gyro                             = hardwareMap.get(BNO055IMU.class, "imuINT");
-
-        gyro.initialize(parameters);
-        angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
     }
 
 
@@ -78,7 +58,7 @@ public class DriveWheelPurePursuitMovement {
      * @param allPoints The array of waypoints to follow.
      * @param followAngle The robot angle to follow the path in.
      */
-    public static void followCurve(ArrayList<CurvePoint> allPoints, double followAngle) {
+    static void followCurve(ArrayList<CurvePoint> allPoints, double followAngle) {
 
         CurvePoint followMe = getFollowPointPath(allPoints, new Point(odometry.xLocation,odometry.yLocation), allPoints.get(0).followDistance);
 
@@ -94,9 +74,9 @@ public class DriveWheelPurePursuitMovement {
      * @param robotPose The robot's current location.
      * @return Returns the closest point.
      */
-    public static int getClosestPointIndex(ArrayList<CurvePoint> points,Point robotPose) {
-        /**
-         * Currently if the point1 is closer than poin0, then the robot will go to point1.
+    private static int getClosestPointIndex(ArrayList<CurvePoint> points, Point robotPose) {
+        /*
+         * Currently if the point1 is closer than point0, then the robot will go to point1.
          * This only happens for point0-1.
          * TODO: This needs a fix.
          */
@@ -122,7 +102,7 @@ public class DriveWheelPurePursuitMovement {
      * @return Returns a point to follow
      * Note: Inputs should be in encoder counts. The array of points is in inches.
      */
-    public static CurvePoint getFollowPointPath(ArrayList<CurvePoint> pathPoints, Point robotLocation, double followRadius) {
+    private static CurvePoint getFollowPointPath(ArrayList<CurvePoint> pathPoints, Point robotLocation, double followRadius) {
 
         int closestPointIndex = getClosestPointIndex(pathPoints,robotLocation);
 
@@ -167,7 +147,7 @@ public class DriveWheelPurePursuitMovement {
      * @param preferredAngle The robot angle to follow the path with in radians
      * @param turnSpeed The speed scaling factor for turning movement
      */
-    public static void goToPosition(double x, double y, double movementSpeed, double preferredAngle, double turnSpeed) {
+    private static void goToPosition(double x, double y, double movementSpeed, double preferredAngle, double turnSpeed) {
 
         double distanceToTarget = Math.hypot(x*odometry.COUNTS_PER_INCH - odometry.xLocation, y*odometry.COUNTS_PER_INCH - odometry.yLocation);
 
