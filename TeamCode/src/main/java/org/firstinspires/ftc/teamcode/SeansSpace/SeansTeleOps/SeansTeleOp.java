@@ -10,22 +10,18 @@ import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.EasyTel
 
 import com.qualcomm.robotcore.hardware.Servo;
 /**
- * @Author Sean Cardosi
- * @Date 11/11/19
+ * Sean Cardosi on 2019-11-11
  */
 @Disabled
 @TeleOp(name = "SeansTeleOp", group = "SeansTeleOp")
 public class SeansTeleOp extends OpMode {
 
-    Servo lgrab , rgrab;
+    private Servo lgrab , rgrab;
     private EasyTeleOpFunctions robot;
     private RobotComponents component;
     private RobotMedia media;//:D
 
     private boolean isReady = false;
-    boolean isCornered = false;
-
-    double turn = 0;
 
     @Override
     public void init() {
@@ -50,7 +46,7 @@ public class SeansTeleOp extends OpMode {
 
     @Override
     public void init_loop() {
-        if(isReady==true) {
+        if(isReady) {
             telemetry.addData(">", "Robot Ready!");
             telemetry.update();
         }
