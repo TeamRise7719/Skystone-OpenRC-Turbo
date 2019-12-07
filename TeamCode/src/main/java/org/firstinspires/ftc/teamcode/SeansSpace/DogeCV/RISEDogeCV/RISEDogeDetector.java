@@ -11,20 +11,19 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvWebcam;
 
 /**
- * @Author Sean Cardosi
- * @Date 11/14/19
+ * Create onSean Cardosi on 2019-11-14
  */
 public class RISEDogeDetector {
     private OpenCvCamera phoneCamera;
     private OpenCvWebcam webcam;
-    public SkystoneDetector skystoneDetector;
+    SkystoneDetector skystoneDetector;
     private Cam cam;
 
     public enum Cam{
         PHONE, WEBCAM
     }
 
-    public RISEDogeDetector(Cam cam, HardwareMap hardwareMap){
+    RISEDogeDetector(Cam cam, HardwareMap hardwareMap){
         this.cam = cam;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         if(cam.equals(Cam.PHONE)){
@@ -71,7 +70,7 @@ public class RISEDogeDetector {
         else if(cam.equals(Cam.WEBCAM)) webcam.resumeViewport();
     }
 
-    public SkystonePosition getStoneSkystonePosition(){
+    SkystonePosition getStoneSkystonePosition(){
         double x = getStoneX();
         if(x < 160) return SkystonePosition.LEFT;//Maybe x < 100
         else if(x >= 160 && x <= 320) return SkystonePosition.MIDDLE;//x >= 100 and x<=150
@@ -81,21 +80,21 @@ public class RISEDogeDetector {
 
     public RISEVector getStoneSkystoneVector(){
         SkystonePosition position = getStoneSkystonePosition();
-        if(position.equals(SkystonePosition.LEFT)) return new RISEVector(-8,29);
-        else if(position.equals(SkystonePosition.MIDDLE)) return new RISEVector(0,29);//Maybe 0, 20
-        else if(position.equals(SkystonePosition.RIGHT)) return new RISEVector(8,29);
+        if(position == SkystonePosition.LEFT) return new RISEVector(-8,29);
+        else if(position == SkystonePosition.MIDDLE) return new RISEVector(0,29);//Maybe 0, 20
+        else if(position == SkystonePosition.RIGHT) return new RISEVector(8,29);
         return null;
     }
 
-    public double getStoneX(){
+    double getStoneX(){
         return skystoneDetector.getScreenPosition().x;
     }
 
-    public double getStoneY(){
+    double getStoneY(){
         return skystoneDetector.getScreenPosition().y;
     }
 
-    public boolean isDetected(){
+    boolean isDetected(){
         return skystoneDetector.isDetected();
     }
 

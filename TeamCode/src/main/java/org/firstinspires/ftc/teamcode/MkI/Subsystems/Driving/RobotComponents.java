@@ -5,34 +5,22 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 /*
  * Created by Sean Cardosi on 10/15/2019.
  */
 public class RobotComponents {
 
-    private final HardwareMap hardwareMap;
-    private final Telemetry telemetry;
     private final DcMotor intake;
     private final DcMotor liftL;
     private final DcMotor liftR;
 
-    private int liftMax = 2000;
-    private int liftMin = 50;
-    Servo lgrab , rgrab, shoulder,wrist,claw;
-
+//    private int liftMax = 2000;
+//    private int liftMin = 50;
+    private Servo lgrab , rgrab, shoulder,wrist,claw;
 
     private double posit = 0.14;
 
-
-
-
-
-
-    public RobotComponents(final HardwareMap _hardwareMap, final Telemetry _telemetry) {
-        hardwareMap = _hardwareMap;
-        telemetry = _telemetry;
+    public RobotComponents(final HardwareMap hardwareMap) {
 
         intake = hardwareMap.dcMotor.get("intake");
         intake.setDirection(DcMotor.Direction.REVERSE);
@@ -74,8 +62,6 @@ public class RobotComponents {
     //----------------------------------------------=+(Intake)+=----------------------------------------------\\
 
 
-
-    //TODO: Adjust lift encoder values to properly stop to avoid breaking the lift.
     //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
     /**
@@ -87,7 +73,7 @@ public class RobotComponents {
         liftR.setPower(gamepad.left_stick_y/2);
     }
 
-    /**
+    /*
      * Uses a gamepad number to assign the downward movement of the lift to
      * @param gamepad The gamepad to be used to control the downward movement of the lift
      */
@@ -121,16 +107,10 @@ public class RobotComponents {
     //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 
-
-
-    //----------------------------------------------=+(Block build)+=----------------------------------------------\\
-
-
+    //----------------------------------------------=+(Block Build)+=----------------------------------------------\\
     public void clawGrab(){
         claw.setPosition(0.6);
     }
-
-
 
     public void clawRelease(){
         claw.setPosition(0);
@@ -160,13 +140,10 @@ public class RobotComponents {
 //    public void shoulderDown(Gamepad gamepad){
 //        shoulder.setPosition(0.140);
 //    }
+    //----------------------------------------------=+(Block Build)+=----------------------------------------------\\
 
 
-
-    //----------------------------------------------=+(Block build)+=----------------------------------------------\\
-
-
-//    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
     public void returnPosition() {
         lgrab.setPosition(1);
         rgrab.setPosition(1);
@@ -177,7 +154,7 @@ public class RobotComponents {
         rgrab.setPosition(0.25);
 
     }
-//    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+    //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 
 

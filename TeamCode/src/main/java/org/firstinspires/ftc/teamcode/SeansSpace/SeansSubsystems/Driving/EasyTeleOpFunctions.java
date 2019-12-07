@@ -12,8 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
- * @Author Sean Cardosi
- * @Date 11/11/19
+ * Created by Sean Cardosi on 2019-11-11
  */
 
 public class EasyTeleOpFunctions {

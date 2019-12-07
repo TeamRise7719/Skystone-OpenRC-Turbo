@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
 
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.followCurve;
@@ -14,20 +13,17 @@ import java.util.ArrayList;
  */
 public class AutonomousPathing {
 
-    Telemetry telemetry;
-    boolean path14 = false;//Path to follow if the die roll was a 1 or a 4
-    boolean path25 = false;//Path to follow if the die roll was a 2 or a 5
-    boolean path36 = false;//Path to follow if the die roll was a 3 or a 6
+    private boolean path14 = false;//Path to follow if the die roll was a 1 or a 4
+    private boolean path25 = false;//Path to follow if the die roll was a 2 or a 5
+    private boolean path36 = false;//Path to follow if the die roll was a 3 or a 6
 
 
 
-    public AutonomousPathing(Telemetry tel) {
-        telemetry = tel;
-    }
+    public AutonomousPathing() {}
 
     public void findPath() {
 
-        /**
+        /*
          * Code here to find the Skystones (x,y) location and to make the correct boolean true.
          * Find Skystones locations using TensorFlowObjectDetection.
          */
@@ -38,17 +34,17 @@ public class AutonomousPathing {
 
         ArrayList<CurvePoint> allPoints = new ArrayList<>();
 
-        if (path14 == true) {
+        if (path14) {
 
             //Code to follow to get Skystones in this position
             allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50));
 
-        } else if (path25 == true) {
+        } else if (path25) {
 
             //Code to follow to get Skystones in this position
             allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50));
 
-        } else if (path36 == true) {
+        } else if (path36) {
 
             //Code to follow to get Skystones in this position
             allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50));
@@ -60,15 +56,15 @@ public class AutonomousPathing {
 
     public void runPIDPath() {
 
-        if (path14 == true) {
+        if (path14) {
 
             //Code to follow to get Skystones in this position
 
-        } else if (path25 == true) {
+        } else if (path25) {
 
             //Code to follow to get Skystones in this position
 
-        } else if (path36 == true) {
+        } else if (path36) {
 
             //Code to follow to get Skystones in this position
 

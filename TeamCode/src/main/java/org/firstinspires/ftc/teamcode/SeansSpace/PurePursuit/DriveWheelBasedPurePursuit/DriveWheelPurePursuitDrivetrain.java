@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementTurn;
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementX;
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementY;
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.telemetry;
 
 /**
  * Created by Sean Cardosi on 11/6/2019
@@ -14,20 +13,18 @@ import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBa
  */
 public class DriveWheelPurePursuitDrivetrain {
 
-    public static DcMotor lf, lr, rf, rr;
-    private final HardwareMap hardwareMap;
-    double lfPower = 0.0;
-    double lrPower = 0.0;
-    double rfPower = 0.0;
-    double rrPower = 0.0;
+    private static DcMotor lf, lr, rf, rr;
+    private double lfPower = 0.0;
+    private double lrPower = 0.0;
+    private double rfPower = 0.0;
+    private double rrPower = 0.0;
 
 
-    public DriveWheelPurePursuitDrivetrain(final HardwareMap _hardwareMap) {
-        hardwareMap = _hardwareMap;
+    DriveWheelPurePursuitDrivetrain(final HardwareMap _hardwareMap) {
 
         //configuring the components
-        lr = hardwareMap.dcMotor.get("leftB");
-        lf = hardwareMap.dcMotor.get("leftF");
+        lr = _hardwareMap.dcMotor.get("leftB");
+        lf = _hardwareMap.dcMotor.get("leftF");
         lr.setDirection(DcMotor.Direction.FORWARD);
         lf.setDirection(DcMotor.Direction.FORWARD);
         lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -35,8 +32,8 @@ public class DriveWheelPurePursuitDrivetrain {
         lr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        rr = hardwareMap.dcMotor.get("rightB");
-        rf = hardwareMap.dcMotor.get("rightF");
+        rr = _hardwareMap.dcMotor.get("rightB");
+        rf = _hardwareMap.dcMotor.get("rightF");
         rr.setDirection(DcMotor.Direction.REVERSE);
         rf.setDirection(DcMotor.Direction.REVERSE);
         rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -57,7 +54,7 @@ public class DriveWheelPurePursuitDrivetrain {
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void ApplyPower() {
+    void ApplyPower() {
 
 
         double x = movementX;

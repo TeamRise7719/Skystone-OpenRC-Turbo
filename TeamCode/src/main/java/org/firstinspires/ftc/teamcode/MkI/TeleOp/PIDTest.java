@@ -8,10 +8,9 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.SeansEncLibrary;
 @TeleOp(name = "TestPID",group = "Testing" )
 public class PIDTest extends LinearOpMode {
 
-    SeansEncLibrary enc;
     public void runOpMode() throws InterruptedException {
 
-        enc = new SeansEncLibrary(hardwareMap, telemetry, this);
+        SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         enc.init();
 
         waitForStart();
@@ -29,12 +28,10 @@ public class PIDTest extends LinearOpMode {
             if (gamepad1.b) {
                 enc.gyroTurn(enc.TURN_SPEED, 90);
             }
-            if (gamepad2.b) {
-            }
-            if (gamepad2.x) {
-            }
-
-
+//            if (gamepad2.b) {
+//            }
+//            if (gamepad2.x) {
+//            }
         }
     }
 }

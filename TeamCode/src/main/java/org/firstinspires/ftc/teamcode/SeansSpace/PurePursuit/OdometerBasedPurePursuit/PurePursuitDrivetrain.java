@@ -9,20 +9,18 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class PurePursuitDrivetrain {
 
-    public static DcMotor lf, lr, rf, rr;
-    private final HardwareMap hardwareMap;
-    double lfPower = 0.0;
-    double lrPower = 0.0;
-    double rfPower = 0.0;
-    double rrPower = 0.0;
+    private static DcMotor lf, lr, rf, rr;
+    private double lfPower = 0.0;
+    private double lrPower = 0.0;
+    private double rfPower = 0.0;
+    private double rrPower = 0.0;
 
 
     public PurePursuitDrivetrain(final HardwareMap _hardwareMap) {
-        hardwareMap = _hardwareMap;
 
         //configuring the components
-        lr = hardwareMap.dcMotor.get("leftB");
-        lf = hardwareMap.dcMotor.get("leftF");
+        lr = _hardwareMap.dcMotor.get("leftB");
+        lf = _hardwareMap.dcMotor.get("leftF");
         lr.setDirection(DcMotor.Direction.FORWARD);
         lf.setDirection(DcMotor.Direction.FORWARD);
         lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -30,8 +28,8 @@ public class PurePursuitDrivetrain {
         lr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        rr = hardwareMap.dcMotor.get("rightB");
-        rf = hardwareMap.dcMotor.get("rightF");
+        rr = _hardwareMap.dcMotor.get("rightB");
+        rf = _hardwareMap.dcMotor.get("rightF");
         rr.setDirection(DcMotor.Direction.REVERSE);
         rf.setDirection(DcMotor.Direction.REVERSE);
         rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -47,7 +45,7 @@ public class PurePursuitDrivetrain {
         rrPower = 0.0;
     }
 
-    public void ApplyPower() {
+    void ApplyPower() {
 
 
         double x = PurePursuitMovement.movementX;

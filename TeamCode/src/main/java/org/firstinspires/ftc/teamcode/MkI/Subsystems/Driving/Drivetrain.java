@@ -16,8 +16,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * drive train and a gyro sensor.
  */
 public class Drivetrain {
-    private final HardwareMap hardwareMap;
-    private final Telemetry telemetry;
 
     private final DcMotor lf, lr, rf, rr;
 
@@ -25,11 +23,8 @@ public class Drivetrain {
 
     private double headingOffset = 0.0;
     private Orientation angles;
-    public double driveSpeed = 1;
 
-    public Drivetrain(final HardwareMap _hardwareMap, final Telemetry _telemetry) {
-        hardwareMap = _hardwareMap;
-        telemetry = _telemetry;
+    public Drivetrain(final HardwareMap hardwareMap) {
 
         //configuring the components
         lr = hardwareMap.dcMotor.get("leftB");
@@ -95,7 +90,7 @@ public class Drivetrain {
     /**
      * @return the robot's current heading in radians
      */
-    public double getHeading() {
+    private double getHeading() {
         return (getRawHeading() - headingOffset) % (2.0 * Math.PI);
     }
 
@@ -133,7 +128,7 @@ public class Drivetrain {
      * @param _rf Right front motor
      * @param _rr Right rear motor
      */
-    public void setMotors(double _lf, double _lr, double _rf, double _rr) {
+    private void setMotors(double _lf, double _lr, double _rf, double _rr) {
         final double scale = maxAbs(1.0, _lf, _lr, _rf, _rr);
         lf.setPower(_lf / scale);
         lr.setPower(_lr / scale);
@@ -156,19 +151,17 @@ public class Drivetrain {
         final double lr = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
         final double rr = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
-//        if((gamepad1.right_trigger>0.1)) {
-//            setMotors(lf / 2, lr / 2, rf / 2, rr / 2);
-//        } else {
-//            setMotors(lf, lr, rf, rr);
-//        }
 
-        if (gamepad1.right_stick_button) {
-            driveSpeed = 4;
-        } else if (gamepad1.left_stick_button) {
-            driveSpeed = 1;
+        //TODO: Jordan just do this. It makes it easier for the driver.
+        // Your method could result in unintentional movements. Its also awkward...
+        // Jordan please read through this so you see how it works. This way you
+        // will have quartered speed while you hold down the right bumper.
+
+        if(gamepad1.right_bumper) {//If we are in a state where we want to quarter the drive speed then do so.
+            setMotors(lf / 4, lr / 4, rf / 4, rr / 4);//Quarter Speed
+        } else {//If we are not in a state where we want to quarter the drive speed well... then don't.
+            setMotors(lf, lr, rf, rr );//Full Speed
         }
-
-        setMotors(lf / driveSpeed, lr / driveSpeed, rf / driveSpeed, rr / driveSpeed);
 
         telemetry.addData("Speeds","%f,%f,%f,%f", lf,rf,lr,rr);
         telemetry.addData("RAW Gyro: ",getRawHeading());
@@ -176,7 +169,5 @@ public class Drivetrain {
         telemetry.addData("Offset: ",headingOffset);
 
         telemetry.update();
-
-
     }
 }
