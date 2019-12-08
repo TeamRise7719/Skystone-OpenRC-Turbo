@@ -1,17 +1,15 @@
-package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit;
+package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.ImprovedPurePursuit;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementTurn;
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementX;
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementY;
-
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.ImprovedPurePursuit.PathGenerator.scaledLeft;
+import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.ImprovedPurePursuit.PathGenerator.scaledRight;
 /**
  * Created by Sean Cardosi on 11/6/2019
  * DriveWheelPurePursuitDrivetrain is the drivetrain class to only be used with Pure Pursuit.
  */
-public class DriveWheelPurePursuitDrivetrain {
+public class DrivetrainMovement {
 
     private static DcMotor lf, lr, rf, rr;
     private double lfPower = 0.0;
@@ -20,7 +18,7 @@ public class DriveWheelPurePursuitDrivetrain {
     private double rrPower = 0.0;
 
 
-    public DriveWheelPurePursuitDrivetrain(final HardwareMap _hardwareMap) {
+    public DrivetrainMovement(final HardwareMap _hardwareMap) {
 
         //configuring the components
         lr = _hardwareMap.dcMotor.get("leftB");
@@ -57,14 +55,10 @@ public class DriveWheelPurePursuitDrivetrain {
     public void ApplyPower() {
 
 
-        double x = movementX;
-        double y = movementY;
-        double r = movementTurn;
-
-        lfPower = x + y + r;
-        rfPower = x - y - r;
-        lrPower = x - y + r;
-        rrPower = x + y - r;
+        lfPower = scaledLeft;
+        lrPower = scaledLeft;
+        rfPower = scaledRight;
+        rrPower = scaledRight;
 
         //find the maximum of the powers
         double lfmaxRawPower = Math.abs(lfPower);

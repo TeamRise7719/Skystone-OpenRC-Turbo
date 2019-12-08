@@ -24,8 +24,8 @@ public class DriveWheelOdometry {
 
     private Telemetry telemetry;
 
-    double xLocation = 0.0;
-    double yLocation = 0.0;
+    public double xLocation = 0.0;
+    public double yLocation = 0.0;
     private double distance = 0.0;
     private double changeRight = 0.0;
     private double changeLeft = 0.0;
@@ -37,7 +37,7 @@ public class DriveWheelOdometry {
     double COUNTS_PER_INCH = ((COUNTS_PER_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * 3.1415));
 
 
-    DriveWheelOdometry(HardwareMap hardwareMap, Telemetry tel) {
+    public DriveWheelOdometry(HardwareMap hardwareMap, Telemetry tel) {
 
         //GYRO IS IN RADIANS FOR PURE PURSUIT
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
@@ -99,7 +99,7 @@ public class DriveWheelOdometry {
     /*
      * Finds the robots (x,y) location using the previous encoder values and the robot heading.
      */
-    void updateLocation() {
+    public void updateLocation() {
 
 
         loop();
@@ -131,7 +131,7 @@ public class DriveWheelOdometry {
      * Finds the robot's current heading on a scale equivalent with atan2.
      * @return Return the robot's angle
      */
-    double getRawHeading() {
+    public double getRawHeading() {
 
         double raw = angles.firstAngle + Math.toRadians(90);
         return AngleUnit.normalizeRadians(raw);// + Math.toRadians(90);
