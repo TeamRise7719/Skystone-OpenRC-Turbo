@@ -20,7 +20,7 @@ public class DriveWheelPurePursuitDrivetrain {
     private double rrPower = 0.0;
 
 
-    public DriveWheelPurePursuitDrivetrain(final HardwareMap _hardwareMap) {
+    DriveWheelPurePursuitDrivetrain(final HardwareMap _hardwareMap) {
 
         //configuring the components
         lr = _hardwareMap.dcMotor.get("leftB");
@@ -54,7 +54,7 @@ public class DriveWheelPurePursuitDrivetrain {
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void ApplyPower() {
+    void ApplyPower() {
 
 
         double x = movementX;

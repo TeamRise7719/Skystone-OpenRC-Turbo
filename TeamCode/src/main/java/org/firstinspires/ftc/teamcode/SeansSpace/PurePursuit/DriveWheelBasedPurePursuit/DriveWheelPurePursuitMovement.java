@@ -22,8 +22,8 @@ public class DriveWheelPurePursuitMovement {
 
     private static Telemetry telemetry;
 
-    public static double movementX = 0.0;
-    public static double movementY = 0.0;
+    static double movementX = 0.0;
+    static double movementY = 0.0;
     static double movementTurn = 0.0;
     private static int lastClosestPoint = 0;
     private static int nextPossiblePoint=0;
