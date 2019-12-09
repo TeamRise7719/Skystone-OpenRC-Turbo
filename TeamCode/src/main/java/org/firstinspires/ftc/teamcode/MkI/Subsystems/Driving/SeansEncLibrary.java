@@ -57,7 +57,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
 
     private static final double     P_TURN_COEFF            = 0.008;//.008     // Larger is more responsive, but also less stable
-    private static final double     I_TURN_COEFF            = 00.00000000002;//  // Larger is more responsive, but also less stable
+    private static final double     I_TURN_COEFF            = 00.00000000005;//  // Larger is more responsive, but also less stable
     private static final double     D_TURN_COEFF            = 0.000001;//0.000001     // Larger is more responsive, but also less stable
 
 
