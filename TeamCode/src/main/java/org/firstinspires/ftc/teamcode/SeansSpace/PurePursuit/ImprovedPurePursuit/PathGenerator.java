@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPure
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementX;
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementY;
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementTurn;
+//import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.DriveWheelBasedPurePursuit.DriveWheelPurePursuitMovement.movementTurn;
 import static java.lang.Math.*;
 
 import java.util.ArrayList;
