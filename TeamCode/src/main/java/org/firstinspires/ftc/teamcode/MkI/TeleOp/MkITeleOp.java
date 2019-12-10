@@ -31,8 +31,9 @@ public class MkITeleOp extends OpMode {
         robot.runUsingEncoders();
 
         component = new RobotComponents(hardwareMap);
+        component.foundationInit();
         //D: Don't do it...
-        media = new RobotMedia(hardwareMap);//:D
+
 
         isReady = true;
     }
@@ -48,6 +49,7 @@ public class MkITeleOp extends OpMode {
     @Override
     public void start() {
         super.start();
+        media = new RobotMedia(hardwareMap);//:D
     }
 
     @Override
@@ -96,16 +98,16 @@ public class MkITeleOp extends OpMode {
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
         if (gamepad1.a) {
-            component.returnPosition();
+            component.foundationRelease();
         }
         if (gamepad1.y) {
-            component.outPosition();
+            component.foundationGrab();
         }
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
         //D: Don't do it...
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-        media.playSounds(gamepad1, hardwareMap);//:D
+        media.playSounds(gamepad1, gamepad2, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
     }
 }

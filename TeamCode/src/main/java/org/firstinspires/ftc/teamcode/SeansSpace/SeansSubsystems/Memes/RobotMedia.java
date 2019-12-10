@@ -32,14 +32,14 @@ public class RobotMedia {
         endgameTimer.reset();
     }
 
-    public void playSounds(Gamepad gamepad, HardwareMap hardwareMap) {
+    public void playSounds(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap) {
         //----------------------------------------------=+(Horn)+=----------------------------------------------\\
-        if ((gamepad.start)&&(!startState)) {
+        if ((gamepad1.start)&&(!startState)) {
             horn.reset();
             horn = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.horn);
             horn.start();
         }
-        startState = gamepad.start;
+        startState = gamepad1.start;
 
         if(horn.isPlaying()&&!startState){
             horn.stop();
@@ -48,13 +48,13 @@ public class RobotMedia {
 
 
         //----------------------------------------------=+(Myaah)+=----------------------------------------------\\
-        if ((gamepad.back)&&(!backState)) {
+        if ((gamepad2.start)&&(!backState)) {
             myaah.reset();
             myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
             myaah.start();
         }
 
-        backState = gamepad.back;
+        backState = gamepad2.back;
 
         if(myaah.isPlaying()&&!backState){
             myaah.stop();
@@ -76,14 +76,14 @@ public class RobotMedia {
 
 
         //----------------------------------------------=+(Right Round)+=----------------------------------------------\\
-        if ((gamepad.left_bumper)&&(!lBumperState)) {
+        if ((gamepad1.left_bumper)&&(!lBumperState)) {
             spinMe.reset();
             spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
             spinMe.start();
             lBumperState = true;
         }
 
-        lBumperState = gamepad.left_bumper;
+        lBumperState = gamepad1.left_bumper;
 
         if (spinMe.isPlaying() && lBumperState) {
             spinMe.start();

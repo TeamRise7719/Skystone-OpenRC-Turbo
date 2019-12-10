@@ -51,7 +51,7 @@ public class RobotComponents {
 
     //----------------------------------------------=+(Intake)+=----------------------------------------------\\
     public void intakeStone() {
-        intake.setPower(-0.75);
+        intake.setPower(-0.5);
     }
     public void ejectStone() {
         intake.setPower(1);
@@ -126,7 +126,7 @@ public class RobotComponents {
 
     public void shoulder(Gamepad gamepad){
         double down = 0.13;
-        double up = 0.9;
+        double up = 0.8;
         if (gamepad.a){
             posit = down;
         } else if (gamepad.y){
@@ -144,15 +144,19 @@ public class RobotComponents {
 
 
     //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-    public void returnPosition() {
+    public void foundationRelease() {
         lgrab.setPosition(1);
         rgrab.setPosition(1);
 
     }
-    public void outPosition() {
+    public void foundationGrab() {
         lgrab.setPosition(0.25);
         rgrab.setPosition(0.25);
 
+    }
+    public void foundationInit(){
+        lgrab.setPosition(0.4);
+        rgrab.setPosition(0.4);
     }
     //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
