@@ -98,7 +98,7 @@ public class SeansTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-        media.playSounds(gamepad1, hardwareMap);//:D
+        media.playSounds(gamepad1, gamepad2, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
 
 
