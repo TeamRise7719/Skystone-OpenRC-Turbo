@@ -9,8 +9,9 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.Drivetrain;
 import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes.RobotMedia;
 
 /*
- * Created by Sean Cardosi on 9/22/2019.
+ * Created by Mostly Jordan Nuthalapaty, a little Sean Cardosi on 9/22/2019.
  * Contributors: Sean Cardosi and D: DON'T TAKE AWAY MY :D FACES JORDAN
+ * too bad
  */
 @TeleOp(name = "MkI TeleOp", group = "MkI")
 public class MkITeleOp extends OpMode {
@@ -108,7 +109,7 @@ public class MkITeleOp extends OpMode {
 
         //D: Don't do it...
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-        media.playSounds(gamepad1, gamepad2, hardwareMap);//:D
+        //media.playSounds(gamepad1, gamepad2, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
     }
 }

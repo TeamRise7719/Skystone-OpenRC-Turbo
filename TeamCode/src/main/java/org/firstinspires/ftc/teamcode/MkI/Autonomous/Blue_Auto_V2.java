@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Transitioning.AutoTransitioner;
 
-@Autonomous (name = "Blue Auto V2", group = "MkI Blue Auto")
+@Autonomous (name = "Blue Auto Foundation", group = "MkI Blue Auto")
 public class Blue_Auto_V2 extends LinearOpMode {
 
     ElapsedTime etime = new ElapsedTime();
