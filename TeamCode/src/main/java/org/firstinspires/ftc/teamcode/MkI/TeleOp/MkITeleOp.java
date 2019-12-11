@@ -50,6 +50,7 @@ public class MkITeleOp extends OpMode {
     public void start() {
         super.start();
         media = new RobotMedia(hardwareMap);//:D
+        media.startTimer();
     }
 
     @Override
