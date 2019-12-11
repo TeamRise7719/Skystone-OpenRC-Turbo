@@ -95,7 +95,7 @@ public class RobotMedia {
     public void rightRound(boolean play) {//This might keep getting reset. Needs Testing.
 
         if (play) {
-            spinMe.reset();
+//            spinMe.reset();
 //            spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
             spinMe.start();
         } else if (!play) {

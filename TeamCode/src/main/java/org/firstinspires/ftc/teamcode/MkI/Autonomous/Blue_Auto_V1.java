@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.MkI.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.AutonomousPathing;
@@ -13,6 +14,16 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.VisionTargeting.SkystoneDet
 
 @Autonomous(name = "Blue Auto V1", group = "MkI Blue Auto")
 public class Blue_Auto_V1 extends LinearOpMode {
+
+    ElapsedTime etime = new ElapsedTime();
+
+    public void waitFor(int time){
+        time = time/1000;
+        etime.reset();
+        while ((etime.time() < time)&&(opModeIsActive())) {
+            idle();
+        }
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,20 +37,29 @@ public class Blue_Auto_V1 extends LinearOpMode {
         waitForStart();
 
         //Position 1 (4 from wall)
-        enc.steeringDrive( 48, false, false);
-        enc.steeringDrive(-24,false,false);
-        //strafing here
-        enc.gyroTurn(enc.TURN_SPEED, -90);
+        enc.steeringDrive( -44.3, false, true);
+        mech.ejectStone();
+        waitFor(500);
+        mech.stopStone();
+        enc.steeringDrive(2, false, false);
+        enc.steeringDrive(18,false,true);
+        enc.gyroTurn(enc.TURN_SPEED,180);
+        enc.steeringDrive(15,false,false);
         mech.intakeStone();
-        enc.gyroTurn(enc.TURN_SPEED, 180);
-        enc.steeringDrive(80, false,false);
 
-        //sample
-        //vision code goes here
-        mech.intakeStone();
-        enc.steeringDrive(-12,  false,false);
-        enc.gyroTurn(enc.TURN_SPEED, 90);
-        enc.steeringDrive(80, false,false);
+//        enc.steeringDrive(-24,false,false);
+//        //strafing here
+//        enc.gyroTurn(enc.TURN_SPEED, -90);
+//        mech.intakeStone();
+//        enc.gyroTurn(enc.TURN_SPEED, 180);
+//        enc.steeringDrive(80, false,false);
+//
+//        //sample
+//        //vision code goes here
+//        mech.intakeStone();
+//        enc.steeringDrive(-12,  false,false);
+//        enc.gyroTurn(enc.TURN_SPEED, 90);
+//        enc.steeringDrive(80, false,false);
 
 
 // other side
