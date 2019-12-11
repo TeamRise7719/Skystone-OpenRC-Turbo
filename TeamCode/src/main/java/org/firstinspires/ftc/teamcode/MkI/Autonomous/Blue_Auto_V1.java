@@ -36,7 +36,7 @@ public class Blue_Auto_V1 extends LinearOpMode {
 
         waitForStart();
 
-        //Position 1 (4 from wall)
+        //Position 1 (4 from wall);
         enc.steeringDrive( -44.3, false, true);
         mech.intake.setPower(-1);
         waitFor(1000);
