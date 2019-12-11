@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorImpl;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -10,7 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 public class RobotComponents {
 
-    private final DcMotor intake;
+    public final DcMotor intake;
     private final DcMotor liftL;
     private final DcMotor liftR;
 
@@ -24,7 +26,9 @@ public class RobotComponents {
 
         intake = hardwareMap.dcMotor.get("intake");
         intake.setDirection(DcMotor.Direction.REVERSE);
-        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
         liftL = hardwareMap.dcMotor.get("liftL");
         liftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -51,7 +55,7 @@ public class RobotComponents {
 
     //----------------------------------------------=+(Intake)+=----------------------------------------------\\
     public void intakeStone() {
-        intake.setPower(-0.5);
+        intake.setPower(-0.7);
     }
     public void ejectStone() {
         intake.setPower(1);

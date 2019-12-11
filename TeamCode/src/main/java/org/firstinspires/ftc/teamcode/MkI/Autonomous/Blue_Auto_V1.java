@@ -38,43 +38,33 @@ public class Blue_Auto_V1 extends LinearOpMode {
 
         //Position 1 (4 from wall)
         enc.steeringDrive( -44.3, false, true);
+        mech.intake.setPower(-1);
+        waitFor(1000);
         mech.ejectStone();
         waitFor(500);
+        enc.steeringDrive(4, false, false);
         mech.stopStone();
-        enc.steeringDrive(2, false, false);
         enc.steeringDrive(18,false,true);
-        enc.gyroTurn(enc.TURN_SPEED,180);
-        enc.steeringDrive(15,false,false);
+        enc.steeringDrive(-33,false,false);
+        enc.gyroTurn(enc.TURN_SPEED,-90);
         mech.intakeStone();
-
-//        enc.steeringDrive(-24,false,false);
-//        //strafing here
-//        enc.gyroTurn(enc.TURN_SPEED, -90);
-//        mech.intakeStone();
-//        enc.gyroTurn(enc.TURN_SPEED, 180);
-//        enc.steeringDrive(80, false,false);
-//
-//        //sample
-//        //vision code goes here
-//        mech.intakeStone();
-//        enc.steeringDrive(-12,  false,false);
-//        enc.gyroTurn(enc.TURN_SPEED, 90);
-//        enc.steeringDrive(80, false,false);
-
-
-// other side
-
-        //24
-        //turn 120
-        // drive 40
-        //turn 45
-        //drive 32
-        //vision
-        //intake
-        //back 32
-        //turn 120
-        //drive 45
-        AutoTransitioner.transitionOnStop(this,"MkITeleOp");    }
+        waitFor(1000);
+        enc.gyroTurn(enc.TURN_SPEED,0);
+        enc.steeringDrive(35,false,false);
+        enc.steeringDrive(-18,false,true);
+        mech.ejectStone();
+        waitFor(1000);
+        enc.steeringDrive(8, false, false);
+        mech.stopStone();
+        enc.steeringDrive(18,false,true);
+        enc.steeringDrive(-50,false,false);
+        enc.gyroTurn(enc.TURN_SPEED,-90);
+        mech.intakeStone();
+        waitFor(1000);
+        enc.gyroTurn(enc.TURN_SPEED,0);
+        enc.steeringDrive(20,false,false);
 
 
+        AutoTransitioner.transitionOnStop(this,"MkITeleOp");
+    }
 }

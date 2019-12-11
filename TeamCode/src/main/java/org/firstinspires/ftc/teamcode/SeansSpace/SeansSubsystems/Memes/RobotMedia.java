@@ -94,11 +94,11 @@ public class RobotMedia {
     //----------------------------------------------=+(Right Round Only)+=----------------------------------------------\\
     public void rightRound(boolean play) {//This might keep getting reset. Needs Testing.
 
-        if (play) {
+        if (play == true) {
 //            spinMe.reset();
 //            spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
             spinMe.start();
-        } else if (!play) {
+        } else if (play == false) {
             spinMe.stop();
         }
     }
