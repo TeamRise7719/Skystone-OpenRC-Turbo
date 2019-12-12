@@ -13,7 +13,7 @@ public class RobotMedia {
 
     private ElapsedTime endgameTimer;
     private MediaPlayer horn;
-    private MediaPlayer myaah;
+    private MediaPlayer swamp;
     private MediaPlayer endgame;
     private MediaPlayer spinMe;
     private boolean startState = false;
@@ -23,7 +23,7 @@ public class RobotMedia {
 
     public RobotMedia(HardwareMap hardwareMap) {
         horn = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.horn);
-        myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
+        swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.swamp);
         endgame = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.endgame);
         spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
         endgameTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
@@ -50,15 +50,15 @@ public class RobotMedia {
 
         //----------------------------------------------=+(Myaah)+=----------------------------------------------\\
         if ((gamepad2.start)&&(!backState)) {
-            myaah.reset();
-            myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
-            myaah.start();
+            swamp.reset();
+            swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.swamp);
+            swamp.start();
         }
 
-        backState = gamepad2.back;
+        backState = gamepad2.start;
 
-        if(myaah.isPlaying()&&!backState){
-            myaah.stop();
+        if(swamp.isPlaying()&&!backState){
+            swamp.stop();
         }
         //----------------------------------------------=+(Myaah)+=----------------------------------------------\\
 

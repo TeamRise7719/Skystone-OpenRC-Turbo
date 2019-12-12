@@ -36,9 +36,11 @@ public class GGSkystoneDetector extends DogeCVDetector {
         detectorName = "Skystone Detector";
     }
 
-    public Rect foundRectangle() {
-        return foundRect;
+    public Point foundRectangle() {
+
+        return getCenterPoint(foundRect);
     }
+
 
     @Override
     public Mat process(Mat input) {

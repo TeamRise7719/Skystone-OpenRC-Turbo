@@ -23,6 +23,8 @@ public class GGSkystoneDetectorTest extends LinearOpMode {
 
             if (detector.found()){
                 telemetry.addData("SS Found!", "");
+                telemetry.addData("X: ", detector.detector.foundRectangle().x);
+                telemetry.addData("Y: ", detector.detector.foundRectangle().y);
             } else {
                 telemetry.addData("SS not found.", "");
             }
