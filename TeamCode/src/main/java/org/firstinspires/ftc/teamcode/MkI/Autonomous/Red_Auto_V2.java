@@ -14,12 +14,12 @@ public class Red_Auto_V2 extends LinearOpMode {
 
     ElapsedTime etime = new ElapsedTime();
 
-    public void waitFor(int time) {
-        time = time / 1000;
-        etime.reset();
-        while ((etime.time() < time) && (opModeIsActive())) {
-            idle();
-        }
+        public void waitFor(int time) {
+            time = time / 1000;
+            etime.reset();
+            while ((etime.time() < time) && (opModeIsActive())) {
+                idle();
+            }
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Red_Auto_V2 extends LinearOpMode {
         enc.steeringDrive(30,false,true);
 
         enc.steeringDrive(-22,false,false);
-        enc.gyroTurn(enc.TURN_SPEED,-90);
+        enc.gyroTurn(enc.TURN_SPEED,90);
         enc.steeringDrive(24, false, false);
 
 //        //vision code goes here
