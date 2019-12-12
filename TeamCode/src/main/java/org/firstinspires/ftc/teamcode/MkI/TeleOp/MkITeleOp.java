@@ -9,9 +9,7 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.Drivetrain;
 import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes.RobotMedia;
 
 /*
- * Created by Mostly Jordan Nuthalapaty, a little Sean Cardosi on 9/22/2019.
- * Contributors: Sean Cardosi and D: DON'T TAKE AWAY MY :D FACES JORDAN
- * too bad
+ * Created by Sean Cardosi on 9/22/2019.
  */
 @TeleOp(name = "MkI TeleOp", group = "MkI")
 public class MkITeleOp extends OpMode {
@@ -34,7 +32,6 @@ public class MkITeleOp extends OpMode {
         component = new RobotComponents(hardwareMap);
         component.foundationInit();
         //D: Don't do it...
-
 
         isReady = true;
     }
@@ -109,7 +106,7 @@ public class MkITeleOp extends OpMode {
 
         //D: Don't do it...
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
-        //media.playSounds(gamepad1, gamepad2, hardwareMap);//:D //
+        media.playSounds(gamepad1, gamepad2, hardwareMap);//:D
         //----------------------------------------------=+(Media)+=----------------------------------------------\\
     }
 }

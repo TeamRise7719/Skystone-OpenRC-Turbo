@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
+import org.firstinspires.ftc.teamcode.MkI.TeleOp.MkITeleOp;
 import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.AutonomousPathing;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.SeansEncLibrary;
@@ -65,6 +66,6 @@ public class Blue_Auto_V1 extends LinearOpMode {
         enc.steeringDrive(20,false,false);
 
 
-        AutoTransitioner.transitionOnStop(this,"MkITeleOp");
+        AutoTransitioner.transitionOnStop(this, "MkI TeleOp");
     }
 }
