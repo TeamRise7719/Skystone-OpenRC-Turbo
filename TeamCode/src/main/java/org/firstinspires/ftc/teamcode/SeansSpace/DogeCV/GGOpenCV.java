@@ -14,7 +14,7 @@ public class GGOpenCV implements VisionSystem {
 
     public Cam cam;
     public OpenCvCamera camera;
-    GGSkystoneDetector detector;
+    public GGSkystoneDetector detector;
     HardwareMap hardwareMap;
 
     public enum Cam{
@@ -45,7 +45,7 @@ public class GGOpenCV implements VisionSystem {
         return detector.isDetected();
     }
 
-    GGOpenCV(Cam cam, HardwareMap hardwareMap) {
+    public GGOpenCV(Cam cam, HardwareMap hardwareMap) {
         this.cam = cam;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
