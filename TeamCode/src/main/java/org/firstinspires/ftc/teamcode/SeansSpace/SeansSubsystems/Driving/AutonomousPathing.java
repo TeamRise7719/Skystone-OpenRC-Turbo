@@ -20,9 +20,9 @@ import java.util.ArrayList;
  */
 public class AutonomousPathing {
 
-    private String path14 = "left";//Path to follow if the die roll was a 1 or a 4
-    private String path25 = "middle";//Path to follow if the die roll was a 2 or a 5
-    private String path36 = "right";//Path to follow if the die roll was a 3 or a 6
+    private String path14 = "left";//Path to follow if the dice roll was a 1 or a 4
+    private String path25 = "middle";//Path to follow if the dice roll was a 2 or a 5
+    private String path36 = "right";//Path to follow if the dice roll was a 3 or a 6
     private String unknown = "unknown";
     double pose = 0;
     GGSkystoneDetector vision;

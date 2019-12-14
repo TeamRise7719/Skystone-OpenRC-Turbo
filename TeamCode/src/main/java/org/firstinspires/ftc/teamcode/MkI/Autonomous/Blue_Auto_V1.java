@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.Drivetrain;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Transitioning.AutoTransitioner;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.VisionTargeting.SkystoneDetectionPhone;
 
-@Autonomous(name = "Blue Auto Blocks", group = "MkI Blue Auto")
+@Autonomous(name = "Blue Two Blind", group = "MkI Blue Auto")
 public class Blue_Auto_V1 extends LinearOpMode {
 
     ElapsedTime etime = new ElapsedTime();
