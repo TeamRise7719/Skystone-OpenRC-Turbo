@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.Diagnostics;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -9,6 +10,8 @@ import org.firstinspires.ftc.teamcode.SeansSpace.RevExtensions.ExpansionHubMotor
 /**
  * Created by Sean Cardosi on 2019-12-01.
  */
+@Disabled
+
 @TeleOp(name = "Temperature Monitor",group = "Diagnostics")
 public class TemperatureMonitor extends OpMode
 {

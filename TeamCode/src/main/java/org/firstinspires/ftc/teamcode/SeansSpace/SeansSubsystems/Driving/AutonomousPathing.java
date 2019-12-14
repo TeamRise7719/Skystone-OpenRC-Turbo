@@ -1,5 +1,12 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.GGOpenCV;
+import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.GGSkystoneDetector;
+import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.VisionSystem;
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
 
 import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.followCurve;
@@ -13,61 +20,56 @@ import java.util.ArrayList;
  */
 public class AutonomousPathing {
 
-    private boolean path14 = false;//Path to follow if the die roll was a 1 or a 4
-    private boolean path25 = false;//Path to follow if the die roll was a 2 or a 5
-    private boolean path36 = false;//Path to follow if the die roll was a 3 or a 6
+    private String path14 = "left";//Path to follow if the die roll was a 1 or a 4
+    private String path25 = "middle";//Path to follow if the die roll was a 2 or a 5
+    private String path36 = "right";//Path to follow if the die roll was a 3 or a 6
+    private String unknown = "unknown";
+    double pose = 0;
+    GGSkystoneDetector vision;
+    GGOpenCV detector;
 
+    public AutonomousPathing(HardwareMap hardwareMap) {
+        GGOpenCV detector = new GGOpenCV(GGOpenCV.Cam.PHONE, hardwareMap);
+    }
+    public void init() {
 
-
-    public AutonomousPathing() {}
-
-    public void findPath() {
-
-        /*
-         * Code here to find the Skystones (x,y) location and to make the correct boolean true.
-         * Find Skystones locations using TensorFlowObjectDetection.
-         */
-
+        detector.startCamera();
+        detector.startLook(VisionSystem.TargetType.SKYSTONE);
 
     }
-    public void runPurePursuitPath() {
+    public void initSearch(Telemetry telemetry) {
 
-        ArrayList<CurvePoint> allPoints = new ArrayList<>();
+            if (detector.found()){
+                telemetry.addData("Skystone Found!", "");
+                telemetry.addData("X: ", detector.detector.foundRectangle().x);
+                telemetry.addData("Y: ", detector.detector.foundRectangle().y);
 
-        if (path14) {
+                pose = detector.detector.foundRectangle().x;
 
-            //Code to follow to get Skystones in this position
-            allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50));
+            } else {
+                telemetry.addData("Skystone not found.", "");
+            }
 
-        } else if (path25) {
+            telemetry.update();
+    }
+    public void stopSearch() {
 
-            //Code to follow to get Skystones in this position
-            allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50));
-
-        } else if (path36) {
-
-            //Code to follow to get Skystones in this position
-            allPoints.add(new CurvePoint(0, 0, 1.0, 1.0, 50));
-
-        }
-        followCurve(allPoints, Math.toRadians(90));//Robot will get stuck spinning while looking for another point to go to at the endPoint.
+        detector.stopLook();
     }
 
+    public String findPath() {
 
-    public void runPIDPath() {
+        if ((pose>=260&&pose<=280)||(pose>=40&&pose<60)) {//If Left
+            return path14;//A 1 or a 4 were rolled.
 
-        if (path14) {
+        } else if ((pose>=190&&pose<=210)||(pose>=6&&pose<=10)) {//If Middle
+            return path25;//A 2 or a 5 were rolled.
 
-            //Code to follow to get Skystones in this position
+        } else if ((pose>=124&&pose<=130)||(pose==0)) {//If Right
+            return path36;//A 3 or a 6 were rolled.
 
-        } else if (path25) {
-
-            //Code to follow to get Skystones in this position
-
-        } else if (path36) {
-
-            //Code to follow to get Skystones in this position
-
+        } else {//Could not determine a pose within a range
+            return unknown;
         }
     }
 }

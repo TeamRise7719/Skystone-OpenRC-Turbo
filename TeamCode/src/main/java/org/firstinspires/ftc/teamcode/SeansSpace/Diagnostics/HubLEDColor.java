@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.Diagnostics;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,8 @@ import org.firstinspires.ftc.teamcode.SeansSpace.RevExtensions.ExpansionHubEx;
 /**
  * Created by Sean Cardosi on 2019-12-01.
  */
+@Disabled
+
 @TeleOp(name = "Hub LED ColoR Changer",group = "Diagnostics")
 public class HubLEDColor extends LinearOpMode
 {

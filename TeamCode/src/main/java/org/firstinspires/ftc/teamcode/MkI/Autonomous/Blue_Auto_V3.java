@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Transitioning.AutoTransitio
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.VisionTargeting.SkystoneDetectionPhone;
 
 
-@Autonomous (name = "Blue Auto Both", group = "Mlk Blue Auto")
+@Autonomous (name = "Blue Auto Both", group = "MkI Blue Auto")
 public class Blue_Auto_V3 extends LinearOpMode {
 
     GGSkystoneDetector vis;
