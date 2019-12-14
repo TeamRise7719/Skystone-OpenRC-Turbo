@@ -195,10 +195,10 @@ public class BlueOneSkystone extends LinearOpMode {
             mech.stopStone();
             enc.steeringDrive(18,false,true);
             enc.steeringDrive(-33,false,false);
-            enc.gyroTurn(enc.TURN_SPEED,-90);
+            enc.gyroTurn(enc.TURN_SPEED,0);
             mech.intakeStone();
             waitFor(1000);
-            enc.gyroTurn(enc.TURN_SPEED,0);
+            enc.gyroTurn(enc.TURN_SPEED,90);
             enc.steeringDrive(35,false,false);
             enc.steeringDrive(-18,false,true);
             mech.ejectStone();
@@ -207,10 +207,10 @@ public class BlueOneSkystone extends LinearOpMode {
             mech.stopStone();
             enc.steeringDrive(18,false,true);
             enc.steeringDrive(-50,false,false);
-            enc.gyroTurn(enc.TURN_SPEED,-90);
+            enc.gyroTurn(enc.TURN_SPEED,0);
             mech.intakeStone();
             waitFor(1000);
-            enc.gyroTurn(enc.TURN_SPEED,0);
+            enc.gyroTurn(enc.TURN_SPEED,90);
             enc.steeringDrive(20,false,false);
         }
         AutoTransitioner.transitionOnStop(this,"MkI TeleOp");//Transition
