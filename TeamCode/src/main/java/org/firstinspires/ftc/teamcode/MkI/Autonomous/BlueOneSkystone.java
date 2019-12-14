@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.Autonom
 /**
  * Created by Sean Cardosi on 2019-12-13.
  */
-@TeleOp(name = "Blue Two Stone",group = "MkI Blue Auto")
+@TeleOp(name = "Blue One Stone",group = "MkI Blue Auto")
 public class BlueOneSkystone extends LinearOpMode {
 
     AutonomousPathing path;
