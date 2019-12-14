@@ -61,17 +61,20 @@ public class BlueTwoSkystone extends LinearOpMode {
 
 
 
-        if (pose.equals("left")) {
+        if (pose.equals("1or4")) {//Left
 
             //----=+(First)+=----\\
             enc.steeringDrive(4,false,false);//Get Clear of the Wall
             robotStartPose.x += 4;//Add the change to the robot pose
 
             //Calculate the angle to turn to face the stone... this is for speed
-            Point skystonePose = new Point(2*tileWidth,tileWidth + 2*stoneLength + stoneLength/2);
-            double angleToStone = -Math.round(Math.atan2(skystonePose.y-robotStartPose.y,skystonePose.x-robotStartPose.x));
+            Point skystonePose = new Point(2*tileWidth,tileWidth + 1*stoneLength + stoneLength/2);
+            double exactAngleToStone = -Math.toDegrees(Math.atan2(skystonePose.y-robotStartPose.y,skystonePose.x-robotStartPose.x));
+            double angleToStone = (Math.floor(exactAngleToStone) + Math.ceil(exactAngleToStone)) / 2;
+
             //Calculate the distance to the stone
-            double distanceToStone = Math.round(Math.hypot(skystonePose.x-robotStartPose.x,skystonePose.y-robotStartPose.y));
+            double exactDistanceToStone = Math.hypot(skystonePose.x-robotStartPose.x,skystonePose.y-robotStartPose.y);
+            double distanceToStone = (Math.floor(exactDistanceToStone) + Math.ceil(exactAngleToStone)) / 2;
 
             enc.gyroTurn(enc.TURN_SPEED, angleToStone);//Point to the stone
             mech.intakeStone();
@@ -107,7 +110,7 @@ public class BlueTwoSkystone extends LinearOpMode {
 
 
 
-        } else if (pose.equals("middle")) {
+        } else if (pose.equals("2or5")) {//Middle
 
             //----=+(First)+=----\\
             enc.steeringDrive(4,false,false);//Get Clear of the Wall
@@ -115,9 +118,12 @@ public class BlueTwoSkystone extends LinearOpMode {
 
             //Calculate the angle to turn to face the stone... this is for speed
             Point skystonePose = new Point(2*tileWidth,tileWidth + 1*stoneLength + stoneLength/2);
-            double angleToStone = -Math.round(Math.atan2(skystonePose.y-robotStartPose.y,skystonePose.x-robotStartPose.x));
+            double exactAngleToStone = -Math.toDegrees(Math.atan2(skystonePose.y-robotStartPose.y,skystonePose.x-robotStartPose.x));
+            double angleToStone = (Math.floor(exactAngleToStone) + Math.ceil(exactAngleToStone)) / 2;
+
             //Calculate the distance to the stone
-            double distanceToStone = Math.round(Math.hypot(skystonePose.x-robotStartPose.x,skystonePose.y-robotStartPose.y));
+            double exactDistanceToStone = Math.hypot(skystonePose.x-robotStartPose.x,skystonePose.y-robotStartPose.y);
+            double distanceToStone = (Math.floor(exactDistanceToStone) + Math.ceil(exactAngleToStone)) / 2;
 
             enc.gyroTurn(enc.TURN_SPEED, angleToStone);//Point to the stone
             mech.intakeStone();
@@ -156,7 +162,7 @@ public class BlueTwoSkystone extends LinearOpMode {
 
 
 
-        } else if (pose.equals("right")) {
+        } else if (pose.equals("3or6")) {//Right
 
             //----=+(First)+=----\\
             enc.steeringDrive(4,false,false);//Get Clear of the Wall
@@ -164,9 +170,12 @@ public class BlueTwoSkystone extends LinearOpMode {
 
             //Calculate the angle to turn to face the stone... this is for speed
             Point skystonePose = new Point(2*tileWidth,tileWidth + 1*stoneLength + stoneLength/2);
-            double angleToStone = -Math.round(Math.atan2(skystonePose.y-robotStartPose.y,skystonePose.x-robotStartPose.x));
+            double exactAngleToStone = -Math.toDegrees(Math.atan2(skystonePose.y-robotStartPose.y,skystonePose.x-robotStartPose.x));
+            double angleToStone = (Math.floor(exactAngleToStone) + Math.ceil(exactAngleToStone)) / 2;
+
             //Calculate the distance to the stone
-            double distanceToStone = Math.round(Math.hypot(skystonePose.x-robotStartPose.x,skystonePose.y-robotStartPose.y));
+            double exactDistanceToStone = Math.hypot(skystonePose.x-robotStartPose.x,skystonePose.y-robotStartPose.y);
+            double distanceToStone = (Math.floor(exactDistanceToStone) + Math.ceil(exactAngleToStone)) / 2;
 
             enc.gyroTurn(enc.TURN_SPEED, angleToStone);//Point to the stone
             mech.intakeStone();
