@@ -219,6 +219,10 @@ public class BlueTwoSkystone extends LinearOpMode {
         } else if (pose.equals("unknown")) {//Blind grab two stones
 
             //----=+(Blind)+=----\\
+            enc.steeringDrive(4,false,false);//Get clear of wall
+            enc.gyroTurn(enc.TURN_SPEED,90);//Turn towards other wall
+            enc.steeringDrive(5,false,true);//Line up with wall
+            enc.steeringDrive(-15,false,false);//Back up to be in a position to strafe and push stone
             enc.steeringDrive( -44.3, false, true);
             mech.intake.setPower(-1);
             waitFor(1000);
