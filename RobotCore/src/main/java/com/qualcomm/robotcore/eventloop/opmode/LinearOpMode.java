@@ -26,7 +26,7 @@ public abstract class LinearOpMode extends OpMode {
 
   private LinearOpModeHelper helper          = null;
   private ExecutorService    executorService = null;
-  private volatile boolean   isStarted       = false;
+  public volatile boolean   isStarted       = false;
   private volatile boolean   stopRequested   = false;
 
   //------------------------------------------------------------------------------------------------

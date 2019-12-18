@@ -41,13 +41,13 @@ public class Red_Auto_V1 extends LinearOpMode {
         waitFor(500);
         enc.steeringDrive(4, false, false);
         enc.steeringDrive(-18,false,true);
-        enc.steeringDrive(-33,false,false);
+        enc.steeringDrive(-35,false,false);
         enc.gyroTurn(enc.TURN_SPEED,90);
         mech.intakeStone();
         waitFor(1000);
         enc.gyroTurn(enc.TURN_SPEED,0);
-        enc.steeringDrive(35,false,false);
-        enc.steeringDrive(18,false,true);
+        enc.steeringDrive(37,false,false);
+        enc.steeringDrive(19,false,true);
         mech.ejectStone();
         waitFor(1000);
         enc.steeringDrive(8, false, false);
@@ -57,7 +57,7 @@ public class Red_Auto_V1 extends LinearOpMode {
         mech.intakeStone();
         waitFor(1000);
         enc.gyroTurn(enc.TURN_SPEED,0);
-        enc.steeringDrive(20,false,false);
+        enc.steeringDrive(22,false,false);
 
 
         AutoTransitioner.transitionOnStop(this,"MkITeleOp");

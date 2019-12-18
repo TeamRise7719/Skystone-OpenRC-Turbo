@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.Diagnostics;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,8 @@ import org.firstinspires.ftc.teamcode.SeansSpace.RevExtensions.ExpansionHubEx;
 /**
  * Created by Sean Cardosi on 2019-12-01.
  */
+@Disabled
+
 @TeleOp(name = "Hub Hardware and Firmware Monitor",group = "Diagnostics")
 public class HubHardwareFirmwareMonitor extends LinearOpMode {
     ExpansionHubEx expansionHub;

@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.MkI.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-
 import org.firstinspires.ftc.teamcode.MkI.TeleOp.MkITeleOp;
 import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.AutonomousPathing;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.RobotComponents;
@@ -13,7 +11,7 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.Drivetrain;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Transitioning.AutoTransitioner;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.VisionTargeting.SkystoneDetectionPhone;
 
-@Autonomous(name = "Blue Auto Blocks", group = "MkI Blue Auto")
+@Autonomous(name = "Blue Two Blind", group = "MkI Blue Auto")
 public class Blue_Auto_V1 extends LinearOpMode {
 
     ElapsedTime etime = new ElapsedTime();
