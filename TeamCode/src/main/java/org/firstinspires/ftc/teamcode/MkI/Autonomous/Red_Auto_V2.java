@@ -36,12 +36,12 @@ public class Red_Auto_V2 extends LinearOpMode {
         waitForStart();
 
 
-        enc.steeringDrive(-20, false,false);
+        enc.steeringDrive(-21, false,false);
         enc.steeringDrive(-6.5, false,false);
         enc.steeringDrive(-11.5, false, true);
         bacon.foundationRelease();
         waitFor(2000);
-        enc.steeringDrive(28,false,false);
+        enc.steeringDrive(29,false,false);
         bacon.foundationGrab();
         enc.steeringDrive(30,false,true);
 
