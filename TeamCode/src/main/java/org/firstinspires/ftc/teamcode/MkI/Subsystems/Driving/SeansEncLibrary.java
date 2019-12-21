@@ -83,6 +83,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
 
 
+
      public void init(){
 
         left_back_drive.setDirection(DcMotor.Direction.REVERSE);
