@@ -23,7 +23,7 @@ public class RobotMedia {
 
     public RobotMedia(HardwareMap hardwareMap) {
         horn = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.horn);
-        swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.swamp);
+        swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
         endgame = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.endgame);
         spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
         endgameTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
@@ -51,7 +51,7 @@ public class RobotMedia {
         //----------------------------------------------=+(Myaah)+=----------------------------------------------\\
         if ((gamepad2.start)&&(!backState)) {
             swamp.reset();
-            swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.swamp);
+            swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
             swamp.start();
         }
 
@@ -94,11 +94,11 @@ public class RobotMedia {
     //----------------------------------------------=+(Right Round Only)+=----------------------------------------------\\
     public void rightRound(boolean play) {//This might keep getting reset. Needs Testing.
 
-        if (play == true) {
+        if (play) {
 //            spinMe.reset();
 //            spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
             spinMe.start();
-        } else if (play == false) {
+        } else {
             spinMe.stop();
         }
     }
