@@ -25,7 +25,7 @@ public class Blue_Auto_V1 extends LinearOpMode {
     }
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode(){
 
         //int position;
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
@@ -36,6 +36,7 @@ public class Blue_Auto_V1 extends LinearOpMode {
         waitForStart();
 
         //Position 1 (4 from wall);
+        //Todo: add vision
         enc.steeringDrive( -44.3, false, true);
         mech.intake.setPower(-1);
         waitFor(1000);
