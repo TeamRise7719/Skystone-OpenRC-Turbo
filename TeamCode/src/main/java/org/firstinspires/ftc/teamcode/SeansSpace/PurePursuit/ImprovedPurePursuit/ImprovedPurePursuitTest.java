@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.ImprovedPurePursuit;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.MathElements.Point;
@@ -9,6 +11,8 @@ import java.util.ArrayList;
 /**
  * Created by Sean Cardosi on 2019-12-05.
  */
+@Disabled
+@Autonomous(name = "Improved Pure Pursuit Test", group = "Pure Pursuit")
 public class ImprovedPurePursuitTest extends OpMode {
 
     PathGenerator path;
