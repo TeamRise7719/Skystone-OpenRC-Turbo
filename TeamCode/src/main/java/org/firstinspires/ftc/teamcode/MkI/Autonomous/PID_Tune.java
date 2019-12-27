@@ -32,22 +32,22 @@ public class PID_Tune extends LinearOpMode {
 
         waitForStart();
 
-        telemetry.addLine("Forward no toggle");
-        telemetry.update();
-        enc.steeringDrive(24, false,false);
-        waitFor(1000);
-        telemetry.addLine("Backward no toggle");
-        telemetry.update();
-        enc.steeringDrive(-24, false,false);
-        waitFor(1000);
-        telemetry.addLine("Left no toggle");
-        telemetry.update();
-        enc.steeringDrive(-24, false,true);
-        waitFor(1000);
-        telemetry.addLine("Right no toggle");
-        telemetry.update();
-        enc.steeringDrive(24, false,true);
-        waitFor(1000);
+//        telemetry.addLine("Forward no toggle");
+//        telemetry.update();
+//        enc.steeringDrive(24, false,false);
+//        waitFor(1000);
+//        telemetry.addLine("Backward no toggle");
+//        telemetry.update();
+//        enc.steeringDrive(-24, false,false);
+//        waitFor(1000);
+//        telemetry.addLine("Left no toggle");
+//        telemetry.update();
+//        enc.steeringDrive(-24, false,true);
+//        waitFor(1000);
+//        telemetry.addLine("Right no toggle");
+//        telemetry.update();
+//        enc.steeringDrive(24, false,true);
+//        waitFor(1000);
         telemetry.addLine("Forward with toggle");
         telemetry.update();
         enc.steeringDrive(24, true,false);
