@@ -289,16 +289,24 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                 drivePID.calcInit();
                 speed = drivePID.timedCalculate(encAvg);
 
-                if (strafeDirection == 1){
-                    left_back_drive.setPower(-strafeDirection * (-speed + steeringSpeed));
+                if (strafeDirection == 1 /*Left*/){
+//                    left_back_drive.setPower(-strafeDirection * (-speed + steeringSpeed));
+//                    left_front_drive.setPower(strafeDirection * (speed + steeringSpeed));
+//                    right_back_drive.setPower(strafeDirection * (speed - steeringSpeed));
+//                    right_front_drive.setPower(-strafeDirection * (-speed - steeringSpeed));
+                    left_back_drive.setPower(-strafeDirection * (speed + steeringSpeed));
                     left_front_drive.setPower(strafeDirection * (speed + steeringSpeed));
                     right_back_drive.setPower(strafeDirection * (speed - steeringSpeed));
-                    right_front_drive.setPower(-strafeDirection * (-speed - steeringSpeed));
-                } else if (strafeDirection == -1){
-                    left_back_drive.setPower(strafeDirection * (-speed + steeringSpeed));
-                    left_front_drive.setPower(-strafeDirection * (speed + steeringSpeed));
-                    right_back_drive.setPower(-strafeDirection * (speed - steeringSpeed));
-                    right_front_drive.setPower(strafeDirection * (-speed - steeringSpeed));
+                    right_front_drive.setPower(-strafeDirection * (speed - steeringSpeed));
+                } else if (strafeDirection == -1 /*Right*/){
+//                    left_back_drive.setPower(strafeDirection * (-speed + steeringSpeed));
+//                    left_front_drive.setPower(-strafeDirection * (speed + steeringSpeed));
+//                    right_back_drive.setPower(-strafeDirection * (speed - steeringSpeed));
+//                    right_front_drive.setPower(strafeDirection * (-speed - steeringSpeed));
+                    left_back_drive.setPower(strafeDirection * (speed - steeringSpeed));
+                    left_front_drive.setPower(-strafeDirection * (speed - steeringSpeed));
+                    right_back_drive.setPower(-strafeDirection * (speed + steeringSpeed));
+                    right_front_drive.setPower(strafeDirection * (speed + steeringSpeed));
                 }
             }
 //            stop_all_motors();
