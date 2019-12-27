@@ -55,15 +55,15 @@ public class PID_Tune extends LinearOpMode {
         telemetry.addLine("Backward with toggle");
         telemetry.update();
         enc.steeringDrive(-24, true,false);
-        waitFor(1000);
-        telemetry.addLine("Right with toggle");
-        telemetry.update();
-        enc.steeringDrive(24, true,true);
-        waitFor(1000);
-        telemetry.addLine("Left with toggle");
-        telemetry.update();
-        enc.steeringDrive(-24, true,true);
+        waitFor(5000);
+//        telemetry.addLine("Right with toggle");
+//        telemetry.update();
+//        enc.steeringDrive(24, true,true);
+//        waitFor(1000);
+//        telemetry.addLine("Left with toggle");
+//        telemetry.update();
+//        enc.steeringDrive(-24, true,true);
 
-        AutoTransitioner.transitionOnStop(this,"MkITeleOp");
+//        AutoTransitioner.transitionOnStop(this,"MkITeleOp");
     }
 }

@@ -18,22 +18,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Util.Threading;
 import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Memes.RobotMedia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SeansEncLibrary {//TODO:Change this class to work using the new odometers.
 
     private DcMotor left_back_drive;
     private DcMotor left_front_drive;
     private DcMotor right_back_drive;
     private DcMotor right_front_drive;
-    private SynchronousPID turnPID;
-    private SynchronousPID leftFrontDrivingPID;
-    private SynchronousPID leftBackDrivingPID;
-    private SynchronousPID rightFrontDrivingPID;
-    private SynchronousPID rightBackDrivingPID;
-    private RobotMedia areYouSpinningYet;
 
-    //TODO remove when done
+    private SynchronousPID turnPID;
     private SynchronousPID drivePID;
-    //TODO This one right here is a test
+
+    private RobotMedia areYouSpinningYet;
 
     public BNO055IMU gyro;
     private Orientation gyro_angle;
@@ -66,8 +64,8 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
 
     private static final double     P_DRIVE_COEFF           = 0.0015;     // Larger is more responsive, but also less stable
-    private static final double     I_DRIVE_COEFF           = 0.0000000001;     // Larger is more responsive, but also less stable
-    private static final double     D_DRIVE_COEFF           = 0.0001;     // Larger is more responsive, but also less stable
+    private static final double     I_DRIVE_COEFF           = 0.0000000000015;     // Larger is more responsive, but also less stable
+    private static final double     D_DRIVE_COEFF           = 0.000001;     // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
@@ -81,12 +79,6 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
         linearOpMode = opMode;
         areYouSpinningYet = new RobotMedia(hardwareMap);
     }
-
-
-
-
-
-
 
      public void init(){
 
@@ -197,13 +189,25 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             turnPID.setContinuous(true);
             gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             turnPID.setSetpoint(gyro_angle.firstAngle);
-            turnPID.setOutputRange(-0.4, 0.4);
+            turnPID.setOutputRange(-0.2, 0.2);
 
             drivePID.setContinuous(false);
             drivePID.setSetpoint(newAverageTarget);
-            drivePID.setOutputRange(-0.8, 0.8);
+            drivePID.setOutputRange(-0.4, 0.4);
+
+            int numLoops = 1;
+//            ElapsedTime e1 = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+//            ElapsedTime e2 = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+//            ElapsedTime e3 = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+
+            ElapsedTime loopTime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+            ArrayList<Object> loopList = new ArrayList<>();
 
             while (linearOpMode.opModeIsActive()) {
+
+
+                loopTime.reset();
+                numLoops++;
 
                 encAvg = (left_front_drive.getCurrentPosition() + left_back_drive.getCurrentPosition() + right_back_drive.getCurrentPosition() + right_front_drive.getCurrentPosition()) / 4;
                 if (((Math.abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
@@ -218,6 +222,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                     steeringSpeed = 0;
                 }
 
+                loopList.add(loopTime);
 
                 drivePID.calcInit();
                 speed = drivePID.timedCalculate(encAvg);
@@ -228,16 +233,18 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                 right_back_drive.setPower(speed - steeringSpeed);
                 right_front_drive.setPower(speed - steeringSpeed);
             }
+            telemetry.addData("Loop 1: ", loopList.toString());
+            telemetry.addData("Number of Loops", numLoops);
+            telemetry.update();
         }
 
-//        stop_all_motors();
 
         if (strafe) {
             int moveCounts = ((int) (distance * COUNTS_PER_INCH));
-            int newBackLeftTarget; //= left_back_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-            int newFrontLeftTarget; //= left_front_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-            int newBackRightTarget; //= right_back_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-            int newFrontRightTarget; //= right_front_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
+            int newBackLeftTarget;
+            int newFrontLeftTarget;
+            int newBackRightTarget;
+            int newFrontRightTarget;
             int newAverageTarget;
 
             if (strafeDirection == 1) {
@@ -267,8 +274,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
             drivePID.setContinuous(false);
             drivePID.setSetpoint(newAverageTarget);
-            drivePID.setOutputRange(-0.8, 0.8);
-
+            drivePID.setOutputRange(-0.4, 0.4);
 
             while (linearOpMode.opModeIsActive()) {
 
@@ -298,7 +304,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                     left_front_drive.setPower(strafeDirection * (speed + steeringSpeed));
                     right_back_drive.setPower(strafeDirection * (speed - steeringSpeed));
                     right_front_drive.setPower(-strafeDirection * (speed - steeringSpeed));
-                } else if (strafeDirection == 1){
+                } else if (strafeDirection == 1) {
 //                    left_back_drive.setPower(strafeDirection * (-speed + steeringSpeed));
 //                    left_front_drive.setPower(-strafeDirection * (speed + steeringSpeed));
 //                    right_back_drive.setPower(-strafeDirection * (speed - steeringSpeed));
@@ -309,224 +315,10 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                     right_front_drive.setPower(strafeDirection * (speed + steeringSpeed));
                 }
             }
-//            stop_all_motors();
-        }
-    }
 
-//    public void steeringDrive(double distance,
-//                              boolean steeringToggle,
-//                              boolean strafe) {
-//
-//        //TODO: Figure out what to change so that this isn't necessary
-//
-//
-//        distance = -distance;
-//        int strafeDirection = 0;
-//        if (distance > 0) { strafeDirection = 1;} else if (distance < 0) { strafeDirection = -1;}
-//
-//        double steeringSpeed;
-//        double leftFrontDriveSpeed;
-//        double leftBackDriveSpeed;
-//        double rightFrontDriveSpeed;
-//        double rightBackDriveSpeed;
-//
-//        leftFrontDrivingPID.reset();
-//        leftBackDrivingPID.reset();
-//        rightFrontDrivingPID.reset();
-//        rightBackDrivingPID.reset();
-//        turnPID.reset();
-//
-//        if (!strafe) {
-//            int moveCounts = ((int) (distance * COUNTS_PER_INCH));
-//            int newFrontLeftTarget = left_front_drive.getCurrentPosition() + moveCounts;
-//            int newBackLeftTarget = left_back_drive.getCurrentPosition() + moveCounts;
-//            int newFrontRightTarget = right_front_drive.getCurrentPosition() + moveCounts;
-//            int newBackRightTarget = right_back_drive.getCurrentPosition() + moveCounts;
-//
-//            int encFrontLeft;
-//            int encBackLeft;
-//            int encFrontRight;
-//            int encBackRight;
-//            ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-//            etime.reset();
-//
-//
-//            turnPID.setContinuous(true);
-//            gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//            turnPID.setSetpoint(gyro_angle.firstAngle);
-//            turnPID.setOutputRange(-0.4, 0.4);
-//
-//
-//            leftFrontDrivingPID.setContinuous(false);
-//            leftFrontDrivingPID.setSetpoint(newFrontLeftTarget);
-//            leftFrontDrivingPID.setOutputRange(-0.4, 0.4);
-//
-//            leftBackDrivingPID.setContinuous(false);
-//            leftBackDrivingPID.setSetpoint(newBackLeftTarget);
-//            leftBackDrivingPID.setOutputRange(-0.4, 0.4);
-//
-//
-//            rightFrontDrivingPID.setContinuous(false);
-//            rightFrontDrivingPID.setSetpoint(newFrontRightTarget);
-//            rightFrontDrivingPID.setOutputRange(-0.4, 0.4);
-//
-//            rightBackDrivingPID.setContinuous(false);
-//            rightBackDrivingPID.setSetpoint(newBackRightTarget);
-//            rightBackDrivingPID.setOutputRange(-0.4, 0.4);
-//
-//            while (linearOpMode.opModeIsActive()) {
-//
-//                if ((((Math.abs(newBackLeftTarget - left_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD)
-//                        && (((Math.abs(newBackRightTarget - right_back_drive.getCurrentPosition())) < ENCODER_THRESHOLD)))) {
-//                    break;
-//                }
-//
-//                if (steeringToggle) {
-//                    gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//                    turnPID.calcInit();
-//                    steeringSpeed = turnPID.timedCalculate(gyro_angle.firstAngle);
-//                } else {
-//                    steeringSpeed = 0;
-//                }
-//
-//                encFrontLeft = left_front_drive.getCurrentPosition();
-//                leftFrontDrivingPID.calcInit();
-//                leftFrontDriveSpeed = leftFrontDrivingPID.timedCalculate(encFrontLeft);
-//
-//                encBackLeft = left_back_drive.getCurrentPosition();
-//                leftBackDrivingPID.calcInit();
-//                leftBackDriveSpeed = leftBackDrivingPID.timedCalculate(encBackLeft);
-//
-//                encFrontRight = right_front_drive.getCurrentPosition();
-//                rightFrontDrivingPID.calcInit();
-//                rightFrontDriveSpeed = rightFrontDrivingPID.timedCalculate(encFrontRight);
-//
-//                encBackRight = right_back_drive.getCurrentPosition();
-//                rightBackDrivingPID.calcInit();
-//                rightBackDriveSpeed = rightBackDrivingPID.timedCalculate(encBackRight);
-//
-//
-//                left_back_drive.setPower(leftBackDriveSpeed + steeringSpeed);
-//                left_front_drive.setPower(leftBackDriveSpeed + steeringSpeed);
-//                right_back_drive.setPower(rightBackDriveSpeed - steeringSpeed);
-//                right_front_drive.setPower(rightFrontDriveSpeed - steeringSpeed);
-//
-////                telemetry.addData("LErr/RErr", "%s:%s", newLeftTarget - encLeft, newRightTarget - encRight);
-////                telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(), gyro_angle.firstAngle);
-////                telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
-////                telemetry.update();
-//            }
-//
-//            stop_all_motors();
-//        }
-//        if (strafe) {
-//
-//            int moveCounts = ((int) (distance * COUNTS_PER_INCH));
-//            int newBackLeftTarget = 0; //= left_back_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-//            int newFrontLeftTarget = 0; //= left_front_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-//            int newBackRightTarget = 0; //= right_back_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-//            int newFrontRightTarget = 0; //= right_front_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-//
-//            if (strafeDirection == 1){
-//                newBackLeftTarget = left_back_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-//                newFrontLeftTarget = left_front_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-//                newBackRightTarget = right_back_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-//                newFrontRightTarget = right_front_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-//            } else if (strafeDirection == -1){
-//                newBackLeftTarget = left_back_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-//                newFrontLeftTarget = left_front_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-//                newBackRightTarget = right_back_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-//                newFrontRightTarget = right_front_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-//            }
-//
-//            int encFrontLeft;
-//            int encBackLeft;
-//            int encFrontRight;
-//            int encBackRight;
-//            ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-//            etime.reset();
-//
-//
-//            turnPID.setContinuous(true);
-//            gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//            turnPID.setSetpoint(gyro_angle.firstAngle);
-//            turnPID.setOutputRange(-0.2, 0.2);
-//
-//
-//            leftFrontDrivingPID.setContinuous(false);
-//            leftFrontDrivingPID.setSetpoint(newFrontLeftTarget);
-//            leftFrontDrivingPID.setOutputRange(-0.2, 0.2);
-//
-//            leftBackDrivingPID.setContinuous(false);
-//            leftBackDrivingPID.setSetpoint(newBackLeftTarget);
-//            leftBackDrivingPID.setOutputRange(-0.2, 0.2);
-//
-//
-//            rightFrontDrivingPID.setContinuous(false);
-//            rightFrontDrivingPID.setSetpoint(newFrontRightTarget);
-//            rightFrontDrivingPID.setOutputRange(-0.2, 0.2);
-//
-//            rightBackDrivingPID.setContinuous(false);
-//            rightBackDrivingPID.setSetpoint(newBackRightTarget);
-//            rightBackDrivingPID.setOutputRange(-0.2, 0.2);
-//
-//            while (linearOpMode.opModeIsActive()) {
-//
-//                if ((((Math.abs(newBackLeftTarget - left_back_drive.getCurrentPosition())) < 10)
-//                        && (((Math.abs(newBackRightTarget - right_back_drive.getCurrentPosition())) < 10)))) {
-//                    break;
-//                }
-//
-//                if (steeringToggle) {
-//                    gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//                    steeringSpeed = turnPID.calculate(gyro_angle.firstAngle);
-//                } else {
-//                    steeringSpeed = 0;
-//                }
-//
-//                encFrontLeft = left_front_drive.getCurrentPosition();
-//                leftFrontDrivingPID.calcInit();
-//                leftFrontDriveSpeed = leftFrontDrivingPID.timedCalculate(encFrontLeft);
-//
-//                encBackLeft = left_back_drive.getCurrentPosition();
-//                leftBackDrivingPID.calcInit();
-//                leftBackDriveSpeed = leftBackDrivingPID.timedCalculate(encBackLeft);
-//
-//                encFrontRight = right_front_drive.getCurrentPosition();
-//                rightFrontDrivingPID.calcInit();
-//                rightFrontDriveSpeed = rightFrontDrivingPID.timedCalculate(encFrontRight);
-//
-//                encBackRight = right_back_drive.getCurrentPosition();
-//                rightBackDrivingPID.calcInit();
-//                rightBackDriveSpeed = rightBackDrivingPID.timedCalculate(encBackRight);
-//
-//
-//                //In my head this works although steering toggle will be an issue.
-////                left_back_drive.setPower(-strafeDirection * (-leftBackDriveSpeed + steeringSpeed));
-////                left_front_drive.setPower(strafeDirection * (leftFrontDriveSpeed + steeringSpeed));
-////                right_back_drive.setPower(strafeDirection * (rightBackDriveSpeed - steeringSpeed));
-////                right_front_drive.setPower(-strafeDirection * (-rightFrontDriveSpeed - steeringSpeed));
-//
-//                if (strafeDirection == 1){
-//                    left_back_drive.setPower(-strafeDirection * (-leftBackDriveSpeed + steeringSpeed));
-//                    left_front_drive.setPower(strafeDirection * (leftFrontDriveSpeed + steeringSpeed));
-//                    right_back_drive.setPower(strafeDirection * (rightBackDriveSpeed - steeringSpeed));
-//                    right_front_drive.setPower(-strafeDirection * (-rightFrontDriveSpeed - steeringSpeed));
-//                } else if (strafeDirection == -1){
-//                    left_back_drive.setPower(strafeDirection * (-leftBackDriveSpeed + steeringSpeed));
-//                    left_front_drive.setPower(-strafeDirection * (leftFrontDriveSpeed + steeringSpeed));
-//                    right_back_drive.setPower(-strafeDirection * (rightBackDriveSpeed - steeringSpeed));
-//                    right_front_drive.setPower(strafeDirection * (-rightFrontDriveSpeed - steeringSpeed));
-//                }
-//
-////                telemetry.addData("LErr/RErr", "%s:%s", newLeftTarget - encLeft, newRightTarget - encRight);
-////                telemetry.addData("HeadingErr/CurrentHeading", "%f:%f", turnPID.getError(), gyro_angle.firstAngle);
-////                telemetry.addData("LSpd/RSpd/Steer", "%f:%f:%f", leftDriveSpeed, rightDriveSpeed, steeringSpeed);
-////                telemetry.update();
-//            }
-//            stop_all_motors();
-//        }
-//    }
+        }
+        stop_all_motors();
+    }
 
     public void gyroTurn(double speed, double angle) {
         turnPID.reset();
@@ -607,227 +399,4 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
         return turnPID.onTarget(HEADING_THRESHOLD);
     }
-
-    //TODO: Can we delete all of this?
-//    /**
-//     * getError determines the error between the target angle and the robot's current heading
-//     * @param   targetAngle  Desired angle (relative to global reference established at last Gyro Reset).
-//     * @return  error angle: Degrees in the range +/- 180. Centered on the robot's frame of reference
-//     *          +ve error means the robot should turn LEFT (CCW) to reduce error.
-//     */
-//
-//    public double getErrorUltra(double targetDistance, boolean isBack) {
-//
-//        double ultrasonicValue;
-//        double robotError;
-//
-//        // calculate error
-//        if (isBack) {
-//            //use the back sensor
-//            ultrasonicValue = (ultrasonicBack.getDistance() / 2.54);
-//
-//        } else {
-//
-//            //use the front sensor
-//            ultrasonicValue = (ultrasonicFront.getDistance() / 2.54);
-//
-//        }
-//        robotError = targetDistance - ultrasonicValue;
-//
-//        return robotError;
-//    }
-//    public void UltrasonicGyroDrive(
-//                                    double distance,
-//                                    double angle,
-//                                    boolean steeringToggle,
-//                                    double UltraTolerance,
-//                                    boolean isBack,
-//                                    double Timeout) {
-//        double speed;
-//        double max;
-//        double error;
-//        double steer;
-//        double leftSpeed;
-//        double rightSpeed;
-//        double ultraError;
-//
-//
-//        // Ensure that the opmode is still active
-//        if (linearOpMode.opModeIsActive()) {
-//            left_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            left_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            ultraError = getErrorUltra(distance,isBack);
-//
-//            ElapsedTime etime = new ElapsedTime();
-//            etime.reset();
-//
-//            // keep looping while we are still active, and BOTH motors are running.
-//            while ((etime.time() < Timeout) && (linearOpMode.opModeIsActive()) /* && (java.lang.Math.abs(ultraError) > UltraTolerance)*/ ){
-//                // adjust relative speed based on heading error.
-//                ultraError = getErrorUltra(distance,isBack);
-//                speed = ultraError*ULTRA_COEFF;
-//
-//                error = getError(angle);
-//                steer = getSteer(error, P_DRIVE_COEFF);
-//
-//                // if driving in reverse, the motor correction also needs to be reversed
-//                if (distance > 0) {
-//                    steer *= -1.0;
-//                }
-//
-//                if (steeringToggle) {
-//                    leftSpeed = speed - steer;
-//                    rightSpeed = speed + steer;
-//                } else {
-//                    leftSpeed = speed;
-//                    rightSpeed = speed;
-//                }
-//
-//                // Normalize speeds if either one exceeds +/- 1.0;
-//                max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
-//                if (max > 1) {
-//                    leftSpeed /= max;
-//                    rightSpeed /= max;
-//                }
-//
-//                if (leftSpeed > 0.8){
-//                    leftSpeed = 0.8;
-//                } else if (leftSpeed < -0.8){
-//                    leftSpeed = -0.8;
-//                }
-//
-//                if (rightSpeed > 0.8){
-//                    rightSpeed = 0.8;
-//                } else if (rightSpeed < -0.8){
-//                    rightSpeed = -0.8;
-//                }
-//
-//                if(!isBack){
-//                    leftSpeed = leftSpeed*-1;
-//                    rightSpeed = rightSpeed*-1;
-//                }
-//
-//                if((isBack)&&(ultrasonicBack.getError())){
-//                    leftSpeed = 0;
-//                    rightSpeed = 0;
-//                }
-//                else if((!isBack)&&(ultrasonicFront.getError())){
-//                    leftSpeed = 0;
-//                    rightSpeed = 0;
-//                }
-//
-//                left_back_drive.setPower(leftSpeed);
-//                left_front_drive.setPower(leftSpeed);
-//                right_back_drive.setPower(rightSpeed);
-//                right_front_drive.setPower(rightSpeed);
-//
-//
-//                // Display drive status for the driver.
-//                telemetry.addData("Target", distance);
-//                telemetry.addData("Error", "%5.1f", ultraError);
-//                telemetry.addData("Speed", "%5.2f:%5.2f", leftSpeed, rightSpeed);
-//                telemetry.update();
-//            }
-//
-//            // Stop all motion;
-//            left_back_drive.setPower(0);
-//            left_front_drive.setPower(0);
-//            right_back_drive.setPower(0);
-//            right_front_drive.setPower(0);
-//        }
-//    }
-//
-//        public void gyroDrive ( double speed,
-//                            double distance,
-//                            double angle,
-//                            boolean steeringToggle) {
-//
-//        int     newLeftTarget;
-//        int     newRightTarget;
-//        int     moveCounts;
-//        double  max;
-//        double  error;
-//        double  steer;
-//        double  leftSpeed;
-//        double  rightSpeed;
-//
-//        // Ensure that the opmode is still active
-//        if (linearOpMode.opModeIsActive()) {
-//
-//            // Determine new target position, and pass to motor controller
-//            moveCounts = (int)(distance * COUNTS_PER_INCH);
-//            newLeftTarget = left_back_drive.getCurrentPosition() + moveCounts;
-//            newRightTarget = right_back_drive.getCurrentPosition() + moveCounts;
-//
-//            // start motion.
-//            speed = Range.clip(speed, -1.0, 1.0);
-//            left_back_drive.setPower(speed);
-//            left_front_drive.setPower(speed);
-//            right_back_drive.setPower(speed);
-//            right_front_drive.setPower(speed);
-//
-//
-//            // keep looping while we are still active, and BOTH motors are running.
-//            while (linearOpMode.opModeIsActive() && (Math.abs(newLeftTarget-left_back_drive.getCurrentPosition())>ENCODER_THRESHOLD
-//                   || Math.abs(newRightTarget-right_back_drive.getCurrentPosition())>ENCODER_THRESHOLD) ) {
-//
-//                // adjust relative speed based on heading error.
-////                error = getError(angle);
-//                error = 0;
-//                steer = getSteer(error, P_DRIVE_COEFF);
-//
-//                // if driving in reverse, the motor correction also needs to be reversed
-//                if (distance < 0) {
-//                    steer *= -1.0;
-//                }
-//
-//                if(steeringToggle) {
-//                    leftSpeed = speed - steer;
-//                    rightSpeed = speed + steer;
-//                }
-//                else {
-//                    leftSpeed = speed;
-//                    rightSpeed = speed;
-//                }
-//
-//                // Normalize speeds if either one exceeds +/- 1.0;
-//                max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
-//                if (max > 1.0)
-//                {
-//                    leftSpeed /= max;
-//                    rightSpeed /= max;
-//                }
-//
-//                left_back_drive.setPower(-leftSpeed);
-//                left_front_drive.setPower(-leftSpeed);
-//                right_back_drive.setPower(-rightSpeed);
-////                right_front_drive.setPower(-rightSpeed);
-////
-////                // Display drive status for the driver.
-////                telemetry.addData("Err/St",  "%5.1f/%5.1f",  error, steer);
-////                telemetry.addData("Target",  "%7d:%7d",      newLeftTarget,  newRightTarget);
-////                telemetry.addData("Actual",  "%7d:%7d",      left_back_drive.getCurrentPosition(),
-////                        right_back_drive.getCurrentPosition());
-////                telemetry.addData("Speed",   "%5.2f:%5.2f",  -leftSpeed, -rightSpeed);
-////                telemetry.update();
-////            }
-////
-////            // Stop all motion;
-////            left_back_drive.setPower(0);
-////            left_front_drive.setPower(0);
-////            right_back_drive.setPower(0);
-////            right_front_drive.setPower(0);
-////
-////            telemetry.addData("LErr/RErr", "%5.2f", angle);
-////            telemetry.addData("HeadingErr/CurrentHeading", "%5.2f:%5.2f", turnPID.getError(),gyro_angle.firstAngle);
-////            telemetry.addData("Coef ", turnPID.getState());
-//////            telemetry.addData("Speed.", "%5.2f:%5.2f", -motorSpeed, motorSpeed);
-////            telemetry.update();
-////
-////        }
-////    }
-//
-//
 }
