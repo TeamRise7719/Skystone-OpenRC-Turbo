@@ -13,6 +13,7 @@ public class RobotMedia {
 
     private ElapsedTime endgameTimer;
     private MediaPlayer horn;
+    private MediaPlayer myaah;
     private MediaPlayer swamp;
     private MediaPlayer endgame;
     private MediaPlayer spinMe;
@@ -20,12 +21,14 @@ public class RobotMedia {
     private boolean backState = false;
     private boolean endgamePlayed = false;
     private boolean lBumperState = false;
+    private boolean swampState = false;
 
     public RobotMedia(HardwareMap hardwareMap) {
         horn = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.horn);
-        swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
+        myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
         endgame = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.endgame);
         spinMe = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.rightround);
+        swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.swamp);
         endgameTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
     }
     public void startTimer() {
@@ -50,17 +53,32 @@ public class RobotMedia {
 
         //----------------------------------------------=+(Myaah)+=----------------------------------------------\\
         if ((gamepad2.start)&&(!backState)) {
-            swamp.reset();
-            swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
-            swamp.start();
+            myaah.reset();
+            myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
+            myaah.start();
         }
 
         backState = gamepad2.start;
 
-        if(swamp.isPlaying()&&!backState){
-            swamp.stop();
+        if(myaah.isPlaying()&&!backState){
+            myaah.stop();
         }
         //----------------------------------------------=+(Myaah)+=----------------------------------------------\\
+
+
+        //----------------------------------------------=+(Swamp)+=----------------------------------------------\\
+        if ((gamepad1.back)&&(!swampState)) {
+            swamp.reset();
+            swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.swamp);
+            swamp.start();
+        }
+
+        swampState = gamepad1.back;//Back button might not work. Change to another button if needed.
+
+        if (swamp.isPlaying()&&!swampState) {
+            swamp.stop();
+        }
+        //----------------------------------------------=+(Swamp)+=----------------------------------------------\\
 
 
         //----------------------------------------------=+(Endgame)+=----------------------------------------------\\

@@ -25,7 +25,7 @@ public class Blue_Auto_V1 extends LinearOpMode {
     }
 
     @Override
-    public void runOpMode(){
+    public void runOpMode() throws InterruptedException {
 
         //int position;
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
