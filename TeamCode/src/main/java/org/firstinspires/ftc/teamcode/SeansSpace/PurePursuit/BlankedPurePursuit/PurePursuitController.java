@@ -301,7 +301,7 @@ public class PurePursuitController {
             //Provide power.
             xPower = (xToPoint / (abs(xToPoint) + abs(yToPoint))) * speed;
             yPower = (yToPoint / (abs(xToPoint) + abs(yToPoint))) * speed;
-            turnPower = (-Range.clip((relativeAngleToPoint/* + (curvatureDirection) * toRadians(followAngle)*/), -1, 1)) * speed;//Scale the turn speed by 30
+            turnPower = (-Range.clip((relativeAngleToPoint/* + (curvatureDirection) * toRadians(followAngle)*/) / Math.toRadians(30), -1, 1)) * speed;
 
             //Update the location and power cycle.
             odometry.updateLocation();
