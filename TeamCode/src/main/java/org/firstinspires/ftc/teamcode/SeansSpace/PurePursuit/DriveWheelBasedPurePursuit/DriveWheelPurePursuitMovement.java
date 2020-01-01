@@ -58,7 +58,7 @@ public class DriveWheelPurePursuitMovement {
      * @param allPoints The array of waypoints to follow.
      * @param followAngle The robot angle to follow the path in.
      */
-    static void followCurve(ArrayList<CurvePoint> allPoints, double followAngle) {
+    public static void followCurve(ArrayList<CurvePoint> allPoints, double followAngle) {
 
         CurvePoint followMe = getFollowPointPath(allPoints, new Point(odometry.xLocation,odometry.yLocation), allPoints.get(0).followDistance);
 
