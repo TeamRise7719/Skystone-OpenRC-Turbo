@@ -28,7 +28,8 @@ pursuit, the robot will need a very good odometry system to accurately track its
 
 
 
-
+This list is not accurate anymore and I am too lazy to update it.
+- Sean
 
 -----------=+(Things To Fix)+=-------------------------------------------------------------------
 

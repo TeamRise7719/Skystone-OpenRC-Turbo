@@ -111,6 +111,7 @@ public class PurePursuitController {
             x1 += 0.001;
         }
 
+        //Dumb equations that nobody cares about.
         double k1 = 0.5 * (pow(x1,2) + pow(y1,2) - pow(x2,2) - pow(y2,2)) / (x1 - x2);
         double k2 = (y1 - y2) / (x1 - x2);
         double b = 0.5 * (pow(x2,2) - 2 * x2 * k1 + pow(y2,2) - pow(x3,2) + 2 * x3 * k1 - pow(y3,2)) / (x3 * k2 - y3 + y2 - x2 * k2);
@@ -125,11 +126,12 @@ public class PurePursuitController {
      */
     private void ApplyPower() {
 
-
+        //Shorten the variables for ease.
         double x = xPower;
         double y = yPower;
         double r = turnPower;
 
+        //Power formulas for mechanum wheels.
         lfPower = x + y + r;
         rfPower = x - y - r;
         lrPower = x - y + r;
@@ -146,11 +148,13 @@ public class PurePursuitController {
             scaleDownAmount = 1.0/lfmaxRawPower;
         }
 
+        //Scale down the powers if necessary.
         lfPower *= scaleDownAmount;
         lrPower *= scaleDownAmount;
         rrPower *= scaleDownAmount;
         rfPower *= scaleDownAmount;
 
+        //Finally set the powers.
         lf.setPower(lfPower);
         lr.setPower(lrPower);
         rf.setPower(rfPower);
@@ -166,26 +170,35 @@ public class PurePursuitController {
     private ArrayList<Point> injectPoints(ArrayList<Point> pathPoints, double spacing) {
 
         ArrayList<Point> newPoints = new ArrayList<>();
+
+        //For all the points in the path.
         for (int i=0; i<pathPoints.size()-1; i++) {
 
+            //Define a new vector
             Point startPoint = pathPoints.get(i);
             Point endPoint = pathPoints.get(i+1);
 
+            //Find the magnitude of the vector.
             double magnitude = hypot(endPoint.x - startPoint.x, endPoint.y-startPoint.y);
 
+            //Find how many points can fit in between the start point and end point.
             double pointsThatFit = ceil(magnitude / spacing);
 
+            //Define the vector as a point.
             Point vector = new Point(endPoint.x-startPoint.x,endPoint.y-startPoint.y);
 
+            //Normalize the vector.
             Point normalizedVector = new Point(vector.x/magnitude,vector.y/magnitude);
 
+            //Calculate the x and y values to increment by for the injected points.
             normalizedVector.x *= (magnitude / pointsThatFit);
             normalizedVector.y *= (magnitude / pointsThatFit);
 
+            //Add the injected points into the array for this segment.
             for (int j=0; j<pointsThatFit; j++) {
                 newPoints.add(new Point(startPoint.x+normalizedVector.x*j,startPoint.y+normalizedVector.y*j));
             }
-            newPoints.add(endPoint);
+            newPoints.add(endPoint);//Add the last point to the new path that includes the injected points.
         }
         return newPoints;
     }
@@ -259,38 +272,48 @@ public class PurePursuitController {
      */
     public void followPath(ArrayList<Point> path, double speed, double followAngle) {
 
+        //Reset the pointIndex
         currentPointIndex = 1;
         nextPointIndex = 2;
 
+        //TODO: Use PID so you don't have to do this.
         while (nextPointIndex != path.size()-1) {
 
+            //Define some variables
             Point robot = new Point(odometry.xLocation, odometry.yLocation);
             Point currentPoint = new Point(path.get(currentPointIndex).x, path.get(currentPointIndex).y);
             Point nextPoint = new Point(path.get(nextPointIndex).x, path.get(nextPointIndex).y);
 
+            //Get the curvature to find whihc way the path curves.
             double curvature = getCurvature(path, currentPointIndex);
             int curvatureDirection = (int) (signum(curvature));
 
+            //Calculate distances and angles until the points.
             double distanceToCurrentPoint = hypot(currentPoint.x - robot.x, currentPoint.y - robot.y);
             double distanceToNextPoint = hypot(nextPoint.x - robot.x, nextPoint.y - robot.y);
             double angleToPoint = (atan2(nextPoint.y - robot.y, nextPoint.x - robot.x));
             double relativeAngleToPoint = AngleUnit.normalizeRadians(angleToPoint - odometry.getRawHeading());
 
+            //Calculate the distance to the target point.
             double xToPoint = cos(relativeAngleToPoint) * distanceToNextPoint;
             double yToPoint = sin(relativeAngleToPoint) * distanceToNextPoint;
 
+            //Provide power.
             xPower = (xToPoint / (abs(xToPoint) + abs(yToPoint))) * speed;
             yPower = (yToPoint / (abs(xToPoint) + abs(yToPoint))) * speed;
             turnPower = (-Range.clip((relativeAngleToPoint/* + (curvatureDirection) * toRadians(followAngle)*/), -1, 1)) * speed;//Scale the turn speed by 30
 
+            //Update the location and power cycle.
             odometry.updateLocation();
             ApplyPower();
 
+            //If nessecary move on the next point on the path.
             if (distanceToNextPoint < distanceToCurrentPoint) {
                 currentPointIndex++;
                 nextPointIndex++;
             }
         }
+        //When done we need to stop.
         xPower = 0;
         yPower = 0;
         turnPower = 0;
