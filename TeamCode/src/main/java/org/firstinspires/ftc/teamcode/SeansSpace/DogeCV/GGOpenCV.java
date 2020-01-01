@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.DogeCV;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.disnodeteam.dogecv.detectors.DogeCVDetector;
 
 import org.opencv.core.Rect;
 import org.openftc.easyopencv.OpenCvCamera;

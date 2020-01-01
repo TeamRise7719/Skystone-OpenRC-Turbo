@@ -1,17 +1,11 @@
 package org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.GGOpenCV;
 import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.GGSkystoneDetector;
 import org.firstinspires.ftc.teamcode.SeansSpace.DogeCV.VisionSystem;
-import org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.PurePursuitGeometry.CurvePoint;
-
-import static org.firstinspires.ftc.teamcode.SeansSpace.PurePursuit.OdometerBasedPurePursuit.PurePursuitMovement.followCurve;
-
-import java.util.ArrayList;
 
 /**
  * Created by Sean Cardosi on 10/22/2019

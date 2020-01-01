@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.RobotComponents;
 import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.SeansEncLibrary;
-import org.firstinspires.ftc.teamcode.MkI.Subsystems.Transitioning.AutoTransitioner;
 
 @Autonomous (name = "PID Test", group = "Test Environment")
 public class PID_Tune extends LinearOpMode {
