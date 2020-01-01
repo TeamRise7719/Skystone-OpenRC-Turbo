@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MkI.Autonomous;
+package org.firstinspires.ftc.teamcode.SeansSpace.SeansAutonomous.VeryBad;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.Autonom
 /**
  * Created by Sean Cardosi on 2019-12-14.
  */
-@TeleOp(name = "Red One Stone",group = "MkI Red Auto")
-public class RedOneSkystone extends LinearOpMode {
+@TeleOp(name = "Red Two Stone",group = "MkI Red Auto")
+public class RedTwoSkystone extends LinearOpMode {
 
     AutonomousPathing path;
     String pose;
@@ -63,6 +63,7 @@ public class RedOneSkystone extends LinearOpMode {
 
         if (pose.equals("1or4")) {//Right
 
+            //----=+(First)+=----\\
             enc.steeringDrive(4,false,false);//Get Clear of the Wall
             robotStartPose.x += 4;//Add the change to the robot pose
 
@@ -86,8 +87,17 @@ public class RedOneSkystone extends LinearOpMode {
             enc.steeringDrive(35,false,false);//Go past bridge
             mech.intakeStone();
             waitFor(1000);//Eject the stone
-            enc.steeringDrive(-2,false,false);//Park
 
+            //----=+(Second)+=----\\
+            enc.steeringDrive(-(3*tileWidth + 4),false,false);//Goal here is to straighten by hitting the wall.
+            enc.steeringDrive(-16,false,true);//Push other stones out of the way.
+            mech.ejectStone();
+            waitFor(1000);//Intake stone
+            enc.steeringDrive(4,false,false);//Get the stone
+            enc.steeringDrive(16,false,true);//Get clear of the bridge
+            enc.steeringDrive(3*tileWidth,false,false);//Get under bridge
+            mech.intakeStone();
+            waitFor(1000);//Eject the stone
 
 
 
@@ -102,6 +112,7 @@ public class RedOneSkystone extends LinearOpMode {
 
         } else if (pose.equals("2or5")) {//Middle
 
+            //----=+(First)+=----\\
             enc.steeringDrive(4,false,false);//Get Clear of the Wall
             robotStartPose.x += 4;//Add the change to the robot pose
 
@@ -125,8 +136,20 @@ public class RedOneSkystone extends LinearOpMode {
             enc.steeringDrive(35,false,false);//Go past bridge
             mech.intakeStone();
             waitFor(1000);//Eject the stone
-            enc.steeringDrive(-2,false,false);//Park
 
+            //----=+(Second)+=----\\
+            enc.steeringDrive(-(3*tileWidth + 4),false,false);//Goal here is to straighten by hitting the wall.
+            enc.gyroTurn(enc.TURN_SPEED,-90);//Face wall
+            enc.steeringDrive(-8,false,false);//Back up to get clear of middle stone
+            enc.steeringDrive(16,false,true);//Push wrong stones out of way.
+            mech.ejectStone();
+            waitFor(1000);//Pick up stone
+            enc.steeringDrive(4,false,false);//Go forward to get stone.
+            enc.steeringDrive(-16,false,true);//Strafe to get clear of bridge
+            enc.steeringDrive(-3*tileWidth,false,false);//Go under bridge
+            enc.gyroTurn(enc.TURN_SPEED,90);//Turn towards foundation
+            mech.intakeStone();
+            waitFor(1000);//Eject stone and hope you are over the line
 
 
 
@@ -141,6 +164,7 @@ public class RedOneSkystone extends LinearOpMode {
 
         } else if (pose.equals("3or6")) {//Left
 
+            //----=+(First)+=----\\
             enc.steeringDrive(4,false,false);//Get Clear of the Wall
             robotStartPose.x += 4;//Add the change to the robot pose
 
@@ -166,6 +190,19 @@ public class RedOneSkystone extends LinearOpMode {
             waitFor(1000);//Eject the stone
             enc.steeringDrive(-2,false,false);//Park
 
+            //----=+(Second)+=----\\
+            enc.steeringDrive(-(3*tileWidth + 4),false,false);//Goal here is to straighten by hitting the wall.
+            enc.gyroTurn(enc.TURN_SPEED,-90);//Face wall
+            enc.steeringDrive(-16,false,false);//Back up to get clear of right stone
+            enc.steeringDrive(16,false,true);//Push wrong stones out of way.
+            mech.ejectStone();
+            waitFor(1000);//Pick up stone
+            enc.steeringDrive(4,false,false);//Go forward to get stone.
+            enc.steeringDrive(-16,false,true);//Strafe to get clear of bridge
+            enc.steeringDrive(-3*tileWidth,false,false);//Go under bridge
+            enc.gyroTurn(enc.TURN_SPEED,90);//Turn towards foundation
+            mech.intakeStone();
+            waitFor(1000);//Eject stone and hope you are over the line
 
 
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.SeansSpace.SeansAutonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.SeansSpace.SeansSubsystems.Driving.SeansDe
 /**
  * Created by Sean Cardosi on 2019-12-16.
  */
+@Autonomous(name = "Default Encoder Test", group = "SeansSpace")
 public class DefaultEncoderTest extends OpMode {
 
     SeansDefaultEncoderLibrary enc;

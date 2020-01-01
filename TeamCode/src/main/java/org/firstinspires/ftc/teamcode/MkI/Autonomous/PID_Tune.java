@@ -26,7 +26,7 @@ public class PID_Tune extends LinearOpMode {
 
         //int position;
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
-        RobotComponents bacon = new RobotComponents(hardwareMap);
+        RobotComponents component = new RobotComponents(hardwareMap);
 
         enc.init();
 
