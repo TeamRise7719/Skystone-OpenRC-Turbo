@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.SeansEncLibrary;
 @TeleOp(name = "TestPID",group = "Testing" )
 public class PIDTest extends LinearOpMode {
 
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode(){
 
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         enc.init();
@@ -20,7 +20,7 @@ public class PIDTest extends LinearOpMode {
 
             if (gamepad1.x) {
 
-                enc.steeringDrive(60,true,false);//24 true
+                enc.steeringDrive(24,true,false);//24 true
             }
             if (gamepad1.y) {
                 enc.steeringDrive(12, false,true);

@@ -53,11 +53,11 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     public  final double     TURN_SPEED              = 0.8;     // Nominal half speed for better accuracy.
 
     private static final double     HEADING_THRESHOLD       = 0.25;      // As tight as we can make it with an integer gyro
-    private static final int     ENCODER_THRESHOLD       = 3;      // As tight as we can make it with an integer gyro
+    private static final int     ENCODER_THRESHOLD       = 10;      // As tight as we can make it with an integer gyro
 
 
-    private static final double     P_TURN_COEFF            = 0.008;//.008     // Larger is more responsive, but also less stable
-    private static final double     I_TURN_COEFF            = 0.0000000000015;//  // Larger is more responsive, but also less stable
+    private static final double     P_TURN_COEFF            = 0.008;//0.008     // Larger is more responsive, but also less stable
+    private static final double     I_TURN_COEFF            = 0.0000000000015;//0.0000000000015  // Larger is more responsive, but also less stable
     private static final double     D_TURN_COEFF            = 0.000001;//0.000001     // Larger is more responsive, but also less stable
 
 
@@ -156,13 +156,14 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                               boolean steeringToggle,
                               boolean strafe) {
 
-        distance = -distance;
         int strafeDirection = 0;
+
         if (distance > 0) {
             strafeDirection = 1;
         } else if (distance < 0) {
             strafeDirection = -1;
         }
+        distance = -distance;
 
         double steeringSpeed;
         double speed;
@@ -193,21 +194,9 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             drivePID.setSetpoint(newAverageTarget);
             drivePID.setOutputRange(-0.4, 0.4);
 
-            int numLoops = 1;
-//            ElapsedTime e1 = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-//            ElapsedTime e2 = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-//            ElapsedTime e3 = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-
-            ElapsedTime loopTime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-            ArrayList<Object> loopList = new ArrayList<>();
-
             while (linearOpMode.opModeIsActive()) {
-
-
-                loopTime.reset();
-                numLoops++;
-
                 encAvg = (left_front_drive.getCurrentPosition() + left_back_drive.getCurrentPosition() + right_back_drive.getCurrentPosition() + right_front_drive.getCurrentPosition()) / 4;
+
                 if (((Math.abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
                     break;
                 }
@@ -220,8 +209,6 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                     steeringSpeed = 0;
                 }
 
-                loopList.add(loopTime);
-
                 drivePID.calcInit();
                 speed = drivePID.timedCalculate(encAvg);
 
@@ -231,14 +218,11 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                 right_back_drive.setPower(speed - steeringSpeed);
                 right_front_drive.setPower(speed - steeringSpeed);
             }
-            telemetry.addData("Loop 1: ", loopList.toString());
-            telemetry.addData("Number of Loops", numLoops);
-            telemetry.update();
         }
 
 
         if (strafe) {
-            int moveCounts = ((int) (distance * COUNTS_PER_INCH));
+            int moveCounts = (int) (distance * COUNTS_PER_INCH);
             int newBackLeftTarget;
             int newFrontLeftTarget;
             int newBackRightTarget;
@@ -246,15 +230,15 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             int newAverageTarget;
 
             if (strafeDirection == 1) {
-                newBackLeftTarget = left_back_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-                newFrontLeftTarget = left_front_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-                newBackRightTarget = right_back_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-                newFrontRightTarget = right_front_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
+                newBackLeftTarget = -(left_back_drive.getCurrentPosition() - (strafeDirection * moveCounts));
+                newFrontLeftTarget = (left_front_drive.getCurrentPosition() + (strafeDirection * moveCounts));
+                newBackRightTarget = (right_back_drive.getCurrentPosition() + (strafeDirection * moveCounts));
+                newFrontRightTarget = -(right_front_drive.getCurrentPosition() - (strafeDirection * moveCounts));
             } else {
-                newBackLeftTarget = left_back_drive.getCurrentPosition() + (strafeDirection * moveCounts);
-                newFrontLeftTarget = left_front_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-                newBackRightTarget = right_back_drive.getCurrentPosition() + (-strafeDirection * moveCounts);
-                newFrontRightTarget = right_front_drive.getCurrentPosition() + (strafeDirection * moveCounts);
+                newBackLeftTarget = (left_back_drive.getCurrentPosition() + (strafeDirection * moveCounts));
+                newFrontLeftTarget = -(left_front_drive.getCurrentPosition() - (strafeDirection * moveCounts));
+                newBackRightTarget = -(right_back_drive.getCurrentPosition() - (strafeDirection * moveCounts));
+                newFrontRightTarget = (right_front_drive.getCurrentPosition() + (strafeDirection * moveCounts));
             }
 
             newAverageTarget = (Math.abs(newBackLeftTarget) + Math.abs(newBackRightTarget) + Math.abs(newFrontLeftTarget) + Math.abs(newFrontRightTarget)) / 4;
@@ -278,7 +262,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
                 encAvg = (Math.abs(left_front_drive.getCurrentPosition()) + Math.abs(left_back_drive.getCurrentPosition()) + Math.abs(right_back_drive.getCurrentPosition()) + Math.abs(right_front_drive.getCurrentPosition())) / 4;
 
-                if (((Math.abs(newAverageTarget - encAvg)) < 10)) {
+                if (((Math.abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
                     break;
                 }
 
@@ -298,19 +282,19 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 //                    left_front_drive.setPower(strafeDirection * (speed + steeringSpeed));
 //                    right_back_drive.setPower(strafeDirection * (speed - steeringSpeed));
 //                    right_front_drive.setPower(-strafeDirection * (-speed - steeringSpeed));
-                    left_back_drive.setPower(-strafeDirection * (speed + steeringSpeed));
-                    left_front_drive.setPower(strafeDirection * (speed + steeringSpeed));
-                    right_back_drive.setPower(strafeDirection * (speed - steeringSpeed));
-                    right_front_drive.setPower(-strafeDirection * (speed - steeringSpeed));
+                    left_back_drive.setPower(strafeDirection * (speed + steeringSpeed));
+                    left_front_drive.setPower(-strafeDirection * (speed + steeringSpeed));
+                    right_back_drive.setPower(-strafeDirection * (speed - steeringSpeed));
+                    right_front_drive.setPower(strafeDirection * (speed - steeringSpeed));
                 } else if (strafeDirection == 1) {
 //                    left_back_drive.setPower(strafeDirection * (-speed + steeringSpeed));
 //                    left_front_drive.setPower(-strafeDirection * (speed + steeringSpeed));
 //                    right_back_drive.setPower(-strafeDirection * (speed - steeringSpeed));
 //                    right_front_drive.setPower(strafeDirection * (-speed - steeringSpeed));
-                    left_back_drive.setPower(strafeDirection * (speed - steeringSpeed));
-                    left_front_drive.setPower(-strafeDirection * (speed - steeringSpeed));
-                    right_back_drive.setPower(-strafeDirection * (speed + steeringSpeed));
-                    right_front_drive.setPower(strafeDirection * (speed + steeringSpeed));
+                    left_back_drive.setPower(-strafeDirection * (speed + steeringSpeed));
+                    left_front_drive.setPower(strafeDirection * (speed + steeringSpeed));
+                    right_back_drive.setPower(strafeDirection * (speed - steeringSpeed));
+                    right_front_drive.setPower(-strafeDirection * (speed - steeringSpeed));
                 }
             }
 

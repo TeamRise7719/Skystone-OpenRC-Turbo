@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.MkI.Subsystems.Driving.SeansEncLibrary;
 @Autonomous (name = "PID Test", group = "Test Environment")
 public class PID_Tune extends LinearOpMode {
 
-    ElapsedTime etime = new ElapsedTime();
+    private ElapsedTime etime = new ElapsedTime();
 
     public void waitFor(int time){
         time = time/1000;
@@ -54,14 +54,14 @@ public class PID_Tune extends LinearOpMode {
         telemetry.addLine("Backward with toggle");
         telemetry.update();
         enc.steeringDrive(-24, true,false);
-        waitFor(5000);
-//        telemetry.addLine("Right with toggle");
-//        telemetry.update();
-//        enc.steeringDrive(24, true,true);
-//        waitFor(1000);
-//        telemetry.addLine("Left with toggle");
-//        telemetry.update();
-//        enc.steeringDrive(-24, true,true);
+        waitFor(1000);
+        telemetry.addLine("Left with toggle");
+        telemetry.update();
+        enc.steeringDrive(-24, true,true);
+        waitFor(1000);
+        telemetry.addLine("Right with toggle");
+        telemetry.update();
+        enc.steeringDrive(24, true,true);
 
 //        AutoTransitioner.transitionOnStop(this,"MkITeleOp");
     }
