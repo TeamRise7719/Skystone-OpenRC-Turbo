@@ -195,9 +195,9 @@ public class EasyTeleOpFunctions {
     }
 
     /**
-     * Function to allign with a nearby stone
+     * Function to align with a nearby stone
      */
-    public void StoneAllign() {
+    public void StoneAlign() {
 
     }
 

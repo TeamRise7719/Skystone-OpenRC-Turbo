@@ -18,10 +18,10 @@ public class SeansDefaultEncoderLibrary {
     private double WHEEL_DIAMETER_INCHES = 3.937;     // For figuring circumference
     private double COUNTS_PER_INCH = ((COUNTS_PER_MOTOR_REV * EXTERNAL_GEAR_RATIO) / (WHEEL_DIAMETER_INCHES * PI));
 
-    public int lfCountLast = 0;
-    public int lrCountLast = 0;
-    public int rfCountLast = 0;
-    public int rrCountLast = 0;
+    private int lfCountLast = 0;
+    private int lrCountLast = 0;
+    private int rfCountLast = 0;
+    private int rrCountLast = 0;
 
     public SeansDefaultEncoderLibrary(HardwareMap hardwareMap) {
 
@@ -95,8 +95,8 @@ public class SeansDefaultEncoderLibrary {
     /**
      * Strafe left or right using built-in PID.
      * Left is a negative distance. Right is positive distance.
-     * @param distance
-     * @param speed
+     * @param distance Distance to strafe in inches.
+     * @param speed Speed to strafe at.
      */
     public void strafe(double distance, double speed) {
 
@@ -105,10 +105,10 @@ public class SeansDefaultEncoderLibrary {
         int direction = (int)signum(distance);//-1 is left, 1 is right
         speed *= direction;
 
-        int lfTarget = (int)(direction*distance*COUNTS_PER_INCH);
-        int lrTarget = (int)(-direction*distance*COUNTS_PER_INCH);
-        int rfTarget = (int)(-direction*distance*COUNTS_PER_INCH);
-        int rrTarget = (int)(direction*distance*COUNTS_PER_INCH);
+        int lfTarget = (int)(direction*abs(distance)*COUNTS_PER_INCH);
+        int lrTarget = (int)(-direction*abs(distance)*COUNTS_PER_INCH);
+        int rfTarget = (int)(-direction*abs(distance)*COUNTS_PER_INCH);
+        int rrTarget = (int)(direction*abs(distance)*COUNTS_PER_INCH);
 
         lf.setTargetPosition(lfTarget+lfCountLast);
         lr.setTargetPosition(lrTarget+lrCountLast);
@@ -127,8 +127,9 @@ public class SeansDefaultEncoderLibrary {
     }
 
     /**
-     * Uses built-in PID to turn. Does not use the gyro. Instead it calculated the
-     * distance each wheel must travel to turn the specified angle.
+     * Uses built-in PID to turn. Does not use the gyro.
+     * Instead it calculates the distance each wheel
+     * must travel to turn the specified angle.
      * @param angle Angle to turn in degrees.
      * @param speed Max speed to turn at. You can use a high speed after the slip factor is implemented.
      */
@@ -170,7 +171,7 @@ public class SeansDefaultEncoderLibrary {
     /**
      * Resets the encoders quickly without having to stop.
      */
-    public void resetEncoders() {
+    private void resetEncoders() {
         lfCountLast = lf.getCurrentPosition();
         lrCountLast = lr.getCurrentPosition();
         rfCountLast = rf.getCurrentPosition();
@@ -178,7 +179,7 @@ public class SeansDefaultEncoderLibrary {
     }
 
     /**
-     * Stop all motors.
+     * Stops all motors.
      */
     public void stopAllMotors() {
         lf.setPower(0);
