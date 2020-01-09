@@ -61,9 +61,9 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     private static final double     D_TURN_COEFF            = 0.000001;//0.000001     // Larger is more responsive, but also less stable
 
 
-    private static final double     P_DRIVE_COEFF           = 0.0015;     // Larger is more responsive, but also less stable
+    private static final double     P_DRIVE_COEFF           = 0.0015;//0.0015;     // Larger is more responsive, but also less stable
     private static final double     I_DRIVE_COEFF           = 0.0000000000015;     // Larger is more responsive, but also less stable
-    private static final double     D_DRIVE_COEFF           = 0.000001;     // Larger is more responsive, but also less stable
+    private static final double     D_DRIVE_COEFF           = 0.0000015;//0.000001;     // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
