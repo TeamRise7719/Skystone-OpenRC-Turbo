@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Fraser.Autonomous;
+package org.firstinspires.ftc.teamcode.Fraser.Autonomous.JordanAutonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -59,7 +59,7 @@ public class Red_Auto_Stones extends LinearOpMode{
         enc.steeringDrive(22,false,false);
 
 
-        AutoTransitioner.transitionOnStop(this,"MkITeleOp");
+        AutoTransitioner.transitionOnStop(this,"Fraser TeleOp");
     }
 }
 

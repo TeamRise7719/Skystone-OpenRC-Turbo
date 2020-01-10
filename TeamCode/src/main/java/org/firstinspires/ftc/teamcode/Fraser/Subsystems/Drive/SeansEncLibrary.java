@@ -58,7 +58,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
     private static final double     P_DRIVE_COEFF           = 0.0015;//0.0015;     // Larger is more responsive, but also less stable
     private static final double     I_DRIVE_COEFF           = 0.0000000000015;     // Larger is more responsive, but also less stable
-    private static final double     D_DRIVE_COEFF           = 0.0000015;//0.000001;     // Larger is more responsive, but also less stable
+    private static final double     D_DRIVE_COEFF           = 0.0000015;//This was 0.000001 it changed when I pulled     // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
@@ -106,21 +106,13 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                  param.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
                  gyro.initialize(param);
-                 gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                 gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
 
              } catch (Exception ex) {
                  telemetry.addData("Error:", ex.toString());
              }
          });
-
-//         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
-//         param.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-//         param.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-//         param.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-//
-//         gyro.initialize(param);
-//         gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         turnPID = new SynchronousPID(P_TURN_COEFF, I_TURN_COEFF, D_TURN_COEFF);
         drivePID = new SynchronousPID(P_DRIVE_COEFF,I_DRIVE_COEFF,D_DRIVE_COEFF);
@@ -181,7 +173,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
             etime.reset();
 
             turnPID.setContinuous(true);
-            gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
             turnPID.setSetpoint(gyro_angle.firstAngle);
             turnPID.setOutputRange(-0.2, 0.2);
 
@@ -197,7 +189,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                 }
 
                 if (steeringToggle) {
-                    gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
                     turnPID.calcInit();
                     steeringSpeed = turnPID.timedCalculate(gyro_angle.firstAngle);
                 } else {
@@ -244,7 +236,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
 
 
             turnPID.setContinuous(true);
-            gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
             turnPID.setSetpoint(gyro_angle.firstAngle);
             turnPID.setOutputRange(-0.2, 0.2);
 
@@ -262,7 +254,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
                 }
 
                 if (steeringToggle) {
-                    gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
                     steeringSpeed = turnPID.calculate(gyro_angle.firstAngle);
                 } else {
                     steeringSpeed = 0;
@@ -356,7 +348,7 @@ public class SeansEncLibrary {//TODO:Change this class to work using the new odo
     private boolean onHeading(double angle) {
 
         double motorSpeed;
-        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
         turnPID.calcInit();
         motorSpeed = turnPID.timedCalculate(gyro_angle.firstAngle);

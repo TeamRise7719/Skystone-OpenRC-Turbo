@@ -1,17 +1,22 @@
-package org.firstinspires.ftc.teamcode.Fraser.Autonomous;
+package org.firstinspires.ftc.teamcode.Fraser.Autonomous.JordanAutonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.FraserComponents;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.GGOpenCV;
+import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.GGSkystoneDetector;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.VisionSystem;
 
-@Autonomous (name = "Red Auto Complete" , group = "Fraser Red Auto" )
-public class Red_Auto_Complete extends LinearOpMode{
 
+
+@Autonomous (name = "Blue Auto Complete", group = "Fraser Blue Auto")
+public class Blue_Auto_Complete extends LinearOpMode {
+    GGSkystoneDetector vis;
+    GGOpenCV detector;
     ElapsedTime etime = new ElapsedTime();
     private double posit = 0;
 
@@ -54,17 +59,17 @@ public class Red_Auto_Complete extends LinearOpMode{
 
         detector.stopLook();
 
-//      position 3 and 6
+
         if((posit>=225&&posit<=290)||(posit>=35&&posit<65)){
 
 
-            enc.steeringDrive(10,false,true);
+            enc.steeringDrive(-10,false,true);
             enc.steeringDrive(44.3,false,false);
             enc.steeringDrive(4, false, false);
             waitFor(1000);
             mech.intakeStone();
             waitFor(500);
-            enc.steeringDrive(18,false,true);
+            enc.steeringDrive(-18,false,true);
             enc.steeringDrive(-33,false,false);
             waitFor(1000);
             mech.ejectStone();
@@ -73,48 +78,57 @@ public class Red_Auto_Complete extends LinearOpMode{
 
         }
 
-        //     position 1 and 4
+
         if ((posit>=170&&posit<=220)||(posit>=1&&posit<=30)){
 
 
-            enc.steeringDrive(20,false,true);
+            enc.steeringDrive(-20,false,true);
             enc.steeringDrive(44.3,false,false);
             enc.steeringDrive(4, false, false);
             waitFor(1000);
             mech.intakeStone();
             waitFor(500);
-            enc.steeringDrive(18,false,true);
+            enc.steeringDrive(-18,false,true);
             enc.steeringDrive(-43,false,false);
             waitFor(1000);
             mech.ejectStone();
 
 
         }
-//         position 2 and 5
+
         if ((posit>=110&&posit<=169)||(posit==0)){
 
 
-            enc.steeringDrive(14,false,true);
-            enc.gyroTurn(enc.TURN_SPEED,-90);
-            enc.steeringDrive(38.3,false,true);
-            waitFor(1000);
-            mech.ejectStone();
-            waitFor(1500);
-            enc.steeringDrive(6, false, false);
-            enc.steeringDrive(-18,false,true);
-            enc.steeringDrive(-53,false,false);
-            enc.gyroTurn(enc.TURN_SPEED,90);
+            enc.steeringDrive(-30,false,true);
+            enc.steeringDrive(44.3,false,false);
+            enc.steeringDrive(4, false, false);
             waitFor(1000);
             mech.intakeStone();
-            waitFor(2000);
-            enc.steeringDrive(-7,false,false);
+            waitFor(500);
+            enc.steeringDrive(-18,false,true);
+            enc.steeringDrive(-53,false,false);
+            waitFor(1000);
+            mech.ejectStone();
 
 
         }
 
-
+        else {
+            enc.steeringDrive(-30,false,true);
+        }
     }
 
 
 
+
+
+
+
+
+
+
 }
+
+
+
+

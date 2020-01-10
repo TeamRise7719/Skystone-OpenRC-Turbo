@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Media.RobotMedia;
 /*
  * Created by Sean Cardosi on 9/22/2019.
  */
-@TeleOp(name = "Fraser TeleOp", group = "MkI")
+@TeleOp(name = "Fraser TeleOp", group = "Fraser")
 public class FraserTeleOp extends OpMode {
 
 

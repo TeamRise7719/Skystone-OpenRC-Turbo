@@ -1,0 +1,12 @@
+Call
+
+
+AutoTransitioner.transitionOnStop(name of OpMode you are transitioning from. Usually this,"Name of OpMode as it would appear on the Phone");
+
+to transition to another OpMode
+The OpMode will automatically init
+
+
+
+
+AutoTransitioner.transitionOnStop(this,"OpMode Name");

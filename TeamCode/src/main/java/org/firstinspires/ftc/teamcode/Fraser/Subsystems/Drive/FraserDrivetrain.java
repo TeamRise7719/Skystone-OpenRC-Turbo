@@ -55,7 +55,7 @@ public class FraserDrivetrain {
         imu                             = hardwareMap.get(BNO055IMU.class, "imuINT");
 
         imu.initialize(parameters);
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.RADIANS);
 
     }
 
@@ -77,7 +77,7 @@ public class FraserDrivetrain {
      * expensive.
      */
     public void loop() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.RADIANS);
     }
 
     /**

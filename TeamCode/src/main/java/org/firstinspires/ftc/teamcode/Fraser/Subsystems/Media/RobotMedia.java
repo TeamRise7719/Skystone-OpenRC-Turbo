@@ -24,6 +24,7 @@ public class RobotMedia {
     private boolean swampState = false;
 
     public RobotMedia(HardwareMap hardwareMap) {
+        //TODO: Increase all decibels, but make them still sound good. Add more sounds.
         horn = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.horn);
         myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
         endgame = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.endgame);
