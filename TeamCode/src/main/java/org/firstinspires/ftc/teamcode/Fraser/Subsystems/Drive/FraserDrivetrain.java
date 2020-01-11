@@ -139,10 +139,10 @@ public class FraserDrivetrain {
     public void drive(Gamepad gamepad1, Telemetry telemetry) {
         loop();
 
-        final double x = gamepad1.left_stick_x;
-        final double y = -gamepad1.left_stick_y;
+        final double x = -gamepad1.left_stick_x;
+        final double y = gamepad1.left_stick_y;
 
-        final double rotation = (gamepad1.right_stick_x);
+        final double rotation = (-gamepad1.right_stick_x);
         final double direction = Math.atan2(x, y) + getHeading();
         final double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
 
@@ -157,10 +157,10 @@ public class FraserDrivetrain {
             setMotors(lf, lr, rf, rr );//Full Speed
         }
 
-//        telemetry.addData("Speeds","%f,%f,%f,%f", lf,rf,lr,rr);
-//        telemetry.addData("RAW Gyro: ",getRawHeading());
-//        telemetry.addData("Heading: ",getHeading());
-//        telemetry.addData("Offset: ",headingOffset);
+        telemetry.addData("Speeds","%f,%f,%f,%f", lf,rf,lr,rr);
+        telemetry.addData("RAW Gyro: ",getRawHeading());
+        telemetry.addData("Heading: ",getHeading());
+        telemetry.addData("Offset: ",headingOffset);
 //
 //        telemetry.update();
     }

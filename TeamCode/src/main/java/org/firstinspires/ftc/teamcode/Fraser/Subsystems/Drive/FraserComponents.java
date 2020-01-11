@@ -32,11 +32,11 @@ public class FraserComponents {
         liftL = hardwareMap.dcMotor.get("liftL");
         liftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftL.setDirection(DcMotor.Direction.FORWARD);
-        liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftR = hardwareMap.dcMotor.get("liftR");
         liftR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftR.setDirection(DcMotor.Direction.REVERSE);
-        liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         lgrab = hardwareMap.servo.get("lgrab");
         rgrab = hardwareMap.servo.get("rgrab");
