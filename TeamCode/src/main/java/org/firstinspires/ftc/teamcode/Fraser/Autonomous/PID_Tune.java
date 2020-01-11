@@ -43,32 +43,33 @@ public class PID_Tune extends LinearOpMode {
         telemetry.addLine("Left no toggle");
         telemetry.update();
         enc.steeringDrive(-24, false,true);
-        waitFor(1000);
+        waitFor(3000);
         telemetry.addLine("Right no toggle");
         telemetry.update();
         enc.steeringDrive(24, false,true);
         waitFor(1000);
 
+//
+//        telemetry.addLine("Forward with toggle");
+//        telemetry.update();
+//        enc.steeringDrive(24, true,false);
+//        waitFor(1000);
+//        telemetry.addLine("Backward with toggle");
+//        telemetry.update();
+//        enc.steeringDrive(-24, true,false);
+//        waitFor(1000);
+//        telemetry.addLine("Left with toggle");
+//        telemetry.update();
+//        enc.steeringDrive(-24, true,true);
+//        waitFor(1000);
+//        telemetry.addLine("Right with toggle");
+//        telemetry.update();
+//        enc.steeringDrive(24, true,true);
 
+//        enc.gyroTurn(enc.TURN_SPEED,90);
+        while (opModeIsActive()) {
 
+        }
 
-
-
-
-        /*telemetry.addLine("Forward with toggle");
-        telemetry.update();
-        enc.steeringDrive(24, true,false);
-        waitFor(1000);
-        telemetry.addLine("Backward with toggle");
-        telemetry.update();
-        enc.steeringDrive(-24, true,false);
-        waitFor(1000);
-        telemetry.addLine("Left with toggle");
-        telemetry.update();
-        enc.steeringDrive(-24, true,true);
-        waitFor(1000);
-        telemetry.addLine("Right with toggle");
-        telemetry.update();
-        enc.steeringDrive(24, true,true);*/
     }
 }
