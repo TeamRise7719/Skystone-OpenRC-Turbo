@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Fraser.Autonomous;
+package org.firstinspires.ftc.teamcode.Fraser.Autonomous.Tuning;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -7,9 +7,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.FraserComponents;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.SeansEncLibrary;
 
-
-@Autonomous(name = "PID Test", group = "Test Environment")
-public class PID_Tune extends LinearOpMode {
+@Autonomous(name = "PID Test", group = "Tuning")
+public class PIDTune extends LinearOpMode {
 
     private ElapsedTime etime = new ElapsedTime();
 

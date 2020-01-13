@@ -1,4 +1,6 @@
-package org.firstinspires.ftc.teamcode.Fraser.Autonomous.SeanAutonomous;
+package org.firstinspires.ftc.teamcode.Fraser.FraserModes.Examples;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Fraser.FraserModes.FraserLinearOpMode;
 
@@ -8,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Fraser.FraserModes.FraserLinearOpMode;
  * A custom LinearOpMode to make coding easier!
  * This is how I think this all should work. I'm probably wrong.
  */
+@Autonomous(name = "Example FraserLinearOpMode", group = "FraserModes")
 public class ExampleFraserLinearOpMode extends FraserLinearOpMode {
 
     double position = 0;

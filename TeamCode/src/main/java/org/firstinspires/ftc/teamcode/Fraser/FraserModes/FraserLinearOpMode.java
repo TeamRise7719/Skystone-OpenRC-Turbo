@@ -15,11 +15,11 @@ import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Transitioning.AutoTransi
  */
 public abstract class FraserLinearOpMode extends LinearOpMode {
 
-    SeansEncLibrary enc;
-    FraserComponents component;
-    RobotMedia media;
-    GGOpenCV detector;
-    ElapsedTime etime = new ElapsedTime();
+    public SeansEncLibrary enc;
+    public FraserComponents component;
+    public RobotMedia media;
+    public GGOpenCV detector;
+    public ElapsedTime etime = new ElapsedTime();
 
     public FraserLinearOpMode() {}
 
