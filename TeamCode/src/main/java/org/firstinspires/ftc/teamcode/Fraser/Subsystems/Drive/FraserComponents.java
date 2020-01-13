@@ -54,7 +54,7 @@ public class FraserComponents {
 
     //----------------------------------------------=+(Intake)+=----------------------------------------------\\
     public void intakeStone() {
-        intake.setPower(-0.7);
+        intake.setPower(-1);
     }
     public void ejectStone() {
         intake.setPower(1);

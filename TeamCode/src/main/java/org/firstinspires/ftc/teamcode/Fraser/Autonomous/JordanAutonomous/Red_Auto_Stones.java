@@ -33,15 +33,16 @@ public class Red_Auto_Stones extends LinearOpMode{
 
 
         //Position 1 (4 from wall)
-        enc.steeringDrive( 44.3, false, true);
+        enc.steeringDrive( 44.7, false, true);
+        enc.steeringDrive(1.5,false,false);
         mech.intake.setPower(-1);
         waitFor(1000);
-        mech.ejectStone();
-        waitFor(500);
         enc.steeringDrive(4, false, false);
+        mech.intake.setPower(0);
         enc.steeringDrive(-18,false,true);
         enc.steeringDrive(-35,false,false);
         enc.gyroTurn(enc.TURN_SPEED,90);
+
         mech.intakeStone();
         waitFor(1000);
         enc.gyroTurn(enc.TURN_SPEED,0);
