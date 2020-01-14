@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.FraserComponents;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Transitioning.AutoTransitioner;
 
-@Autonomous (name = "Red Auto Blind" , group = "Fraser Red Auto" )
+@Autonomous (name = "Red Auto Stones" , group = "Fraser Red Auto" )
 public class Red_Auto_Stones extends LinearOpMode{
 
     ElapsedTime etime = new ElapsedTime();
