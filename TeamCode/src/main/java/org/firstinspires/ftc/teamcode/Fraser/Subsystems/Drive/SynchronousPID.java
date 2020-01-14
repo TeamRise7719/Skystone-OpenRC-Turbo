@@ -283,7 +283,7 @@ public class SynchronousPID {
      * @return true if the error is less than the tolerance
      */
     public boolean onTarget(double tolerance) {
-        return m_last_input != Double.NaN && Math.abs(m_last_input - m_setpoint) < tolerance;
+        return ((m_last_input != Double.NaN) && (Math.abs(m_last_input - m_setpoint) < tolerance));
     }
 
     /**

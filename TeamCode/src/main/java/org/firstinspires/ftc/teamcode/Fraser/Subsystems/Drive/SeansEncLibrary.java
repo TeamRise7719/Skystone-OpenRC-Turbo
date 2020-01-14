@@ -49,11 +49,11 @@ public class SeansEncLibrary {
 
     public final double TURN_SPEED = 0.8;     // Nominal half speed for better accuracy.
 
-    private static final double HEADING_THRESHOLD = 0.25;      // As tight as we can make it with an integer gyro
+    private static final double HEADING_THRESHOLD = 0.5;      // As tight as we can make it with an integer gyro
     private static final int ENCODER_THRESHOLD = 3;      // As tight as we can make it with an integer gyro
 
 
-    private static final double P_TURN_COEFF = 0.0008;//0.008;//0.008     // Larger is more responsive, but also less stable
+    private static final double P_TURN_COEFF = 0.008;//0.008     // Larger is more responsive, but also less stable
     private static final double I_TURN_COEFF = 0;//0.0000000000015;//0.0000000000015  // Larger is more responsive, but also less stable
     private static final double D_TURN_COEFF = 0;//0.000001;//0.000001     // Larger is more responsive, but also less stable
 
@@ -310,8 +310,8 @@ public class SeansEncLibrary {
 
     public void gyroTurn(double speed, double angle) {
         turnPID.reset();
-        turnPID.setContinuous(true);
-        turnPID.setSetpoint(-angle);
+        turnPID.setContinuous(false);
+        turnPID.setSetpoint(angle);
         turnPID.setOutputRange(-speed, speed);
 
 
@@ -418,24 +418,32 @@ public class SeansEncLibrary {
     private boolean onHeading(double angle) {
 
         double motorSpeed;
-        gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
-        turnPID.calcInit();
-        motorSpeed = turnPID.timedCalculate(gyro_angle.firstAngle);
 
-        // Send desired speeds to motors.
-        left_front_drive.setPower(motorSpeed);
-        left_back_drive.setPower(motorSpeed);
-        right_front_drive.setPower(-motorSpeed);
-        right_back_drive.setPower(-motorSpeed);
+        while(linearOpMode.opModeIsActive() || fraserLinearOpMode.opModeIsActive()) {
 
-        // Display it for the driver.
-        telemetry.addData("Target", "%5.2f", angle);
-        telemetry.addData("Err/Angle", "%5.2f:%5.2f", turnPID.getError(), gyro_angle.firstAngle);
-        telemetry.addData("Coef ", turnPID.getState());
-        telemetry.addData("Speed.", "%5.2f:%5.2f", -motorSpeed, motorSpeed);
-        telemetry.update();
+            gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
+            turnPID.calcInit();
+            motorSpeed = turnPID.timedCalculate(gyro_angle.firstAngle);
+
+            if (turnPID.getError() < angle + HEADING_THRESHOLD) {
+                break;
+            }
+
+            // Send desired speeds to motors.
+            left_front_drive.setPower(motorSpeed);
+            left_back_drive.setPower(motorSpeed);
+            right_front_drive.setPower(-motorSpeed);
+            right_back_drive.setPower(-motorSpeed);
+
+            // Display it for the driver.
+            telemetry.addData("Target", "%5.2f", angle);
+            telemetry.addData("Err/Angle", "%5.2f:%5.2f", turnPID.getError(), gyro_angle.firstAngle);
+            telemetry.addData("Coef ", turnPID.getState());
+            telemetry.addData("Speed.", "%5.2f:%5.2f", -motorSpeed, motorSpeed);
+            telemetry.update();
+        }
         return turnPID.onTarget(HEADING_THRESHOLD);
     }
 

@@ -65,15 +65,14 @@ public class Red_Auto_Complete extends LinearOpMode{
             enc.steeringDrive(-4,false,false);
             enc.steeringDrive(20, false, true);
             waitFor(1000);
-        mech.intakeStone();
-        waitFor(500);
-
-        enc.steeringDrive(4,false,false);
-        waitFor(1000);
-        mech.stopStone();
-        waitFor(500);
-        enc.steeringDrive(-12,false,true);
-        enc.steeringDrive(-60,false,false);
+            mech.intakeStone();
+            waitFor(500);
+            enc.steeringDrive(4,false,false);
+            waitFor(1000);
+            mech.stopStone();
+            waitFor(500);
+            enc.steeringDrive(-12,false,true);
+            enc.steeringDrive(-60,false,false);
 //
 //
 //
