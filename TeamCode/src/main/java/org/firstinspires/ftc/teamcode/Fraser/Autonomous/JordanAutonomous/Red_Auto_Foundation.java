@@ -27,7 +27,6 @@ public class Red_Auto_Foundation extends LinearOpMode {
         //int position;
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         FraserComponents bacon = new FraserComponents(hardwareMap);
-
         enc.init();
 
         waitForStart();
@@ -44,8 +43,6 @@ public class Red_Auto_Foundation extends LinearOpMode {
         enc.steeringDrive(-22,false,false);
         enc.gyroTurn(enc.TURN_SPEED,-90);
         enc.steeringDrive(24, false, false);
-
-
 
         AutoTransitioner.transitionOnStop(this,"Fraser TeleOp");
     }

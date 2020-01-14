@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Fraser.Autonomous.JordanAutonomous;
 
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -8,7 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.FraserComponents;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Transitioning.AutoTransitioner;
-
 
 @Autonomous (name = "Blue Auto Foundation", group = "Fraser Blue Auto")
 public class Blue_Auto_Foundation extends LinearOpMode{
@@ -29,7 +27,6 @@ public class Blue_Auto_Foundation extends LinearOpMode{
         //int position;
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         FraserComponents bacon = new FraserComponents(hardwareMap);
-
         enc.init();
 
         waitForStart();
@@ -42,12 +39,9 @@ public class Blue_Auto_Foundation extends LinearOpMode{
         enc.steeringDrive(28,false,false);
         bacon.foundationGrab();
         enc.steeringDrive(-30,false,true);
-
         enc.steeringDrive(-22,false,false);
         enc.gyroTurn(enc.TURN_SPEED,-90);
         enc.steeringDrive(24, false, false);
-
-
 
         AutoTransitioner.transitionOnStop(this,"Fraser TeleOp");
     }

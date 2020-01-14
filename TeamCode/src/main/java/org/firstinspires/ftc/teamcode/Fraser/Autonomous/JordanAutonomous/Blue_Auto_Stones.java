@@ -8,8 +8,7 @@ import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.FraserComponents;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Transitioning.AutoTransitioner;
 
-
-@Autonomous (name = "Blue Auto Stones", group = "Fraser Blue Auto")
+@Autonomous (name = "Blue Auto Blind", group = "Fraser Blue Auto")
 public class Blue_Auto_Stones extends LinearOpMode {
 
     ElapsedTime etime = new ElapsedTime();
@@ -28,7 +27,6 @@ public class Blue_Auto_Stones extends LinearOpMode {
         //int position;
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         FraserComponents mech = new FraserComponents(hardwareMap);
-
         enc.init();
 
         waitForStart();
@@ -61,7 +59,6 @@ public class Blue_Auto_Stones extends LinearOpMode {
         waitFor(1000);
         enc.gyroTurn(enc.TURN_SPEED,0);
         enc.steeringDrive(20,false,false);
-
 
         AutoTransitioner.transitionOnStop(this, "Fraser TeleOp");
     }
