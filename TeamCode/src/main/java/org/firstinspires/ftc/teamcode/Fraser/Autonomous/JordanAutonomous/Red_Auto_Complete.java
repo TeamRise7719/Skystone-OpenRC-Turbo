@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.GGOpenCV;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.VisionSystem;
 
-@Autonomous (name = "Red Auto Complete" , group = "Fraser Red Auto" )
+@Autonomous (name = "Red Auto Vision" , group = "Fraser Red Auto" )
 public class Red_Auto_Complete extends LinearOpMode{
 
     ElapsedTime etime = new ElapsedTime();

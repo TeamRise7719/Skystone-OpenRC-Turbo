@@ -1,0 +1,28 @@
+
+This is the field layout in the Road Runner coordinate system.
+                 (+x)
+                   |
+                   |
+                   | f (foundation)
+                   |
+                   |
+(+y)-------------(0,0)-------------(-y)
+                   |
+                   | s (stones)
+                   | s
+                   | s
+                   |
+                 (-x)
+
+The boundaries are somewhere around 63.
+
+
+Add Marker was confusing so this is an example.
+
+.addMarker(new Vector2d(45,-28), () -> {
+           sleep(4000);
+           return Unit.INSTANCE;
+})
+
+Except don't sleep. The robot will keep moving but won't update its location.
+Put something like moving a servo there instead.
