@@ -12,11 +12,11 @@ public class PIDTune extends LinearOpMode {
 
     private ElapsedTime etime = new ElapsedTime();
 
-    final boolean steeringToggle = true;
-    final boolean driveTest = false;
-    final boolean turnTest = true;
-    final boolean viewTelemetry = true;
-    final int msBetweenMovements = 1000;
+    private final boolean steeringToggle = true;
+    private final boolean driveTest = false;
+    private final boolean turnTest = true;
+    private final boolean viewTelemetry = true;
+    private final int msBetweenMovements = 1000;
 
     @Override
     public void runOpMode() {
@@ -27,6 +27,7 @@ public class PIDTune extends LinearOpMode {
         waitForStart();
 
         if (turnTest) {
+            telemetry.addLine("Turning 90 Degrees");
             enc.gyroTurn(1, 90);
             sleep(msBetweenMovements);
         }
@@ -58,6 +59,7 @@ public class PIDTune extends LinearOpMode {
             }
         }
     }
+
     public void waitFor(int time) {
         time = time / 1000;
         etime.reset();
