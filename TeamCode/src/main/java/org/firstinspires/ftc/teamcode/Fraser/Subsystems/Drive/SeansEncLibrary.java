@@ -376,6 +376,11 @@ public class SeansEncLibrary {
         int direction = 0;//Start at a point where we won't move unless direction is correctly calculated.
 
 //        int direction = (int) Math.signum(distance);//Make sure this works.
+        if (distance > 0) {
+            direction = 1;
+        } else {
+            direction = -1;
+        }
 
         int moveCounts = (int) (distance * COUNTS_PER_INCH);
 
