@@ -12,65 +12,57 @@ public class PIDTune extends LinearOpMode {
 
     private ElapsedTime etime = new ElapsedTime();
 
-    public void waitFor(int time){
-        time = time/1000;
-        etime.reset();
-        while ((etime.time() < time)&&(opModeIsActive())) {
-            idle();
-        }
-    }
+    final boolean steeringToggle = true;
+    final boolean driveTest = false;
+    final boolean turnTest = true;
+    final boolean viewTelemetry = true;
+    final int msBetweenMovements = 1000;
 
     @Override
-    public void runOpMode(){
+    public void runOpMode() {
 
-        //int position;
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
-        FraserComponents component = new FraserComponents(hardwareMap);
-
         enc.init();
 
         waitForStart();
 
-        enc.gyroTurn(1,90);
-
-//        telemetry.addLine("Forward no toggle");
-//        telemetry.update();
-//        enc.steeringDrive(24, false,false);
-//        waitFor(1000);
-//        telemetry.addLine("Backward no toggle");
-//        telemetry.update();
-//        enc.steeringDrive(-24, false,false);
-//        waitFor(1000);
-//        telemetry.addLine("Left no toggle");
-//        telemetry.update();
-//        enc.steeringDrive(-24, false,true);
-//        waitFor(3000);
-//        telemetry.addLine("Right no toggle");
-//        telemetry.update();
-//        enc.steeringDrive(24, false,true);
-//        waitFor(1000);
-
-//
-//        telemetry.addLine("Forward with toggle");
-//        telemetry.update();
-//        enc.steeringDrive(24, true,false);
-//        waitFor(1000);
-//        telemetry.addLine("Backward with toggle");
-//        telemetry.update();
-//        enc.steeringDrive(-24, true,false);
-//        waitFor(1000);
-//        telemetry.addLine("Left with toggle");
-//        telemetry.update();
-//        enc.steeringDrive(-24, true,true);
-//        waitFor(1000);
-//        telemetry.addLine("Right with toggle");
-//        telemetry.update();
-//        enc.steeringDrive(24, true,true);
-
-//        enc.gyroTurn(enc.TURN_SPEED,90);
-        while (opModeIsActive()) {
-
+        if (turnTest) {
+            enc.gyroTurn(1, 90);
+            sleep(msBetweenMovements);
         }
+        if (driveTest) {
+            telemetry.addLine("Forward");
+            telemetry.addLine("Toggle: " + steeringToggle);
+            telemetry.update();
+            enc.steeringDrive(24, steeringToggle, false);
+            waitFor(msBetweenMovements);
+            telemetry.addLine("Backward");
+            telemetry.addLine("Toggle: " + steeringToggle);
+            telemetry.update();
+            enc.steeringDrive(-24, steeringToggle, false);
+            waitFor(msBetweenMovements);
+            telemetry.addLine("Left");
+            telemetry.addLine("Toggle: " + steeringToggle);
+            telemetry.update();
+            enc.steeringDrive(-24, steeringToggle, true);
+            waitFor(msBetweenMovements);
+            telemetry.addLine("Right");
+            telemetry.addLine("Toggle: " + steeringToggle);
+            telemetry.update();
+            enc.steeringDrive(24, steeringToggle, true);
+            waitFor(msBetweenMovements);
+        }
+        if (viewTelemetry) {
+            while (opModeIsActive()) {
 
+            }
+        }
+    }
+    public void waitFor(int time) {
+        time = time / 1000;
+        etime.reset();
+        while ((etime.time() < time) && (opModeIsActive())) {
+            idle();
+        }
     }
 }
