@@ -35,7 +35,7 @@ public class Blue_Auto_Complete extends LinearOpMode {
         detector.startCamera();
         detector.startLook(VisionSystem.TargetType.SKYSTONE);
 
-        while (!this.isStarted) {
+        while (!this.isStarted()) {
             if (detector.found()) {
                 telemetry.addData("Skystone Found!", "");
                 telemetry.addData("X: ", detector.detector.foundRectangle().x);

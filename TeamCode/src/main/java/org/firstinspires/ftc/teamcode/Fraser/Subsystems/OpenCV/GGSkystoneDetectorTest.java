@@ -13,7 +13,7 @@ public class GGSkystoneDetectorTest extends LinearOpMode {
     @Override
     public void runOpMode(){
 
-        GGOpenCV detector = new GGOpenCV(GGOpenCV.Cam.PHONE, hardwareMap);
+        GGOpenCV detector = new GGOpenCV(GGOpenCV.Cam.WEBCAM, hardwareMap);
         detector.startCamera();
         detector.startLook(VisionSystem.TargetType.SKYSTONE);
 

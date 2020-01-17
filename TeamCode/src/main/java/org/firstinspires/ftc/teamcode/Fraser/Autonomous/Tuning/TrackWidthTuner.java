@@ -109,6 +109,7 @@ public class TrackWidthTuner extends LinearOpMode {
 
         while (opModeIsActive()) {
             telemetry.addData("Tuned Track Width ", trackWidth);
+            telemetry.update();
         }
     }
 

@@ -28,7 +28,8 @@ public class PIDTune extends LinearOpMode {
 
         if (turnTest) {
             telemetry.addLine("Turning 90 Degrees");
-            enc.gyroTurn(1, 90);
+            telemetry.update();
+            enc.arcTurn(90);
             sleep(msBetweenMovements);
         }
         if (driveTest) {

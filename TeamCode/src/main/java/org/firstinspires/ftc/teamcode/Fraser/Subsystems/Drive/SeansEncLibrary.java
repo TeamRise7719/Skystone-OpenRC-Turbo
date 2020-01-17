@@ -364,7 +364,7 @@ public class SeansEncLibrary {
         right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        double trackWidth = 13.85;//13.8;// TODO: 2020-01-11 Tune the trackwidth with the trackwidth tuner
+        double trackWidth = 14.0;//13.8;// TODO: 2020-01-11 Tune the trackwidth with the trackwidth tuner
         double radius = trackWidth / 2;
         double circumference = 2 * PI * radius;
         double distance = (angle / 180) * circumference;//Divide by 180 because we are using -180/+180 not 0/+360
