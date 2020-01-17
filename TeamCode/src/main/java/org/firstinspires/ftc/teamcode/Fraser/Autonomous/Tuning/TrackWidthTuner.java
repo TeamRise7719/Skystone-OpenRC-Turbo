@@ -18,20 +18,20 @@ import java.util.ArrayList;
 @Autonomous(name = "Track Width Tuner", group = "Tuning")
 public class TrackWidthTuner extends LinearOpMode {
 
-    SeansEncLibrary enc;
-    public BNO055IMU gyro;
-    double trackWidth;
-    double offset = 0;
+    private SeansEncLibrary enc;
+    private BNO055IMU gyro;
+    private double trackWidth;
+    private double offset = 0;
 
 
-    final int Trials                    = 5;
-    final int timeBetweenTests          = 5000;
-    final double MeasuredTrackWidth     = 13.5;
-    final double targetAngle            = 180;
+    private final int Trials                    = 5;
+    private final int timeBetweenTests          = 5000;
+    private final double MeasuredTrackWidth     = 13.5;
+    private final double targetAngle            = 180;
 
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         enc = new SeansEncLibrary(hardwareMap,telemetry,this);
         enc.init();
 
@@ -84,7 +84,7 @@ public class TrackWidthTuner extends LinearOpMode {
 
         for (int i=1;i<=Trials;i++) {
 
-            double calculated = 0;
+            double calculated;
 
             resetHeading();
 
@@ -113,13 +113,10 @@ public class TrackWidthTuner extends LinearOpMode {
         }
     }
 
-    public double getAdjustedHeading() {
-        return gyro.getAngularOrientation().firstAngle + offset;
+    private double getAdjustedHeading() {
+        return gyro.getAngularOrientation().firstAngle - offset;
     }
-    public void resetHeading() {
+    private void resetHeading() {
         offset = gyro.getAngularOrientation().firstAngle;
-    }
-    public double getAngleError(double target) {
-        return target - getAdjustedHeading();
     }
 }
