@@ -69,6 +69,7 @@ public class GGOpenCVWebcam implements VisionSystem {
      * Will usually be used for testing purposes.
      */
     public void scanMain() {
+        startLook(TargetType.SKYSTONE);
         while (linearOpMode.opModeIsActive()) {
             if (found()) {
                 telemetry.addLine("Skystone Found!");
@@ -90,6 +91,7 @@ public class GGOpenCVWebcam implements VisionSystem {
      * Will usually be used in autonomous.
      */
     public void scanInit() {
+        startLook(TargetType.SKYSTONE);
         while (!linearOpMode.isStarted()) {
             if (found()) {
                 telemetry.addLine("Skystone Found!");
