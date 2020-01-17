@@ -14,7 +14,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.Fraser.FraserModes.FraserLinearOpMode;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Media.RobotMedia;
 import static java.lang.Math.*;
 
@@ -35,7 +34,6 @@ public class SeansEncLibrary {
 
     private Telemetry telemetry;
     private LinearOpMode linearOpMode;
-    private FraserLinearOpMode fraserLinearOpMode;
 
     private double COUNTS_PER_MOTOR_REV = 537.6;
     private double EXTERNAL_GEAR_RATIO = 0.78125;     // This is < 1.0 if geared UP
@@ -72,19 +70,6 @@ public class SeansEncLibrary {
 
         telemetry = tel;
         linearOpMode = opMode;
-        areYouSpinningYet = new RobotMedia(hardwareMap);
-    }
-    //THIS SHOULD WORK. PLEASE CHECK.
-    public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, FraserLinearOpMode opMode) {
-        gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
-
-        left_back_drive = hardwareMap.dcMotor.get("leftB");
-        left_front_drive = hardwareMap.dcMotor.get("leftF");
-        right_back_drive = hardwareMap.dcMotor.get("rightB");
-        right_front_drive = hardwareMap.dcMotor.get("rightF");
-
-        telemetry = tel;
-        fraserLinearOpMode = opMode;
         areYouSpinningYet = new RobotMedia(hardwareMap);
     }
 
@@ -198,7 +183,7 @@ public class SeansEncLibrary {
             drivePID.setSetpoint(newAverageTarget);
             drivePID.setOutputRange(-0.4, 0.4);
 
-            while (linearOpMode.opModeIsActive() || fraserLinearOpMode.opModeIsActive()) {
+            while (linearOpMode.opModeIsActive()) {
                 encAvg = (left_front_drive.getCurrentPosition() + left_back_drive.getCurrentPosition() + right_back_drive.getCurrentPosition() + right_front_drive.getCurrentPosition()) / 4;
 
                 if (((abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
@@ -273,7 +258,7 @@ public class SeansEncLibrary {
             drivePID.setSetpoint(newAverageTarget);
             drivePID.setOutputRange(-0.4, 0.4);
 
-            while (linearOpMode.opModeIsActive() || fraserLinearOpMode.opModeIsActive()) {
+            while (linearOpMode.opModeIsActive()) {
 
                 encAvg = (abs(left_front_drive.getCurrentPosition()) + abs(left_back_drive.getCurrentPosition()) + abs(right_back_drive.getCurrentPosition()) + abs(right_front_drive.getCurrentPosition())) / 4;
 
@@ -321,7 +306,7 @@ public class SeansEncLibrary {
         etime.reset();
 
         // keep looping while we are still active, and not on heading.
-        while (linearOpMode.opModeIsActive() || fraserLinearOpMode.opModeIsActive()) {
+        while (linearOpMode.opModeIsActive()) {
             doneTurning = onHeading(angle);
             if (!doneTurning) {
                 areYouSpinningYet.rightRound(true);
@@ -379,7 +364,7 @@ public class SeansEncLibrary {
         right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        double trackWidth = 13.5;// TODO: 2020-01-11 Tune the trackwidth with the trackwidth tuner
+        double trackWidth = 13.85;//13.8;// TODO: 2020-01-11 Tune the trackwidth with the trackwidth tuner
         double radius = trackWidth / 2;
         double circumference = 2 * PI * radius;
         double distance = (angle / 180) * circumference;//Divide by 180 because we are using -180/+180 not 0/+360
@@ -409,7 +394,7 @@ public class SeansEncLibrary {
         drivePID.setSetpoint(newAverageTarget);
         drivePID.setOutputRange(-0.6, 0.6);
 
-        while (linearOpMode.opModeIsActive() || fraserLinearOpMode.opModeIsActive()) {
+        while (linearOpMode.opModeIsActive()) {
 
 //            telemetry.addData("Back Left Target", newBackLeftTarget);
 //            telemetry.addData("Front Left Target", newFrontLeftTarget);
@@ -439,7 +424,7 @@ public class SeansEncLibrary {
         double motorSpeed;
 
 
-        while(linearOpMode.opModeIsActive() || fraserLinearOpMode.opModeIsActive()) {
+        while(linearOpMode.opModeIsActive()) {
 
             gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
