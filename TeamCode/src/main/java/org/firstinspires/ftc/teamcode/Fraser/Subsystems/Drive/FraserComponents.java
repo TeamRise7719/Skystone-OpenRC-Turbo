@@ -14,7 +14,7 @@ public class FraserComponents {
     private final DcMotor liftL;
     private final DcMotor liftR;
 
-    private Servo lgrab , rgrab, shoulder,wrist,claw;
+    private Servo lgrab , rgrab, shoulderL ,shoulderR, claw;
 
     private double posit = 0.14;
     private int stackHeight = 0;
@@ -42,8 +42,9 @@ public class FraserComponents {
         rgrab = hardwareMap.servo.get("rgrab");
         rgrab.setDirection(Servo.Direction.REVERSE);
 
-        shoulder = hardwareMap.servo.get("shoulder");
-        wrist = hardwareMap.servo.get("wrist");
+        shoulderL = hardwareMap.servo.get("shoulderL");
+        shoulderR = hardwareMap.servo.get("shoulderR");
+        shoulderR.setDirection(Servo.Direction.REVERSE);
         claw = hardwareMap.servo.get("claw");
     }
     public void init() {
@@ -90,55 +91,57 @@ public class FraserComponents {
 
     //----------------------------------------------=+(Block Build)+=----------------------------------------------\\
     public void clawGrab(){
-        claw.setPosition(0.6);
+        claw.setPosition(0.1);
     }
 
     public void clawRelease(){
-        claw.setPosition(0);
+        claw.setPosition(0.3);
     }
 
-    public void wrist(Gamepad gamepad){
-        wrist.setPosition(0.47 + gamepad.left_trigger/5 - gamepad.right_trigger/5);
-    }
 //
 //    public void wristLeft(Gamepad gamepad){
 //        wrist.setPosition(gamepad.right_trigger/5);
 //    }
 
-    public void shoulder(Gamepad gamepad){
-        double down = 0.13;
-        double up = 0.8;
-        if (gamepad.a){
-            posit = down;
-        } else if (gamepad.y){
-            posit = up;
-        }
-
-        shoulder.setPosition(posit + gamepad.right_stick_y/10);
-
-    }
+//    public void shoulderOld(Gamepad gamepad){
+//        double down = 0.13;
+//        double up = 0.8;
+//        if (gamepad.a){
+//            posit = down;
+//        } else if (gamepad.y){
+//            posit = up;
+//        }
 //
-//    public void shoulderDown(Gamepad gamepad){
-//        shoulder.setPosition(0.140);
+//        shoulderL.setPosition(posit + gamepad.right_stick_y/10);
+//        shoulderR.setPosition(posit + gamepad.right_stick_y/10);
 //    }
+//
+    public void shoulderUp(){
+        shoulderL.setPosition(0.25);
+        shoulderR.setPosition(0.25);
+    }
+    public void shoulderDown(){
+        shoulderL.setPosition(1);
+        shoulderR.setPosition(1);
+    }
     //----------------------------------------------=+(Block Build)+=----------------------------------------------\\
 
 
 
     //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
     public void foundationRelease() {
-        lgrab.setPosition(1);
-        rgrab.setPosition(1);
+        lgrab.setPosition(0.75);
+        rgrab.setPosition(0.75);
 
     }
     public void foundationGrab() {
-        lgrab.setPosition(0.25);
-        rgrab.setPosition(0.25);
+        lgrab.setPosition(0.05);
+        rgrab.setPosition(0.05);
 
     }
     public void foundationInit(){
-        lgrab.setPosition(0.4);
-        rgrab.setPosition(0.4);
+        lgrab.setPosition(0.05);
+        rgrab.setPosition(0.05);
     }
     //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 

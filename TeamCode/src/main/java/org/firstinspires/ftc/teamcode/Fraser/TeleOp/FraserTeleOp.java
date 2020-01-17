@@ -65,9 +65,9 @@ public class FraserTeleOp extends OpMode {
 
         //----------------------------------------------=+(Intake)+=----------------------------------------------\\
         if ((gamepad1.left_trigger > 0.1)&&(Math.abs(gamepad1.right_trigger ) < 0.1)) {//This is a precaution
-            component.intakeStone();//Intake stone
+            component.ejectStone();//Intake stone
         } else if ((gamepad1.right_trigger > 0.1)&&(Math.abs(gamepad1.left_trigger ) < 0.1)) {//This is a precaution
-            component.ejectStone();//Eject stone
+            component.intakeStone();//Eject stone
         } else {
             component.stopStone();//Stop power to the stone intake
         }
@@ -88,9 +88,15 @@ public class FraserTeleOp extends OpMode {
             component.clawRelease();
         }
 
-        component.wrist(gamepad2);
+        if(gamepad2.y)
+        {
+            component.shoulderDown();
+        }
 
-        component.shoulder(gamepad2);
+        if(gamepad2.a)
+        {
+            component.shoulderUp();
+        }
         //----------------------------------------------=+(Block Build)+=----------------------------------------------\\
 
 

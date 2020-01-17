@@ -58,7 +58,7 @@ public class SeansEncLibrary {
 
     private static final double P_DRIVE_COEFF = 0.0005;//0.0005;     // Larger is more responsive, but also less stable
     private static final double I_DRIVE_COEFF = 0.000000000001;     // Larger is more responsive, but also less stable
-    private static final double D_DRIVE_COEFF = 0.00001;//This was 0.000001 it changed when I pulled     // Larger is more responsive, but also less stable
+    private static final double D_DRIVE_COEFF = 0.000001;//This was 0.000001 it changed when I pulled     // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");
@@ -369,19 +369,19 @@ public class SeansEncLibrary {
         double circumference = 2 * PI * radius;
         double distance = (angle / 180) * circumference;//Divide by 180 because we are using -180/+180 not 0/+360
 
-        int direction;
+        int direction = 0;
 
 //        int direction = (int) signum(distance);//Make sure this works.
         if (distance > 0) {
             direction = 1;
-        } else {
+        } else if (distance < 0){
             direction = -1;
         }
 
         int moveCounts = (int) (distance * COUNTS_PER_INCH);
 
-        int newBackLeftTarget = (left_back_drive.getCurrentPosition() + (-direction * moveCounts));
-        int newFrontLeftTarget = (left_front_drive.getCurrentPosition() + (-direction * moveCounts));
+        int newBackLeftTarget = (left_back_drive.getCurrentPosition() + (direction * moveCounts));
+        int newFrontLeftTarget = (left_front_drive.getCurrentPosition() + (direction * moveCounts));
         int newBackRightTarget = (right_back_drive.getCurrentPosition() + (direction * moveCounts));
         int newFrontRightTarget = (right_front_drive.getCurrentPosition() + (direction * moveCounts));
         int newAverageTarget = (abs(newBackLeftTarget) + abs(newBackRightTarget) + abs(newFrontLeftTarget) + abs(newFrontRightTarget)) / 4;
