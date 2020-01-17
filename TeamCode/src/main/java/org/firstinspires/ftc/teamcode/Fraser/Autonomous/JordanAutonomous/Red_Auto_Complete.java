@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive.SeansEncLibrary;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.GGOpenCV;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.VisionSystem;
 
-@Autonomous (name = "Red Auto Complete" , group = "Fraser Red Auto" )
+@Autonomous (name = "Red Auto Complete " , group = "Fraser Red Auto" )
 public class Red_Auto_Complete extends LinearOpMode{
 
     ElapsedTime etime = new ElapsedTime();
@@ -81,19 +81,38 @@ public class Red_Auto_Complete extends LinearOpMode{
         //     position 1 and 4
 //        if ((posit>=170&&posit<=220)||(posit>=1&&posit<=30)){
 
-        enc.steeringDrive(-22,false,false);
-        mech.intakeStone();
-        waitFor(1000);
-        mech.stopStone();
-        enc.steeringDrive( 44.7, false, true);
-        enc.steeringDrive(1.5,false,false);
-        mech.intake.setPower(-1);
-        waitFor(1000);
-        enc.steeringDrive(4, false, false);
-        mech.intake.setPower(0);
-        enc.steeringDrive(-18,false,true);
-        enc.steeringDrive(-35,false,false);
-        enc.gyroTurn(enc.TURN_SPEED,90);
+//        mech.ejectStone();
+//               enc.steeringDrive(6,false,false);
+//        enc.steeringDrive(23,false,true);
+//        enc.arcTurn(92);
+//        mech.intakeStone();
+//        enc.steeringDrive( 40.2, false, true);
+////        enc.steeringDrive(1.5,false,false);
+////        waitFor(750);
+//
+//        enc.steeringDrive(6, false, false);
+//
+//        enc.steeringDrive(-22,false,true);
+//        mech.stopStone();
+//        enc.steeringDrive(-45,false,false);
+//        enc.arcTurn(276);
+//        mech.ejectStone();
+//        waitFor(500);
+//        enc.arcTurn(93);
+//        mech.stopStone();
+//        enc.steeringDrive(62,false,false);
+//        enc.steeringDrive(18.7,false, true);
+//        mech.intakeStone();
+//        waitFor(500);
+//        enc.steeringDrive(6, false, false);
+//        mech.stopStone();
+//        enc.steeringDrive(-18,false, true);
+//        enc.steeringDrive(-63,false,false);
+//        enc.arcTurn(185);
+//        mech.ejectStone();
+//        waitFor(500);
+//        enc.steeringDrive(-10,false,false);
+//
 
 
 
@@ -101,20 +120,34 @@ public class Red_Auto_Complete extends LinearOpMode{
 //         position 2 and 5
 //        if ((posit>=110&&posit<=169)||(posit==0)){
 
-//            enc.steeringDrive(-13.5,false,false);
-//            mech.intakeStone();
-//            waitFor(1000);
-//            mech.stopStone();
-//            enc.steeringDrive( 44.7, false, true);
-//            enc.steeringDrive(1.5,false,false);
-//            mech.intake.setPower(-1);
-//            waitFor(1000);
-//            enc.steeringDrive(4, false, false);
-//            mech.intake.setPower(0);
-//            enc.steeringDrive(-18,false,true);
-//            enc.steeringDrive(-55,false,false);
-//            enc.gyroTurn(enc.TURN_SPEED,90);
-//
+//            mech.ejectStone();
+            enc.steeringDrive(6,false, false);
+            enc.steeringDrive(13.5, false,true);
+            enc.arcTurn(92);
+            mech.intakeStone();
+            enc.steeringDrive(39.2,false,true);
+            enc.steeringDrive(4.5,false,false);
+            enc.steeringDrive(-19,false,true);
+            mech.stopStone();
+            enc.steeringDrive(-50,false,false);
+            enc.arcTurn(278);
+            mech.ejectStone();
+            waitFor(1000);
+            enc.arcTurn(93);
+            mech.stopStone();
+            enc.steeringDrive(69,false,false);
+            enc.steeringDrive(20,false, true);
+            mech.intakeStone();
+            waitFor(500);
+            enc.steeringDrive(6, false, false);
+            mech.stopStone();
+            enc.steeringDrive(-18,false, true);
+            enc.steeringDrive(-72,false,false);
+            enc.arcTurn(185);
+            mech.ejectStone();
+            waitFor(500);
+            enc.steeringDrive(-10,false,false);
+
 //
 //        }
 

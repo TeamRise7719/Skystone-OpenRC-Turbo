@@ -50,7 +50,7 @@ public class SeansEncLibrary {
     public final double TURN_SPEED = 0.8;     // Nominal half speed for better accuracy.
 
     private static final double HEADING_THRESHOLD = 0.5;      // As tight as we can make it with an integer gyro
-    private static final int ENCODER_THRESHOLD = 3;      // As tight as we can make it with an integer gyro
+    private static final int ENCODER_THRESHOLD = 5;      // As tight as we can make it with an integer gyro
 
 
     private static final double P_TURN_COEFF = 0.008;//0.008     // Larger is more responsive, but also less stable
@@ -368,12 +368,22 @@ public class SeansEncLibrary {
      * @param angle Angle to turn.
      */
     public void arcTurn(double angle) {
+        left_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        left_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        left_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        left_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         double trackWidth = 13.5;// TODO: 2020-01-11 Tune the trackwidth with the trackwidth tuner
         double radius = trackWidth / 2;
         double circumference = 2 * Math.PI * radius;
         double distance = (angle / 180) * circumference;//Divide by 180 because we are using -180/+180 not 0/+360
-        int direction = 0;//Start at a point where we won't move unless direction is correctly calculated.
+
+        int direction = 1;//Start at a point where we won't move unless direction is correctly calculated.
 
 //        int direction = (int) Math.signum(distance);//Make sure this works.
         if (distance > 0) {
@@ -388,7 +398,7 @@ public class SeansEncLibrary {
         int newFrontLeftTarget = (left_front_drive.getCurrentPosition() + (-direction * moveCounts));
         int newBackRightTarget = (right_back_drive.getCurrentPosition() + (direction * moveCounts));
         int newFrontRightTarget = (right_front_drive.getCurrentPosition() + (direction * moveCounts));
-        int newAverageTarget = (abs(newBackLeftTarget) + abs(newBackRightTarget) + abs(newFrontLeftTarget) + abs(newFrontRightTarget)) / 4;
+        int newAverageTarget = (Math.abs(newBackLeftTarget) + Math.abs(newBackRightTarget) + Math.abs(newFrontLeftTarget) + Math.abs(newFrontRightTarget)) / 4;
 
         drivePID.reset();
         double speed;
@@ -396,26 +406,29 @@ public class SeansEncLibrary {
 
         drivePID.setContinuous(false);
         drivePID.setSetpoint(newAverageTarget);
-        drivePID.setOutputRange(-0.4, 0.4);
+        drivePID.setOutputRange(-0.6, 0.6);
 
         while (linearOpMode.opModeIsActive() || fraserLinearOpMode.opModeIsActive()) {
 
-            telemetry.addData("Back Left Target", newBackLeftTarget);
-            telemetry.addData("Front Left Target", newFrontLeftTarget);
-            telemetry.addData("Back Right Target", newBackRightTarget);
-            telemetry.addData("Front Right Target", newFrontRightTarget);
+//            telemetry.addData("Back Left Target", newBackLeftTarget);
+//            telemetry.addData("Front Left Target", newFrontLeftTarget);
+//            telemetry.addData("Back Right Target", newBackRightTarget);
+//            telemetry.addData("Front Right Target", newFrontRightTarget);
             //No need for telemetry.update(); as setMotorPowers does it.
 
-            encAvg = (abs(left_front_drive.getCurrentPosition()) + abs(left_back_drive.getCurrentPosition()) + abs(right_back_drive.getCurrentPosition()) + abs(right_front_drive.getCurrentPosition())) / 4;
+            encAvg = (Math.abs(left_front_drive.getCurrentPosition()) + Math.abs(left_back_drive.getCurrentPosition()) + Math.abs(right_back_drive.getCurrentPosition()) + Math.abs(right_front_drive.getCurrentPosition())) / 4;
 
-            if (((abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
+            if (((Math.abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
                 break;
             }
 
             drivePID.calcInit();
             speed = drivePID.timedCalculate(encAvg);
 
-            setMotorPowers(-speed,-speed,speed,speed);
+            left_front_drive.setPower(-speed);
+            left_back_drive.setPower(-speed);
+            right_front_drive.setPower(speed);
+            right_back_drive.setPower(speed);
         }
         setMotorPowers(0,0,0,0);
     }
@@ -464,10 +477,10 @@ public class SeansEncLibrary {
         left_back_drive.setPower(leftBack);
         right_front_drive.setPower(rightFront);
         right_back_drive.setPower(rightBack);
-        telemetry.addData("leftFrontPower", leftFront);
-        telemetry.addData("leftBackPower", leftBack);
-        telemetry.addData("rightFrontPower", rightFront);
-        telemetry.addData("rightBackPower", rightBack);
-        telemetry.update();
+//        telemetry.addData("leftFrontPower", leftFront);
+//        telemetry.addData("leftBackPower", leftBack);
+//        telemetry.addData("rightFrontPower", rightFront);
+//        telemetry.addData("rightBackPower", rightBack);
+//        telemetry.update();
     }
 }
