@@ -201,7 +201,7 @@ public class SeansEncLibrary {
             while (linearOpMode.opModeIsActive() || fraserLinearOpMode.opModeIsActive()) {
                 encAvg = (left_front_drive.getCurrentPosition() + left_back_drive.getCurrentPosition() + right_back_drive.getCurrentPosition() + right_front_drive.getCurrentPosition()) / 4;
 
-                if (((Math.abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
+                if (((abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
                     break;
                 }
 
@@ -256,7 +256,7 @@ public class SeansEncLibrary {
                 telemetry.update();
             }
 
-            newAverageTarget = (Math.abs(newBackLeftTarget) + Math.abs(newBackRightTarget) + Math.abs(newFrontLeftTarget) + Math.abs(newFrontRightTarget)) / 4;
+            newAverageTarget = (abs(newBackLeftTarget) + abs(newBackRightTarget) + abs(newFrontLeftTarget) + abs(newFrontRightTarget)) / 4;
 
             int encAvg;
             ElapsedTime etime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
@@ -275,9 +275,9 @@ public class SeansEncLibrary {
 
             while (linearOpMode.opModeIsActive() || fraserLinearOpMode.opModeIsActive()) {
 
-                encAvg = (Math.abs(left_front_drive.getCurrentPosition()) + Math.abs(left_back_drive.getCurrentPosition()) + Math.abs(right_back_drive.getCurrentPosition()) + Math.abs(right_front_drive.getCurrentPosition())) / 4;
+                encAvg = (abs(left_front_drive.getCurrentPosition()) + abs(left_back_drive.getCurrentPosition()) + abs(right_back_drive.getCurrentPosition()) + abs(right_front_drive.getCurrentPosition())) / 4;
 
-                if (((Math.abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
+                if (((abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
                     break;
                 }
 
@@ -368,6 +368,7 @@ public class SeansEncLibrary {
      * @param angle Angle to turn.
      */
     public void arcTurn(double angle) {
+        
         left_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         left_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right_back_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -380,12 +381,12 @@ public class SeansEncLibrary {
 
         double trackWidth = 13.5;// TODO: 2020-01-11 Tune the trackwidth with the trackwidth tuner
         double radius = trackWidth / 2;
-        double circumference = 2 * Math.PI * radius;
+        double circumference = 2 * PI * radius;
         double distance = (angle / 180) * circumference;//Divide by 180 because we are using -180/+180 not 0/+360
 
-        int direction = 1;//Start at a point where we won't move unless direction is correctly calculated.
+        int direction;
 
-//        int direction = (int) Math.signum(distance);//Make sure this works.
+//        int direction = (int) signum(distance);//Make sure this works.
         if (distance > 0) {
             direction = 1;
         } else {
@@ -398,7 +399,7 @@ public class SeansEncLibrary {
         int newFrontLeftTarget = (left_front_drive.getCurrentPosition() + (-direction * moveCounts));
         int newBackRightTarget = (right_back_drive.getCurrentPosition() + (direction * moveCounts));
         int newFrontRightTarget = (right_front_drive.getCurrentPosition() + (direction * moveCounts));
-        int newAverageTarget = (Math.abs(newBackLeftTarget) + Math.abs(newBackRightTarget) + Math.abs(newFrontLeftTarget) + Math.abs(newFrontRightTarget)) / 4;
+        int newAverageTarget = (abs(newBackLeftTarget) + abs(newBackRightTarget) + abs(newFrontLeftTarget) + abs(newFrontRightTarget)) / 4;
 
         drivePID.reset();
         double speed;
@@ -416,9 +417,9 @@ public class SeansEncLibrary {
 //            telemetry.addData("Front Right Target", newFrontRightTarget);
             //No need for telemetry.update(); as setMotorPowers does it.
 
-            encAvg = (Math.abs(left_front_drive.getCurrentPosition()) + Math.abs(left_back_drive.getCurrentPosition()) + Math.abs(right_back_drive.getCurrentPosition()) + Math.abs(right_front_drive.getCurrentPosition())) / 4;
+            encAvg = (abs(left_front_drive.getCurrentPosition()) + abs(left_back_drive.getCurrentPosition()) + abs(right_back_drive.getCurrentPosition()) + abs(right_front_drive.getCurrentPosition())) / 4;
 
-            if (((Math.abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
+            if (((abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
                 break;
             }
 
