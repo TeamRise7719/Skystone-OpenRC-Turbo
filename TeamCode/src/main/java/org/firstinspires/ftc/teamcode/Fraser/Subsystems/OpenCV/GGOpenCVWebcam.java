@@ -19,10 +19,10 @@ public class GGOpenCVWebcam implements VisionSystem {
 
     public static final Rect CAMERA_RECT = new Rect(0, 0, 320, 240);
 
-    public OpenCvCamera camera;
+    public OpenCvWebcam camera;
     public GGSkystoneDetector detector;
     HardwareMap hardwareMap;
-    WebcamName webcam;
+    CameraName webcam;
     LinearOpMode linearOpMode;
     Telemetry telemetry;
 
@@ -59,6 +59,7 @@ public class GGOpenCVWebcam implements VisionSystem {
     }
 
     public void startCamera() {
+        camera.openCameraDevice();
         camera.setPipeline(detector);
         camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.SIDEWAYS_LEFT);
     }

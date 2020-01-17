@@ -25,8 +25,8 @@ public class TrackWidthTuner extends LinearOpMode {
 
 
     private final int Trials                    = 5;
-    private final int timeBetweenTests          = 5000;
-    private final double MeasuredTrackWidth     = 13.5;
+    private final int timeBetweenTests          = 1000;
+    private final double MeasuredTrackWidth     = 14.0;
     private final double targetAngle            = 180;
 
 
@@ -93,7 +93,13 @@ public class TrackWidthTuner extends LinearOpMode {
 
             double percentErr = getAdjustedHeading() / targetAngle;
 
-            calculated = MeasuredTrackWidth * percentErr;
+//            calculated = MeasuredTrackWidth * percentErr;
+
+            double radius = MeasuredTrackWidth / 2;
+            double circumference = 2 * Math.PI * radius;
+            double distance = (targetAngle / 180) * circumference;
+
+            calculated =  (int)(distance / (Math.PI * (getAdjustedHeading() / 180)));
 
             trackWidths.add(calculated);
 
@@ -112,9 +118,9 @@ public class TrackWidthTuner extends LinearOpMode {
     }
 
     private double getAdjustedHeading() {
-        return gyro.getAngularOrientation().firstAngle - offset;
+        return -gyro.getAngularOrientation().firstAngle - offset;
     }
     private void resetHeading() {
-        offset = gyro.getAngularOrientation().firstAngle;
+        offset = -gyro.getAngularOrientation().firstAngle;
     }
 }
