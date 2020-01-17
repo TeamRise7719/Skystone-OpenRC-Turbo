@@ -44,42 +44,25 @@ public class TrackWidthTuner extends LinearOpMode {
         gyro.initialize(param);
         gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
-        telemetry.addData("Tuner is Ready", "");
+        telemetry.addLine("Tuner is Ready");
         telemetry.update();
 
         waitForStart();
 
-        telemetry.addData("Tuner Started...", "");
+        telemetry.addLine("Tuner Started...");
         telemetry.update();
 
         sleep(1000);
 
-        telemetry.addData("Tuning...", "");
+        telemetry.addLine("Tuning...");
+        telemetry.update();
 
         ArrayList<Double> trackWidths = new ArrayList<>();
 
-
-        // TODO: 2020-01-12 Make an actual track width formula
         /*
         I'm tired so this makes sense:
-
-        Because of:
-
-        angle/180 * Pi d = distance
-        d = (distance * 180/angle) / Pi
-        d = trackWidth
-
-        Then:
-
-        trackWidth = distance * (180/getAngleError()) / Pi
-
-
-
-       OR
-
-
-       Get percent of angle we were supposed to turn.
-       Trackwidth *= %error
+        Get percent of angle we were supposed to turn.
+        Trackwidth *= %error
          */
 
         for (int i=1;i<=Trials;i++) {
@@ -88,7 +71,7 @@ public class TrackWidthTuner extends LinearOpMode {
 
             resetHeading();
 
-            telemetry.addData("Test Number ", i);
+            telemetry.addData("Test Number", i);
             telemetry.update();
 
             enc.arcTurn(targetAngle);
@@ -108,7 +91,7 @@ public class TrackWidthTuner extends LinearOpMode {
         trackWidth /= trackWidths.size();
 
         while (opModeIsActive()) {
-            telemetry.addData("Tuned Track Width ", trackWidth);
+            telemetry.addData("Tuned Track Width", trackWidth);
             telemetry.update();
         }
     }
