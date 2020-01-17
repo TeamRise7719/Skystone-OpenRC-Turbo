@@ -15,36 +15,16 @@ public class OpenCVWebcamTest extends LinearOpMode {
     GGOpenCVWebcam detector;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
 
-        try {
+        detector = new GGOpenCVWebcam(telemetry,hardwareMap,this);
+        detector.startLook(VisionSystem.TargetType.SKYSTONE);
 
-            detector = new GGOpenCVWebcam(GGOpenCVWebcam.Cam.WEBCAM, hardwareMap);
-
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            requestOpModeStop();
-        }
+        detector.scanInit();
 
         waitForStart();
 
-        detector.startCamera();
-        detector.startLook(VisionSystem.TargetType.SKYSTONE);
+        detector.scanMain();
 
-        while (opModeIsActive()) {
-            if (detector.found()) {
-                telemetry.addData("Skystone Found!", "");
-                telemetry.addData("X: ", detector.detector.foundRectangle().x);
-                telemetry.addData("Y: ", detector.detector.foundRectangle().y);
-                double x = detector.detector.foundRectangle().x;
-                double y = detector.detector.foundRectangle().y;
-                telemetry.addData("(X,Y)","%f,%f",x,y);
-                telemetry.addData("Position (X): ", detector.detector.foundRectangle().x);
-            } else {
-                telemetry.addData("Skystone not found.", "");
-            }
-            telemetry.update();
-        }
-        detector.stopLook();
     }
 }

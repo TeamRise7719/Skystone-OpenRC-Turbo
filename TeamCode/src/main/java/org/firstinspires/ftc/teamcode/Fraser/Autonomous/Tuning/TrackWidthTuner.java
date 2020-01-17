@@ -59,7 +59,22 @@ public class TrackWidthTuner extends LinearOpMode {
 
         ArrayList<Double> trackWidths = new ArrayList<>();
 
+        // TODO: 2020-01-17 Implement this formula
         /*
+        This should work:
+        circumference = 2 * PI * radius
+        distance = (angle / 180) * circumference
+        radius = trackwidth/2
+        distance = (angle / 180) * 2*PI*radius
+        distance = (angle / 180) * PI*trackwidth
+        trackwidth * PI = distance/(angle/180)
+        trackwidth = distance / (PI(angle/180))
+        angle = robot heading
+
+
+
+
+
         I'm tired so this makes sense:
         Get percent of angle we were supposed to turn.
         Trackwidth *= %error
