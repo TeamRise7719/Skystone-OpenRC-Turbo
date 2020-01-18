@@ -5,13 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.GGSkystoneDetector;
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvPipeline;
 
 /**
  * Created by Sean Cardosi on 2020-01-17.
@@ -28,6 +23,7 @@ public class OpenCVScanner extends LinearOpMode
     {
 
         detector = new GGSkystoneDetector();
+        detector.useDefaults();
         /*
          * Instantiate an OpenCvCamera object for the camera we'll be using.
          * In this sample, we're using a webcam. Note that you will need to
