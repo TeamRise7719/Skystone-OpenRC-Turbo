@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.GGOpenCV;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.GGSkystoneDetector;
 import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.VisionSystem;
 
-@Autonomous (name = "Blue Auto Vision", group = "Fraser Blue Auto")
+@Autonomous (name = "Blue Auto Complete", group = "Fraser Blue Auto")
 public class Blue_Auto_Complete extends LinearOpMode {
     GGOpenCV detector;
     ElapsedTime etime = new ElapsedTime();
@@ -31,62 +31,86 @@ public class Blue_Auto_Complete extends LinearOpMode {
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         enc.init();
         FraserComponents mech = new FraserComponents(hardwareMap);
-        detector = new GGOpenCV(GGOpenCV.Cam.PHONE, hardwareMap);
-        detector.startCamera();
-        detector.startLook(VisionSystem.TargetType.SKYSTONE);
 
-        while (!this.isStarted()) {
-            if (detector.found()) {
-                telemetry.addData("Skystone Found!", "");
-                telemetry.addData("X: ", detector.detector.foundRectangle().x);
-                telemetry.addData("Y: ", detector.detector.foundRectangle().y);
-                posit = detector.detector.foundRectangle().x;
-                telemetry.addData("Position: ", posit);
-            } else {
-                telemetry.addData("Skystone not found.", "");
-            }
-            telemetry.update();
-        }
-        detector.stopLook();
+        //      position 3 and 0
+//        if((posit>=225&&posit<=290)||(posit>=35&&posit<65)){
+//
+//        enc.steeringDrive(24, false, false);
+//        enc.arcTurn(270);
+//        enc.steeringDrive(-2, false, false);
+//        mech.intakeStone();
+//        enc.steeringDrive(-19, false, true);
+//        enc.steeringDrive(6, false, false);
+//        mech.stopStone();
+//        enc.steeringDrive(15.7, false, true);
+//        enc.steeringDrive(-60, false, false);
+//        enc.arcTurn(180);
+//        mech.ejectStone();
+//        enc.steeringDrive(-15, false, false);
+//        mech.stopStone();
 
-        if ((posit >= 225 && posit <= 290) || (posit >= 35 && posit < 65)) {
 
-            enc.steeringDrive(-10, false, true);
-            enc.steeringDrive(44.3, false, false);
-            enc.steeringDrive(4, false, false);
-            waitFor(1000);
-            mech.intakeStone();
-            waitFor(500);
-            enc.steeringDrive(-18, false, true);
-            enc.steeringDrive(-33, false, false);
-            waitFor(1000);
-            mech.ejectStone();
-        } else if ((posit >= 170 && posit <= 220) || (posit >= 1 && posit <= 30)) {
 
-            enc.steeringDrive(-20, false, true);
-            enc.steeringDrive(44.3, false, false);
-            enc.steeringDrive(4, false, false);
-            waitFor(1000);
-            mech.intakeStone();
-            waitFor(500);
-            enc.steeringDrive(-18, false, true);
-            enc.steeringDrive(-43, false, false);
-            waitFor(1000);
-            mech.ejectStone();
-        } else if ((posit >= 110 && posit <= 169) || (posit == 0)) {
 
-            enc.steeringDrive(-30, false, true);
-            enc.steeringDrive(44.3, false, false);
-            enc.steeringDrive(4, false, false);
-            waitFor(1000);
-            mech.intakeStone();
-            waitFor(500);
-            enc.steeringDrive(-18, false, true);
-            enc.steeringDrive(-53, false, false);
-            waitFor(1000);
-            mech.ejectStone();
-        } else {// TODO: 2020-01-14 Change this to blind grab some stones
-            enc.steeringDrive(-30, false, true);
-        }
+        //     position 1 and 4
+//        if ((posit>=170&&posit<=220)||(posit>=1&&posit<=30)){
+
+        enc.steeringDrive(6,false,false);
+        enc.steeringDrive(-21,false,true);
+        enc.arcTurn(270);
+        mech.intakeStone();
+        enc.steeringDrive( -40, false, true);
+        enc.steeringDrive(4.5, false, false);
+        enc.steeringDrive(17,false,true);
+        mech.stopStone();
+        enc.steeringDrive(-45,false,false);
+        enc.arcTurn(90);
+        mech.ejectStone();
+        waitFor(500);
+        enc.arcTurn(270);
+        mech.stopStone();
+        enc.steeringDrive(62,false,false);
+        enc.steeringDrive(-18.7,false, true);
+        mech.intakeStone();
+        enc.steeringDrive(6, false, false);
+        mech.stopStone();
+        enc.steeringDrive(18,false, true);
+        enc.steeringDrive(-63,false,false);
+        enc.arcTurn(180);
+        mech.ejectStone();
+        enc.steeringDrive(-10,false,false);
+
+
+
+
+        //         position 2 and 5
+//        if ((posit>=110&&posit<=169)||(posit==0)){
+
+
+//            enc.steeringDrive(6,false, false);
+//            enc.steeringDrive(-13.5, false,true);
+//            enc.arcTurn(270);
+//            mech.intakeStone();
+//            enc.steeringDrive(-40,false,true);
+//            enc.steeringDrive(4.5,false,false);
+//            enc.steeringDrive(17,false,true);
+//            mech.stopStone();
+//            enc.steeringDrive(-50,false,false);
+//            enc.arcTurn(90);
+//            mech.ejectStone();
+//            waitFor(500);
+//            enc.arcTurn(270);
+//            mech.stopStone();
+//            enc.steeringDrive(69,false,false);
+//            enc.steeringDrive(-20,false, true);
+//            mech.intakeStone();
+//            enc.steeringDrive(6, false, false);
+//            mech.stopStone();
+//            enc.steeringDrive(18,false, true);
+//            enc.steeringDrive(-68,false,false);
+//            enc.arcTurn(180);
+//            mech.ejectStone();
+//            enc.steeringDrive(-10,false,false);
+
     }
 }

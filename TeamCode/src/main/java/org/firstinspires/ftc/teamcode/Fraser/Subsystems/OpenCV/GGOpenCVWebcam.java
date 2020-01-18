@@ -17,7 +17,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
  */
 public class GGOpenCVWebcam implements VisionSystem {
 
-    public static final Rect CAMERA_RECT = new Rect(0, 0, 320, 240);
+    public static final Rect CAMERA_RECT = new Rect(0, 0, 640, 480);
 
     public OpenCvWebcam camera;
     public GGSkystoneDetector detector;
@@ -50,7 +50,6 @@ public class GGOpenCVWebcam implements VisionSystem {
 
     public GGOpenCVWebcam(Telemetry tel, HardwareMap hardwareMap, LinearOpMode opMode) {
         detector = new GGSkystoneDetector();
-        detector.useDefaults();
         webcam = hardwareMap.get(CameraName.class, "webcam");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = new OpenCvWebcam(webcam, cameraMonitorViewId);
@@ -69,12 +68,18 @@ public class GGOpenCVWebcam implements VisionSystem {
      * Will usually be used for testing purposes.
      */
     public void scanMain() {
-        camera.openCameraDeviceImplSpecific();
-//        camera.openCameraDevice();
+        detector.useDefaults();
         camera.setPipeline(detector);
-        camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.SIDEWAYS_LEFT);
-        camera.startStreamingImplSpecific(CAMERA_RECT.width,CAMERA_RECT.height);
-//        startLook(TargetType.SKYSTONE);
+        camera.openCameraDevice();
+//        camera.openCameraDeviceImplSpecific();
+//        camera.openCameraDevice();
+        camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.UPRIGHT);
+//        camera.startStreamingImplSpecific(CAMERA_RECT.width,CAMERA_RECT.height);
+//        startLook(TargetType.SKYSTONE);\
+        camera.resumeViewport();
+        camera.stopStreaming();
+
+        camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.UPRIGHT);
         while (linearOpMode.opModeIsActive()) {
             double x = detector.foundRectangle().x;
             double y = detector.foundRectangle().y;
@@ -84,8 +89,9 @@ public class GGOpenCVWebcam implements VisionSystem {
         }
 //        stopLook();
         camera.stopStreaming();
-        camera.stopStreamingImplSpecific();
-        camera.closeCameraDeviceImplSpecific();
+//        camera.stopStreamingImplSpecific();
+        camera.closeCameraDevice();
+//        camera.closeCameraDeviceImplSpecific();
     }
 
     /**
