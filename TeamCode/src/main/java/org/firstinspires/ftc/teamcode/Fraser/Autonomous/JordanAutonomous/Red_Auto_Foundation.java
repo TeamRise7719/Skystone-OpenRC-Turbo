@@ -31,18 +31,16 @@ public class Red_Auto_Foundation extends LinearOpMode {
 
         waitForStart();
 
-        enc.steeringDrive(-20, false,false);
-        enc.steeringDrive(-6.5, false,false);
-        enc.steeringDrive(11.5, false, true);
+        enc.steeringDrive(-30, false,false);
+        enc.steeringDrive(-11.5, false, true);
         bacon.foundationRelease();
         waitFor(2000);
-        enc.steeringDrive(28,false,false);
+        enc.steeringDrive(33,false,false);
         bacon.foundationGrab();
-        enc.steeringDrive(-30,false,true);
-
-        enc.steeringDrive(-22,false,false);
-        enc.gyroTurn(enc.TURN_SPEED,-90);
-        enc.steeringDrive(24, false, false);
+        enc.steeringDrive(49,false,true);
+//        enc.steeringDrive(-22,false,false);
+//        enc.arcTurn(93);
+//        enc.steeringDrive(24, false, false);
 
         AutoTransitioner.transitionOnStop(this,"Fraser TeleOp");
     }

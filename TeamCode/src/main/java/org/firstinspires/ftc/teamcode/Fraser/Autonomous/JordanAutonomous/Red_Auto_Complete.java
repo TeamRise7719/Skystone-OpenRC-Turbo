@@ -60,18 +60,18 @@ public class Red_Auto_Complete extends LinearOpMode{
 //      position 3 and 0
 //        if((posit>=225&&posit<=290)||(posit>=35&&posit<65)){
 //
-            enc.steeringDrive(6,false,false);
-            enc.steeringDrive(18,false,true);
-            enc.arcTurn(90);
+            enc.steeringDrive(24,false,false);
+            enc.arcTurn(93);
+            enc.steeringDrive(-2,false,false);
             mech.intakeStone();
-            enc.steeringDrive(20, false, true);
-            enc.steeringDrive(4,false,false);
+            enc.steeringDrive(19, false, true);
+            enc.steeringDrive(6,false,false);
             mech.stopStone();
-            enc.steeringDrive(-12,false,true);
+            enc.steeringDrive(-15.7,false,true);
             enc.steeringDrive(-60,false,false);
             enc.arcTurn(180);
             mech.ejectStone();
-            enc.steeringDrive(-10,false,false);
+            enc.steeringDrive(-15,false,false);
             mech.stopStone();
 
 //

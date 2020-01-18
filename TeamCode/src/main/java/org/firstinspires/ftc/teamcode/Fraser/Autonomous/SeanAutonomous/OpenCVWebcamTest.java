@@ -17,8 +17,8 @@ public class OpenCVWebcamTest extends LinearOpMode {
     public void runOpMode() {
 
         detector = new GGOpenCVWebcam(telemetry,hardwareMap,this);
-
-        detector.scanInit();
+        detector.init();
+//        detector.scanInit();
 
         waitForStart();
 
