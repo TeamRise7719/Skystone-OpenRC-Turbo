@@ -63,6 +63,7 @@ public class GGOpenCVWebcam implements VisionSystem {
             telemetry.addData("(x,y)", "%f,%f", detector.foundRectangle().x, detector.foundRectangle().y);
             telemetry.addData("Position (x): ", detector.foundRectangle().x);
             telemetry.update();
+            linearOpMode.sleep(100);
         }
 
         stopLook();
