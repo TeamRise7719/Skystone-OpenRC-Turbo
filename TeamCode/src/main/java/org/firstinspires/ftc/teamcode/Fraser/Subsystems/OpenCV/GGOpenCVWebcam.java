@@ -22,7 +22,7 @@ public class GGOpenCVWebcam implements VisionSystem {
     public OpenCvWebcam camera;
     public GGSkystoneDetector detector;
     HardwareMap hardwareMap;
-    WebcamName webcam;
+    CameraName webcam;
     LinearOpMode linearOpMode;
     Telemetry telemetry;
 
@@ -51,7 +51,7 @@ public class GGOpenCVWebcam implements VisionSystem {
     public GGOpenCVWebcam(Telemetry tel, HardwareMap hardwareMap, LinearOpMode opMode) {
         detector = new GGSkystoneDetector();
         detector.useDefaults();
-        webcam = hardwareMap.get(WebcamName.class, "webcam");
+        webcam = hardwareMap.get(CameraName.class, "webcam");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = new OpenCvWebcam(webcam, cameraMonitorViewId);
         linearOpMode = opMode;
@@ -69,9 +69,11 @@ public class GGOpenCVWebcam implements VisionSystem {
      * Will usually be used for testing purposes.
      */
     public void scanMain() {
-        camera.openCameraDevice();
+        camera.openCameraDeviceImplSpecific();
+//        camera.openCameraDevice();
         camera.setPipeline(detector);
         camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.SIDEWAYS_LEFT);
+        camera.startStreamingImplSpecific(CAMERA_RECT.width,CAMERA_RECT.height);
 //        startLook(TargetType.SKYSTONE);
         while (linearOpMode.opModeIsActive()) {
             double x = detector.foundRectangle().x;
@@ -80,7 +82,10 @@ public class GGOpenCVWebcam implements VisionSystem {
             telemetry.addData("Position (x): ", detector.foundRectangle().x);
             telemetry.update();
         }
-        stopLook();
+//        stopLook();
+        camera.stopStreaming();
+        camera.stopStreamingImplSpecific();
+        camera.closeCameraDeviceImplSpecific();
     }
 
     /**
