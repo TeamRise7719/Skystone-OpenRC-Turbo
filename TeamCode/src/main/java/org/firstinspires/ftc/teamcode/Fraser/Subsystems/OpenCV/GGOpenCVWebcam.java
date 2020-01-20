@@ -7,7 +7,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Fraser.Subsystems.NewOpenCV.OpenCvCameraFactory;
 import org.opencv.core.Rect;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -20,21 +19,22 @@ public class GGOpenCVWebcam implements VisionSystem {
 
     public static final Rect CAMERA_RECT = new Rect(0, 0, 640, 480);
 
-    public OpenCvCamera camera;
+    public OpenCvWebcam camera;
     public GGSkystoneDetector detector;
     HardwareMap hardwareMap;
+    WebcamName webcam;
     LinearOpMode linearOpMode;
     Telemetry telemetry;
 
     @Override
     public void startLook(VisionSystem.TargetType targetType) {
-        detector = new GGSkystoneDetector();
-        detector.useDefaults();
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
-        camera.openCameraDevice();
-        camera.setPipeline(detector);
-        camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.UPRIGHT);
+//        switch (targetType) {
+//            case SKYSTONE: {
+//                detector.useDefaults();
+//                break;
+//            }
+//        }
+        startCamera();
     }
 
     @Override
@@ -50,22 +50,32 @@ public class GGOpenCVWebcam implements VisionSystem {
 
     public GGOpenCVWebcam(Telemetry tel, HardwareMap hardwareMap, LinearOpMode opMode) {
         detector = new GGSkystoneDetector();
+        webcam = hardwareMap.get(WebcamName.class, "webcam");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
+        camera = new OpenCvWebcam(webcam, cameraMonitorViewId);
         linearOpMode = opMode;
         telemetry = tel;
     }
 
-    public void scan() {
-        startLook(TargetType.SKYSTONE);
+    public void startCamera() {
+        camera.setPipeline(detector);
+        camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.SIDEWAYS_LEFT);
+    }
 
+    public void scan() {
+        detector.useDefaults();
+        camera.setPipeline(detector);
+        camera.openCameraDevice();
+        camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.UPRIGHT);
         while (!linearOpMode.isStarted()) {
-            telemetry.addData("(x,y)", "%f,%f", detector.foundRectangle().x, detector.foundRectangle().y);
+            double x = detector.foundRectangle().x;
+            double y = detector.foundRectangle().y;
+            telemetry.addData("(x,y)", "%f,%f", x, y);
             telemetry.addData("Position (x): ", detector.foundRectangle().x);
             telemetry.update();
             linearOpMode.sleep(100);
         }
-
-        stopLook();
+        camera.stopStreaming();
+        camera.closeCameraDevice();
     }
 }

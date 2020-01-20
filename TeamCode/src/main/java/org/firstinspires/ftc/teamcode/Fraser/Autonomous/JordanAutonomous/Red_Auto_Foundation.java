@@ -28,6 +28,7 @@ public class Red_Auto_Foundation extends LinearOpMode {
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         FraserComponents bacon = new FraserComponents(hardwareMap);
         enc.init();
+        bacon.init();
 
         waitForStart();
 
@@ -35,7 +36,7 @@ public class Red_Auto_Foundation extends LinearOpMode {
         enc.steeringDrive(-11.5, false, true);
         bacon.foundationRelease();
         waitFor(2000);
-        enc.steeringDrive(33,false,false);
+        enc.steeringDrive(37,false,false);
         bacon.foundationGrab();
         enc.steeringDrive(49,false,true);
 

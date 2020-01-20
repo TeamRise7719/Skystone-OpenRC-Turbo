@@ -29,8 +29,12 @@ public class Blue_Auto_Complete extends LinearOpMode {
     public void runOpMode() {
 
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
-        enc.init();
+
         FraserComponents mech = new FraserComponents(hardwareMap);
+
+        enc.init();
+        mech.init();
+        waitForStart();
 
         //      position 3 and 0
 //        if((posit>=225&&posit<=290)||(posit>=35&&posit<65)){

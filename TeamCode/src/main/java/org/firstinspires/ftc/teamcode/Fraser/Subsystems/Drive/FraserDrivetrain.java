@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Fraser.Subsystems.Drive;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -29,8 +30,8 @@ public class FraserDrivetrain {
         //configuring the components
         lr = hardwareMap.dcMotor.get("leftB");
         lf = hardwareMap.dcMotor.get("leftF");
-        lr.setDirection(DcMotor.Direction.FORWARD);
-        lf.setDirection(DcMotor.Direction.FORWARD);
+        lr.setDirection(DcMotor.Direction.REVERSE);
+        lf.setDirection(DcMotor.Direction.REVERSE);
         lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -38,8 +39,8 @@ public class FraserDrivetrain {
 
         rr = hardwareMap.dcMotor.get("rightB");
         rf = hardwareMap.dcMotor.get("rightF");
-        rr.setDirection(DcMotor.Direction.REVERSE);
-        rf.setDirection(DcMotor.Direction.REVERSE);
+        rr.setDirection(DcMotor.Direction.FORWARD);
+        rf.setDirection(DcMotor.Direction.FORWARD);
         rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -55,7 +56,7 @@ public class FraserDrivetrain {
         imu                             = hardwareMap.get(BNO055IMU.class, "imuINT");
 
         imu.initialize(parameters);
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.RADIANS);
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
     }
 
@@ -77,7 +78,7 @@ public class FraserDrivetrain {
      * expensive.
      */
     public void loop() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.RADIANS);
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
     }
 
     /**
@@ -142,7 +143,7 @@ public class FraserDrivetrain {
         final double x = -gamepad1.left_stick_x;
         final double y = gamepad1.left_stick_y;
 
-        final double rotation = (-gamepad1.right_stick_x);
+        final double rotation = (gamepad1.right_stick_x);
         final double direction = Math.atan2(x, y) + getHeading();
         final double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
 

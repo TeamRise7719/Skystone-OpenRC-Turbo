@@ -85,6 +85,9 @@ public class FraserComponents {
         liftL.setPower(0.0);
         liftR.setPower(0.0);
     }
+
+
+
     //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 
@@ -95,7 +98,7 @@ public class FraserComponents {
     }
 
     public void clawRelease(){
-        claw.setPosition(0.3);
+        claw.setPosition(0.5);
     }
 
 //
