@@ -9,17 +9,14 @@ public class GGSkystoneDetectorTest extends LinearOpMode {
 
     GGSkystoneDetector vis;
     GGOpenCV detector;
-
+    boolean camFound;
     @Override
     public void runOpMode(){
 
-        GGOpenCV detector = new GGOpenCV(GGOpenCV.Cam.WEBCAM, hardwareMap);
-        detector.startCamera();
+        GGOpenCV detector = new GGOpenCV(hardwareMap);
         detector.startLook(VisionSystem.TargetType.SKYSTONE);
 
-        waitForStart();
-
-        while (opModeIsActive()){
+        while (!this.isStarted()){
 
             if (detector.found()){
                 telemetry.addData("SS Found!", "");
@@ -28,12 +25,10 @@ public class GGSkystoneDetectorTest extends LinearOpMode {
             } else {
                 telemetry.addData("SS not found.", "");
             }
-
             telemetry.update();
 
         }
-
-
+        requestOpModeStop();
 
     }
 

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Rect;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -28,9 +29,11 @@ public class GGOpenCV implements VisionSystem {
             case SKYSTONE: {
                 detector = new GGSkystoneDetector();
                 detector.useDefaults();
+                break;
             }
             default: {
-
+                detector = new GGSkystoneDetector();
+                detector.useDefaults();
             }
         }
         startCamera();
@@ -46,16 +49,15 @@ public class GGOpenCV implements VisionSystem {
         return detector.isDetected();
     }
 
-    public GGOpenCV(Cam cam, HardwareMap hardwareMap) {
-        this.cam = cam;
+    public GGOpenCV(HardwareMap hardwareMap) {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        //camera = new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        camera = new OpenCvWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
         camera.openCameraDevice();
     }
 
     public void startCamera() {
         camera.setPipeline(detector);
-        camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.UPRIGHT);
+        camera.startStreaming(CAMERA_RECT.width, CAMERA_RECT.height, OpenCvCameraRotation.SIDEWAYS_RIGHT);
     }
 
 }
