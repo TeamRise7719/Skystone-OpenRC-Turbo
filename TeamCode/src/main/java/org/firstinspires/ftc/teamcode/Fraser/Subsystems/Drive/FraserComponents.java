@@ -63,6 +63,10 @@ public class FraserComponents {
     public void stopStone() {
         intake.setPower(0.0);
     }
+
+    public void autoIntake(){
+        intake.setPower(-0.8);
+    }
     //----------------------------------------------=+(Intake)+=----------------------------------------------\\
 
 
@@ -133,8 +137,8 @@ public class FraserComponents {
 
     //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
     public void foundationRelease() {
-        lgrab.setPosition(0.75);
-        rgrab.setPosition(0.75);
+        lgrab.setPosition(0.8); //.75
+        rgrab.setPosition(0.8); //.75
 
     }
     public void foundationGrab() {

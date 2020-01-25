@@ -370,20 +370,27 @@ public class SeansEncLibrary {
         double distance = (angle / 180) * circumference;//Divide by 180 because we are using -180/+180 not 0/+360
 
         int direction = 0;
+        int moveCounts = (int) (distance * COUNTS_PER_INCH);
 
+        int newBackLeftTarget = 0 ;
+        int newFrontLeftTarget = 0;
+        int newBackRightTarget = 0;
+        int newFrontRightTarget = 0;
 //        int direction = (int) signum(distance);//Make sure this works.
         if (distance > 0) {
             direction = 1;
+            newBackLeftTarget = (left_back_drive.getCurrentPosition() + (direction * moveCounts));
+            newFrontLeftTarget = (left_front_drive.getCurrentPosition() + (direction * moveCounts));
+            newBackRightTarget = (right_back_drive.getCurrentPosition() + (direction * moveCounts));
+            newFrontRightTarget = (right_front_drive.getCurrentPosition() + (direction * moveCounts));
         } else if (distance < 0){
             direction = -1;
+            newBackLeftTarget = (left_back_drive.getCurrentPosition() + (direction * moveCounts));
+            newFrontLeftTarget = (left_front_drive.getCurrentPosition() + (direction * moveCounts));
+            newBackRightTarget = (right_back_drive.getCurrentPosition() + (direction * moveCounts));
+            newFrontRightTarget = (right_front_drive.getCurrentPosition() + (direction * moveCounts));
         }
 
-        int moveCounts = (int) (distance * COUNTS_PER_INCH);
-
-        int newBackLeftTarget = (left_back_drive.getCurrentPosition() + (direction * moveCounts));
-        int newFrontLeftTarget = (left_front_drive.getCurrentPosition() + (direction * moveCounts));
-        int newBackRightTarget = (right_back_drive.getCurrentPosition() + (direction * moveCounts));
-        int newFrontRightTarget = (right_front_drive.getCurrentPosition() + (direction * moveCounts));
         int newAverageTarget = (abs(newBackLeftTarget) + abs(newBackRightTarget) + abs(newFrontLeftTarget) + abs(newFrontRightTarget)) / 4;
 
         drivePID.reset();
@@ -411,10 +418,22 @@ public class SeansEncLibrary {
             drivePID.calcInit();
             speed = drivePID.timedCalculate(encAvg);
 
-            left_front_drive.setPower(-speed);
-            left_back_drive.setPower(-speed);
-            right_front_drive.setPower(speed);
-            right_back_drive.setPower(speed);
+            if (direction == 1)
+            {
+                left_front_drive.setPower(-speed);
+                left_back_drive.setPower(-speed);
+                right_front_drive.setPower(speed);
+                right_back_drive.setPower(speed);
+            }
+            else if (direction == -1)
+            {
+                left_front_drive.setPower(speed);
+                left_back_drive.setPower(speed);
+                right_front_drive.setPower(-speed);
+                right_back_drive.setPower(-speed);
+            }
+
+
         }
         setMotorPowers(0,0,0,0);
     }

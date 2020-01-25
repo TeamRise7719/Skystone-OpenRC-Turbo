@@ -60,19 +60,42 @@ public class Red_Auto_Complete extends LinearOpMode{
 //      position 3 and 0
 //        if((posit>=225&&posit<=290)||(posit>=35&&posit<65)){
 //
-            enc.steeringDrive(24,false,false);
-            enc.arcTurn(93);
-            enc.steeringDrive(-2,false,false);
-            mech.intakeStone();
-            enc.steeringDrive(19, false, true);
-            enc.steeringDrive(6,false,false);
-            mech.stopStone();
-            enc.steeringDrive(-15.7,false,true);
-            enc.steeringDrive(-60,false,false);
-            enc.arcTurn(180);
-            mech.ejectStone();
-            enc.steeringDrive(-15,false,false);
-            mech.stopStone();
+//            mech.clawRelease();
+//            enc.steeringDrive(24,false,false);
+//            enc.arcTurn(93);
+//            enc.steeringDrive(-3,false,false);
+//            mech.autoIntake();
+//            enc.steeringDrive(19, false, true);
+//            enc.steeringDrive(7,false,false);
+//            waitFor(500);
+//            mech.clawGrab();
+//            mech.stopStone();
+//            enc.steeringDrive(-17.7,false,true);
+//            enc.steeringDrive(-80,false,false);
+//            enc.arcTurn(90);
+//            enc.steeringDrive(-5,false,true);
+//            enc.steeringDrive(-7,false,false);
+//            waitFor(500);
+//            mech.shoulderUp();
+//            waitFor(1500);
+//            mech.clawRelease();
+//            waitFor(500);
+//            mech.shoulderDown();
+//            mech.foundationRelease();
+//            waitFor(1500);
+//            enc.steeringDrive(28,false,false);
+//            enc.arcTurn(-90);
+//            mech.foundationGrab();
+//            enc.arcTurn(45);
+//            enc.steeringDrive(40,false,true);
+
+
+
+
+
+
+
+
 
 //
 //
@@ -82,31 +105,35 @@ public class Red_Auto_Complete extends LinearOpMode{
         //     position 1 and 4
 //        if ((posit>=170&&posit<=220)||(posit>=1&&posit<=30)){
 
+//        mech.clawRelease();
 //        enc.steeringDrive(6,false,false);
 //        enc.steeringDrive(21,false,true);
 //        enc.arcTurn(90);
-//        mech.intakeStone();
+//        mech.autoIntake();
 //        enc.steeringDrive( 40, false, true);
 //        enc.steeringDrive(4.5, false, false);
-//        enc.steeringDrive(-17,false,true);
-//        mech.stopStone();
-//        enc.steeringDrive(-45,false,false);
-//        enc.arcTurn(270);
-//        mech.ejectStone();
 //        waitFor(500);
+//        mech.clawGrab();
+//        mech.stopStone();
+//        enc.steeringDrive(-17,false,true);
+//        enc.steeringDrive(-70,false,false);
 //        enc.arcTurn(90);
-//        mech.stopStone();
-//        enc.steeringDrive(62,false,false);
-//        enc.steeringDrive(18.7,false, true);
-//        mech.intakeStone();
-//        enc.steeringDrive(6, false, false);
-//        mech.stopStone();
-//        enc.steeringDrive(-18,false, true);
-//        enc.steeringDrive(-63,false,false);
-//        enc.arcTurn(180);
-//        mech.ejectStone();
-//        enc.steeringDrive(-10,false,false);
-//
+//        enc.steeringDrive(-5,false,true);
+//        enc.steeringDrive(-7,false,false);
+//        waitFor(500);
+//        mech.shoulderUp();
+//        waitFor(1500);
+//        mech.clawRelease();
+//        waitFor(500);
+//        mech.shoulderDown();
+//        mech.foundationRelease();
+//        waitFor(1500);
+//        enc.steeringDrive(28,false,false);
+//        enc.arcTurn(-90);
+//        mech.foundationGrab();
+//        enc.arcTurn(45);
+//        enc.steeringDrive(40,false,true);
+
 
 
 
@@ -114,31 +141,36 @@ public class Red_Auto_Complete extends LinearOpMode{
 //         position 2 and 5
 //        if ((posit>=110&&posit<=169)||(posit==0)){
 
+            mech.clawRelease();
+            enc.steeringDrive(6,false, false);
+            enc.steeringDrive(13.5, false,true);
+            enc.arcTurn(90);
+            mech.autoIntake();
+            enc.steeringDrive(39.5,false,true);
+            enc.steeringDrive(6.5,false,false);
+            waitFor(500);
+            mech.clawGrab();
+            mech.stopStone();
+            enc.steeringDrive(-20,false,true);
+            enc.steeringDrive(-75,false,false);
+            enc.arcTurn(90);
+            enc.steeringDrive(-5,false,true);
+            enc.steeringDrive(-7,false,false);
+            waitFor(500);
+            mech.shoulderUp();
+            waitFor(1500);
+            mech.clawRelease();
+            waitFor(500);
+            mech.shoulderDown();
+            mech.foundationRelease();
+            waitFor(1500);
+            enc.steeringDrive(28,false,false);
+            enc.arcTurn(-90);
+            mech.foundationGrab();
+            enc.arcTurn(45);
+            enc.steeringDrive(40,false,true);
 
-//            enc.steeringDrive(6,false, false);
-//            enc.steeringDrive(13.5, false,true);
-//            enc.arcTurn(90);
-//            mech.intakeStone();
-//            enc.steeringDrive(40,false,true);
-//            enc.steeringDrive(4.5,false,false);
-//            enc.steeringDrive(-17,false,true);
-//            mech.stopStone();
-//            enc.steeringDrive(-50,false,false);
-//            enc.arcTurn(270);
-//            mech.ejectStone();
-//            waitFor(500);
-//            enc.arcTurn(90);
-//            mech.stopStone();
-//            enc.steeringDrive(69,false,false);
-//            enc.steeringDrive(20,false, true);
-//            mech.intakeStone();
-//            enc.steeringDrive(6, false, false);
-//            mech.stopStone();
-//            enc.steeringDrive(-18,false, true);
-//            enc.steeringDrive(-68,false,false);
-//            enc.arcTurn(180);
-//            mech.ejectStone();
-//            enc.steeringDrive(-10,false,false);
+
 
 //
 //        }
