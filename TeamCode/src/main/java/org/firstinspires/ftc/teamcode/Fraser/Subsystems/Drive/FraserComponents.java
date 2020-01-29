@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class FraserComponents {
 
     public final DcMotor intake;
-    private final DcMotor liftL;
-    private final DcMotor liftR;
+    public final DcMotor liftL;
+    public final DcMotor liftR;
 
     private Servo lgrab , rgrab, shoulderL ,shoulderR, claw;
 
@@ -103,6 +103,11 @@ public class FraserComponents {
 
     public void clawRelease(){
         claw.setPosition(0.5);
+    }
+
+
+    public void autoClaw(){
+        claw.setPosition(0.3);
     }
 
 //

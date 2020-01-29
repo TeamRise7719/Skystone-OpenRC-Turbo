@@ -56,9 +56,9 @@ public class SeansEncLibrary {
     private static final double D_TURN_COEFF = 0;//0.000001;//0.000001     // Larger is more responsive, but also less stable
 
 
-    private static final double P_DRIVE_COEFF = 0.0005;//0.0005;     // Larger is more responsive, but also less stable
-    private static final double I_DRIVE_COEFF = 0.000000000001;     // Larger is more responsive, but also less stable
-    private static final double D_DRIVE_COEFF = 0.000001;//This was 0.000001 it changed when I pulled     // Larger is more responsive, but also less stable
+    private static final double P_DRIVE_COEFF = 0.0005;    // Larger is more responsive, but also less stable
+    private static final double I_DRIVE_COEFF = /*0.000000000001;*/0.000000000005;     // Larger is more responsive, but also less stable
+    private static final double D_DRIVE_COEFF = /*0.000001;*/0.000047;    // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imuINT");

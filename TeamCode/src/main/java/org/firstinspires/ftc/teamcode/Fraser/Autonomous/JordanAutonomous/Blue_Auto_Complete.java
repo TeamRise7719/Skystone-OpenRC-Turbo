@@ -61,12 +61,14 @@ public class Blue_Auto_Complete extends LinearOpMode {
             waitFor(500);
             mech.shoulderDown();
             mech.foundationRelease();
-            waitFor(1500);
+            waitFor(750);
             enc.steeringDrive(28,false,false);
             enc.arcTurn(90);
             mech.foundationGrab();
             enc.arcTurn(-45);
-            enc.steeringDrive(-40,false,true);
+            enc.steeringDrive(-20,false,true);
+            enc.steeringDrive(-10,false,false);
+            enc.steeringDrive(-20,false,true);
 
 
 
