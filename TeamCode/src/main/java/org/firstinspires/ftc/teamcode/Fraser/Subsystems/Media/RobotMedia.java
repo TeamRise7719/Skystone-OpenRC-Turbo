@@ -53,13 +53,13 @@ public class RobotMedia {
 
 
         //----------------------------------------------=+(Myaah)+=----------------------------------------------\\
-        if ((gamepad1.start)&&(!backState)) {
+        if ((gamepad2.back)&&(!backState)) {
             myaah.reset();
             myaah = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.myaah);
             myaah.start();
         }
 
-        backState = gamepad1.start;
+        backState = gamepad2.back;
 
         if(myaah.isPlaying()&&!backState){
             myaah.stop();
@@ -68,13 +68,13 @@ public class RobotMedia {
 
 
         //----------------------------------------------=+(Swamp)+=----------------------------------------------\\
-        if ((gamepad2.back)&&(!swampState)) {
+        if ((gamepad2.start)&&(!swampState)) {
             swamp.reset();
             swamp = MediaPlayer.create(hardwareMap.appContext,com.qualcomm.ftcrobotcontroller.R.raw.swamp);
             swamp.start();
         }
 
-        swampState = gamepad2.back;//Back button might not work. Change to another button if needed.
+        swampState = gamepad2.start;//Back button might not work. Change to another button if needed.
 
         if (swamp.isPlaying()&&!swampState) {
             swamp.stop();

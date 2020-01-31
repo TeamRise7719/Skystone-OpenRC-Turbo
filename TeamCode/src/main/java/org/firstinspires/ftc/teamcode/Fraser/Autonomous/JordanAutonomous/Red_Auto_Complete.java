@@ -12,10 +12,10 @@ import org.firstinspires.ftc.teamcode.Fraser.Subsystems.OpenCV.VisionSystem;
 @Autonomous (name = "Red Auto Complete " , group = "Fraser Red Auto" )
 public class Red_Auto_Complete extends LinearOpMode {
 
-    ElapsedTime etime = new ElapsedTime();
+    private ElapsedTime etime = new ElapsedTime();
     private double posit = 0;
 
-    public void waitFor(int time) {
+    private void waitFor(int time) {
         time = time / 1000;
         etime.reset();
         while ((etime.time() < time) && (opModeIsActive())) {
@@ -58,7 +58,6 @@ public class Red_Auto_Complete extends LinearOpMode {
         }
 
         waitForStart();
-
 
 //      position 3 and 0
         if ((posit >= 235 && posit <= 260) || (posit >= 0 && posit < 50)) {

@@ -12,10 +12,10 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 public class GGOpenCV implements VisionSystem {
 
-    public static final Rect CAMERA_RECT = new Rect(0, 0, 320, 240);
+    private static final Rect CAMERA_RECT = new Rect(0, 0, 320, 240);
 
     public Cam cam;
-    public OpenCvWebcam camera;
+    private OpenCvWebcam camera;
     public GGSkystoneDetector detector;
     HardwareMap hardwareMap;
 
@@ -41,7 +41,7 @@ public class GGOpenCV implements VisionSystem {
 
     @Override
     public void stopLook() {
-        camera.closeCameraDevice();
+        camera.stopStreaming();
     }
 
     @Override
