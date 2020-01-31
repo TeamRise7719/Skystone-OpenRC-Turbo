@@ -91,7 +91,7 @@ public class Blue_Auto_Complete extends LinearOpMode {
 
         }
 
-        //     position 1 and 4
+        //  position 1 and 4
         if ((posit >= 79 && posit <= 100)) {
 
             mech.clawRelease();
