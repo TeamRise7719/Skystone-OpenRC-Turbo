@@ -44,7 +44,7 @@ public class ARM_TEST extends LinearOpMode {
             waitFor(1500);
             mech.clawRelease();
             waitFor(1000);
-            mech.clawGrab();
+            mech.autoClaw();
             waitFor(1000);
             mech.shoulderDown();
             waitFor(1500);
