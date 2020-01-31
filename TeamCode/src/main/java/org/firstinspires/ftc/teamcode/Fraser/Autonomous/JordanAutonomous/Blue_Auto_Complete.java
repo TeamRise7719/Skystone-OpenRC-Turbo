@@ -124,22 +124,22 @@ public class Blue_Auto_Complete extends LinearOpMode {
 
         }
 //                   position 2 and 5
-        if ((posit >= 162 && posit <= 200)) {
+        if ((posit >= 150 && posit <= 170)) {
 
             mech.clawRelease();
             enc.steeringDrive(6, false, false);
-            enc.steeringDrive(13.5, false, true);
-            enc.arcTurn(84);
+            enc.steeringDrive(-13.5, false, true);
+            enc.arcTurn(-84);
             mech.intakeStone();
-            enc.steeringDrive(38.5, false, true);
+            enc.steeringDrive(-38.5, false, true);
             enc.steeringDrive(6.5, false, false);
             waitFor(500);
             mech.clawGrab();
             mech.stopStone();
-            enc.steeringDrive(-22, false, true);
+            enc.steeringDrive(22, false, true);
             enc.steeringDrive(-69, false, false);
-            enc.arcTurn(90);
-            enc.steeringDrive(-6, false, true);
+            enc.arcTurn(-90);
+            enc.steeringDrive(6, false, true);
             enc.steeringDrive(-8, false, false);
             waitFor(500);
             mech.shoulderUp();
@@ -150,10 +150,10 @@ public class Blue_Auto_Complete extends LinearOpMode {
             mech.foundationRelease();
             waitFor(1500);
             enc.steeringDrive(30, false, false);
-            enc.arcTurn(-80);
+            enc.arcTurn(80);
             mech.foundationGrab();
-            enc.arcTurn(15);
-            enc.steeringDrive(40,false,true);
+            enc.arcTurn(-20);
+            enc.steeringDrive(-40,false,true);
 
 
         }
