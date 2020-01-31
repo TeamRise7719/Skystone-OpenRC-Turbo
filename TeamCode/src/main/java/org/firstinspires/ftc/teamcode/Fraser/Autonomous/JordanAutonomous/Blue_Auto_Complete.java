@@ -30,7 +30,6 @@ public class Blue_Auto_Complete extends LinearOpMode {
         SeansEncLibrary enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         FraserComponents mech = new FraserComponents(hardwareMap);
 
-
         enc.init();
         mech.init();
 
