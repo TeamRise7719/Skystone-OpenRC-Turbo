@@ -101,7 +101,7 @@ public class Red_Auto_Complete extends LinearOpMode {
 
                 mech.clawRelease();
                 enc.steeringDrive(6,false,false);
-                enc.steeringDrive(21,false,true);
+                enc.steeringDrive(19,false,true);
                 enc.arcTurn(84);
                 mech.intakeStone();
                 enc.steeringDrive( 38, false, true);

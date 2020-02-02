@@ -85,7 +85,7 @@ public class FraserTeleOp extends OpMode {
         }
 
         if (gamepad2.left_bumper){
-            component.autoClaw();
+            component.clawRelease();
         }
 
         if(gamepad2.y)
