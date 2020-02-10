@@ -98,7 +98,7 @@ public class FraserComponents {
 
     //----------------------------------------------=+(Block Build)+=----------------------------------------------\\
     public void clawGrab(){
-        claw.setPosition(0.1);
+        claw.setPosition(0);
     }
 
     public void clawRelease(){
@@ -107,7 +107,7 @@ public class FraserComponents {
 
 
     public void autoClaw(){
-        claw.setPosition(0.3);
+        claw.setPosition(0.4);
     }
 
 //
@@ -129,8 +129,8 @@ public class FraserComponents {
 //    }
 //
     public void shoulderUp(){
-        shoulderL.setPosition(0.25);
-        shoulderR.setPosition(0.25);
+        shoulderL.setPosition(0.15);
+        shoulderR.setPosition(0.15);
     }
     public void shoulderDown(){
         shoulderL.setPosition(1);
@@ -142,8 +142,8 @@ public class FraserComponents {
 
     //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
     public void foundationRelease() {
-        lgrab.setPosition(0.8); //.75
-        rgrab.setPosition(0.8); //.75
+        lgrab.setPosition(0.95); //.75
+        rgrab.setPosition(0.85); //.75
 
     }
     public void foundationGrab() {
