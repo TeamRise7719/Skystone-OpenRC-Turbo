@@ -41,7 +41,9 @@ public class GGOpenCV implements VisionSystem {
 
     @Override
     public void stopLook() {
-        camera.stopStreaming();
+//        camera.pauseViewport();
+//        camera.stopStreaming();
+        camera.closeCameraDevice();
     }
 
     @Override

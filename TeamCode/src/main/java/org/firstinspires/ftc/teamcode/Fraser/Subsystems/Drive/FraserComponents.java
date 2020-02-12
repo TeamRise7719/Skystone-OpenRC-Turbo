@@ -98,7 +98,7 @@ public class FraserComponents {
 
     //----------------------------------------------=+(Block Build)+=----------------------------------------------\\
     public void clawGrab(){
-        claw.setPosition(0);
+        claw.setPosition(0.1);
     }
 
     public void clawRelease(){
@@ -107,7 +107,7 @@ public class FraserComponents {
 
 
     public void autoClaw(){
-        claw.setPosition(0.4);
+        claw.setPosition(0.3);
     }
 
 //

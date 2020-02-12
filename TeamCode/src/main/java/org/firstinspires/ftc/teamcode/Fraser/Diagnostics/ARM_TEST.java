@@ -30,6 +30,8 @@ public class ARM_TEST extends LinearOpMode {
         enc.init();
         mech.init();
 
+        waitForStart();
+
 
         /** Arm Test
          *
@@ -37,6 +39,7 @@ public class ARM_TEST extends LinearOpMode {
             mech.clawRelease();
             waitFor(1000);
             mech.autoIntake();
+            enc.steeringDrive(4.5, false, false);
             waitFor(1000);
             mech.clawGrab();
             waitFor(1000);
