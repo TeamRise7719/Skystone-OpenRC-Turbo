@@ -98,7 +98,8 @@ public class Blue_Auto_Complete extends LinearOpMode {
             mech.clawRelease();
             enc.steeringDrive(10,false,false);
             enc.arcTurn(-90);
-            enc.steeringDrive(6,false,false);
+            //enc.arcTurn(-93);
+            enc.steeringDrive(4,false,false);
             mech.intakeStone();
             enc.steeringDrive( -34.8, false, true);
             enc.steeringDrive(4.5, false, false);
@@ -109,6 +110,7 @@ public class Blue_Auto_Complete extends LinearOpMode {
             enc.steeringDrive(-90,false,false);
             enc.arcTurn(-90);
             enc.steeringDrive(4,false,true);
+            //enc.steeringDrive(-11.5,false,false);
             enc.steeringDrive(-7.5,false,false);
             waitFor(500);
             mech.shoulderUp();
