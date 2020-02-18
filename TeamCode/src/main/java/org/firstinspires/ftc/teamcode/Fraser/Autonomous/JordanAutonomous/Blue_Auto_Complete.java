@@ -43,33 +43,32 @@ public class Blue_Auto_Complete extends LinearOpMode {
                 telemetry.addData("X: ", detector.detector.foundRectangle().x);
                 telemetry.addData("Y: ", detector.detector.foundRectangle().y);
                 posit = detector.detector.foundRectangle().y;
-                detector.stopLook();
+
             } else {
                 telemetry.addData("SS not found.", "");
             }
             telemetry.update();
 
         }
-
-        waitForStart();
+        detector.stopLook();
 
 //      position 3 and 0
         if ((posit >= 0 && posit <= 57) || (posit >= 246 && posit < 280)) {
 
             mech.clawRelease();
             enc.steeringDrive(24, false, false);
-            enc.arcTurn(89);
+            enc.arcTurn(-89);
             enc.steeringDrive(-4, false, false);
             mech.intakeStone();
-            enc.steeringDrive(19, false, true);
-            enc.steeringDrive(7, false, false);
+            enc.steeringDrive(-19, false, true);
+            enc.steeringDrive(9, false, false);
             waitFor(500);
             mech.clawGrab();
             mech.stopStone();
-            enc.steeringDrive(-17.7, false, true);
-            enc.steeringDrive(-80, false, false);
-            enc.arcTurn(90);
-            enc.steeringDrive(-6, false, true);
+            enc.steeringDrive(19.7, false, true);
+            enc.steeringDrive(-82, false, false);
+            enc.arcTurn(-90);
+            enc.steeringDrive(6, false, true);
             enc.steeringDrive(-8, false, false);
 //            waitFor(500);
             mech.shoulderUp();
@@ -80,12 +79,12 @@ public class Blue_Auto_Complete extends LinearOpMode {
             mech.foundationRelease();
             waitFor(1500);
             enc.steeringDrive(32,false,false);
-            enc.arcTurn(-90);
+            enc.arcTurn(90);
             mech.foundationGrab();
-            enc.arcTurn(45);
-            enc.steeringDrive(15,false,true);
+            enc.arcTurn(-45);
+            enc.steeringDrive(-15,false,true);
             enc.steeringDrive(-25,false,false);
-            enc.steeringDrive(23,false,true);
+            enc.steeringDrive(-23,false,true);
 
 
 
@@ -97,20 +96,19 @@ public class Blue_Auto_Complete extends LinearOpMode {
 
             mech.clawRelease();
             enc.steeringDrive(10,false,false);
-            enc.arcTurn(-90);
+            enc.arcTurn(-89);
             //enc.arcTurn(-93);
-            enc.steeringDrive(4,false,false);
+            enc.steeringDrive(6,false,false);
             mech.intakeStone();
-            enc.steeringDrive( -34.8, false, true);
-            enc.steeringDrive(4.5, false, false);
+            enc.steeringDrive( -33.8, false, true);
+            enc.steeringDrive(5.5, false, false);
             waitFor(500);
             mech.clawGrab();
             mech.stopStone();
             enc.steeringDrive(18,false,true);
-            enc.steeringDrive(-90,false,false);
+            enc.steeringDrive(-91,false,false);
             enc.arcTurn(-90);
             enc.steeringDrive(4,false,true);
-            //enc.steeringDrive(-11.5,false,false);
             enc.steeringDrive(-7.5,false,false);
             waitFor(500);
             mech.shoulderUp();
@@ -135,18 +133,18 @@ public class Blue_Auto_Complete extends LinearOpMode {
 
             mech.clawRelease();
             enc.steeringDrive(10,false,false);
-            enc.arcTurn(90);
+            enc.arcTurn(-89);
             enc.steeringDrive(15,false,false);
             mech.intakeStone();
-            enc.steeringDrive( 34.8, false, true);
+            enc.steeringDrive( -33.8, false, true);
             enc.steeringDrive(4.5, false, false);
             waitFor(500);
             mech.clawGrab();
             mech.stopStone();
-            enc.steeringDrive(-18,false,true);
+            enc.steeringDrive(18,false,true);
             enc.steeringDrive(-95,false,false);
-            enc.arcTurn(90);
-            enc.steeringDrive(-4,false,true);
+            enc.arcTurn(-90);
+            enc.steeringDrive(4,false,true);
             enc.steeringDrive(-7.5,false,false);
             waitFor(500);
             mech.shoulderUp();
@@ -157,12 +155,12 @@ public class Blue_Auto_Complete extends LinearOpMode {
             mech.foundationRelease();
             waitFor(1500);
             enc.steeringDrive(32,false,false);
-            enc.arcTurn(-90);
+            enc.arcTurn(90);
             mech.foundationGrab();
-            enc.arcTurn(45);
-            enc.steeringDrive(15,false,true);
+            enc.arcTurn(-45);
+            enc.steeringDrive(-15,false,true);
             enc.steeringDrive(-25,false,false);
-            enc.steeringDrive(23,false,true);
+            enc.steeringDrive(-23,false,true);
 
 
         }
