@@ -11,6 +11,7 @@ public class GGSkystoneDetectorTest extends LinearOpMode {
     GGOpenCV detector;
     boolean camFound;
     @Override
+
     public void runOpMode(){
 
         GGOpenCV detector = new GGOpenCV(hardwareMap);
