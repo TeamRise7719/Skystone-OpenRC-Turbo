@@ -61,7 +61,7 @@ public class Red_Auto_Complete extends LinearOpMode {
 
             mech.clawRelease();
             enc.steeringDrive(24, false, false);
-            enc.arcTurn(91);
+            enc.arcTurn(89);
             enc.steeringDrive(-4, false, false);
             mech.intakeStone();
             enc.steeringDrive(19, false, true);
@@ -98,11 +98,11 @@ public class Red_Auto_Complete extends LinearOpMode {
 
             mech.clawRelease();
             enc.steeringDrive(10, false, false);
-            enc.arcTurn(91);
+            enc.arcTurn(89);
             enc.steeringDrive(6, false, false);
             mech.intakeStone();
             enc.steeringDrive(33.8, false, true);
-            enc.steeringDrive(5.5, false, false);
+            enc.steeringDrive(7.5, false, false);
             waitFor(500);
             mech.clawGrab();
             mech.stopStone();
@@ -134,19 +134,19 @@ public class Red_Auto_Complete extends LinearOpMode {
 
             mech.clawRelease();
             enc.steeringDrive(10, false, false);
-            enc.arcTurn(91);
+            enc.arcTurn(89);
             enc.steeringDrive(15, false, false);
             mech.intakeStone();
             enc.steeringDrive(33.8, false, true);
-            enc.steeringDrive(4.5, false, false);
+            enc.steeringDrive(6.5, false, false);
             waitFor(500);
             mech.clawGrab();
             mech.stopStone();
-            enc.steeringDrive(-18, false, true);
-            enc.steeringDrive(-95, false, false);
+            enc.steeringDrive(-14, false, true);
+            enc.steeringDrive(-91, false, false);
             enc.arcTurn(90);
-            enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(-7.5, false, false);
+            enc.steeringDrive(-8, false, true);
+            enc.steeringDrive(-8.5, false, false);
             waitFor(500);
             mech.shoulderUp();
             waitFor(1500);
@@ -160,7 +160,7 @@ public class Red_Auto_Complete extends LinearOpMode {
             mech.foundationGrab();
             enc.arcTurn(45);
             enc.steeringDrive(15, false, true);
-            enc.steeringDrive(-25, false, false);
+            enc.steeringDrive(-24, false, false);
             enc.steeringDrive(23, false, true);
 
 
