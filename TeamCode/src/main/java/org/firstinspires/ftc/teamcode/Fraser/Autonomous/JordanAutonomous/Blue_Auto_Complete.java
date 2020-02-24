@@ -126,7 +126,7 @@ public class Blue_Auto_Complete extends LinearOpMode {
 
         }
 //                   position 2 and 5
-        if ((posit >= 150 && posit <= 170)) {
+        if ((posit >= 130 && posit <= 190)) {
 
             mech.clawRelease();
             enc.steeringDrive(10, false, false);
