@@ -102,12 +102,16 @@ public class FraserComponents {
     }
 
     public void clawRelease(){
-        claw.setPosition(0.5);
+        claw.setPosition(0.35);
     }
 
 
     public void autoClaw(){
-        claw.setPosition(0.3);
+        claw.setPosition(0.35);
+    }
+
+    public void capClaw(){
+        claw.setPosition(0.05);
     }
 
 //

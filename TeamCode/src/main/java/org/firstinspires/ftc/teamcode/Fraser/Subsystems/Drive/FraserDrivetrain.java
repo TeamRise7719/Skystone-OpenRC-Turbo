@@ -158,10 +158,10 @@ public class FraserDrivetrain {
             setMotors(lf, lr, rf, rr );//Full Speed
         }
 
-        telemetry.addData("Speeds","%f,%f,%f,%f", lf,rf,lr,rr);
-        telemetry.addData("RAW Gyro: ",getRawHeading());
-        telemetry.addData("Heading: ",getHeading());
-        telemetry.addData("Offset: ",headingOffset);
+//        telemetry.addData("Speeds","%f,%f,%f,%f", lf,rf,lr,rr);
+//        telemetry.addData("RAW Gyro: ",getRawHeading());
+//        telemetry.addData("Heading: ",getHeading());
+//        telemetry.addData("Offset: ",headingOffset);
 //
 //        telemetry.update();
     }

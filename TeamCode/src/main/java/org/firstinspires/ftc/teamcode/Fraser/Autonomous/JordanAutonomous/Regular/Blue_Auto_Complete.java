@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Fraser.Autonomous.JordanAutonomous;
+package org.firstinspires.ftc.teamcode.Fraser.Autonomous.JordanAutonomous.Regular;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -53,28 +53,30 @@ public class Blue_Auto_Complete extends LinearOpMode {
         detector.stopLook();
 
 //      position 3 and 0
-        if ((posit >= 0 && posit <= 57) || (posit >= 240 && posit < 280)) {
+        if ((posit >= 0 && posit <= 57) || (posit >= 220 && posit < 280)) {
 
+            mech.ejectStone();
             mech.clawRelease();
-            enc.steeringDrive(24, false, false);
-            enc.arcTurn(-89);
+            enc.steeringDrive(22, false, false);
+            mech.stopStone();
+            enc.arcTurn(-92);
             enc.steeringDrive(-4, false, false);
+            waitFor(100);
             mech.intakeStone();
             enc.steeringDrive(-19, false, true);
-            enc.steeringDrive(9, false, false);
-            waitFor(500);
+            waitFor(125);
+            enc.steeringDrive(6.5, false, false);
             mech.clawGrab();
             mech.stopStone();
-            enc.steeringDrive(19.7, false, true);
-            enc.steeringDrive(-82, false, false);
+            enc.arcTurn(2);
+            enc.steeringDrive(19, false, true);
+            enc.steeringDrive(-80, false, false);
             enc.arcTurn(-90);
-            enc.steeringDrive(6, false, true);
-            enc.steeringDrive(-12, false, false);
-//            waitFor(500);
+            enc.steeringDrive(7, false, true);
+            enc.steeringDrive(-10, false, false);
             mech.shoulderUp();
             waitFor(1500);
             mech.autoClaw();
-            waitFor(500);
             mech.shoulderDown();
             mech.foundationRelease();
             waitFor(1500);
@@ -92,34 +94,36 @@ public class Blue_Auto_Complete extends LinearOpMode {
         //  position 1 and 4
         if ((posit >= 60 && posit <= 100)) {
 
+            mech.ejectStone();
             mech.clawRelease();
-            enc.steeringDrive(10, false, false);
-            enc.arcTurn(-90);
-            enc.steeringDrive(6, false, false);
+            enc.steeringDrive(22, false, false);
+            mech.stopStone();
+            enc.arcTurn(-91);
+            enc.steeringDrive(5, false, false);
+            waitFor(100);
             mech.intakeStone();
-            enc.steeringDrive(-33.8, false, true);
-            enc.steeringDrive(9, false, false);
-            waitFor(500);
+            enc.steeringDrive(-19, false, true);
+            waitFor(125);
+            enc.steeringDrive(6, false, false);
             mech.clawGrab();
             mech.stopStone();
+            enc.arcTurn(2);
             enc.steeringDrive(18, false, true);
             enc.steeringDrive(-91, false, false);
             enc.arcTurn(-90);
             enc.steeringDrive(4, false, true);
             enc.steeringDrive(-9.5, false, false);
-            waitFor(500);
             mech.shoulderUp();
             waitFor(1500);
             mech.autoClaw();
-            waitFor(500);
             mech.shoulderDown();
             mech.foundationRelease();
             waitFor(1500);
             enc.steeringDrive(28, false, false);
             enc.arcTurn(90);
             mech.foundationGrab();
-            enc.arcTurn(-65);
-            enc.steeringDrive(-15, false, true);
+            enc.arcTurn(-55);
+            enc.steeringDrive(-14, false, true);
             enc.steeringDrive(-21, false, false);
             enc.steeringDrive(-23, false, true);
 
@@ -128,35 +132,39 @@ public class Blue_Auto_Complete extends LinearOpMode {
 //                   position 2 and 5
         if ((posit >= 130 && posit <= 190)) {
 
+            mech.ejectStone();
             mech.clawRelease();
-            enc.steeringDrive(10, false, false);
+            enc.steeringDrive(22, false, false);
+            mech.stopStone();
             enc.arcTurn(-91);
-            enc.steeringDrive(15, false, false);
+            enc.steeringDrive(9.5, false, false);
+//            waitFor(100);
             mech.intakeStone();
-            enc.steeringDrive(-33.8, false, true);
-            enc.steeringDrive(6.5, false, false);
-            waitFor(500);
+            enc.steeringDrive(-19.5, false, true);
+            waitFor(125);
+            enc.steeringDrive(8, false, false);
             mech.clawGrab();
             mech.stopStone();
-            enc.steeringDrive(14, false, true);
-            enc.steeringDrive(-91, false, false);
+            enc.arcTurn(3);
+//            waitFor(250);
+            enc.steeringDrive(18, false, true);
+            enc.steeringDrive(-93, false, false);
             enc.arcTurn(-90);
-            enc.steeringDrive(11, false, true);
-            enc.steeringDrive(-8.5, false, false);
-            waitFor(500);
+            enc.steeringDrive(8, false, true);
+            enc.steeringDrive(-10, false, false);
             mech.shoulderUp();
-            waitFor(1500);
+            waitFor(1000);
             mech.autoClaw();
-            waitFor(500);
             mech.shoulderDown();
             mech.foundationRelease();
-            waitFor(1500);
+            waitFor(1000);
             enc.steeringDrive(28, false, false);
             enc.arcTurn(90);
+            waitFor(50);
             mech.foundationGrab();
-            enc.arcTurn(-45);
-            enc.steeringDrive(-15, false, true);
-            enc.steeringDrive(-24, false, false);
+            enc.arcTurn(-55);
+            enc.steeringDrive(-13, false, true);
+            enc.steeringDrive(-21, false, false);
             enc.steeringDrive(-23, false, true);
 
 

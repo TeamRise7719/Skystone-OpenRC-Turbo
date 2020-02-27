@@ -41,7 +41,7 @@ public class ARM_TEST extends LinearOpMode {
             mech.intakeStone();
             enc.steeringDrive(4.5, false, false);
             waitFor(1000);
-            mech.clawGrab();
+            mech.capClaw();
             waitFor(1000);
             mech.shoulderUp();
             waitFor(1500);

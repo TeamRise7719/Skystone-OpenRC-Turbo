@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Fraser.Autonomous.JordanAutonomous;
+package org.firstinspires.ftc.teamcode.Fraser.Autonomous.JordanAutonomous.Regular;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;

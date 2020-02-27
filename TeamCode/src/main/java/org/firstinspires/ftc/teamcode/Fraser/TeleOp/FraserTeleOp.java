@@ -88,6 +88,10 @@ public class FraserTeleOp extends OpMode {
             component.autoClaw();
         }
 
+        if (gamepad2.x){
+            component.capClaw();
+        }
+
         if(gamepad2.y)
         {
             component.shoulderDown();
